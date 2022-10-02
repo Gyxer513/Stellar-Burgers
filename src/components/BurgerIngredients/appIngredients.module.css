@@ -1,0 +1,13 @@
+.burgerConstructor {
+  margin-left: 320px;
+  max-width: 600px;
+  height: 700px;
+}
+.burgerConstructor_container {
+  white-space: nowrap;
+  scroll-snap-type: y mandatory;
+}
+.burgerConstructor_rolls {
+  display: flex;
+  justify-content: space-around;
+}

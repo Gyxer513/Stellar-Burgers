@@ -1,0 +1,9 @@
+.burgerConstructor {
+    display: block;
+    margin: 100px 0 0 200px;
+}
+.burgerConstructor__box {
+    display: flex;
+    margin: 50px 0 0 280px;
+    align-items: center;
+}

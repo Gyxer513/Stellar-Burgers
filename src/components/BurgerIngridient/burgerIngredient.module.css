@@ -1,0 +1,13 @@
+.burgerIngredient {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 240px;
+}
+.burgerIngredient__costBox {
+    display: flex;
+    align-items: center;
+}
+.burgerIngredient__cost {
+    margin-right: 10px;
+}
