@@ -1,9 +1,30 @@
 .burgerConstructor {
-    display: block;
-    margin: 100px 0 0 200px;
+  width: auto;
+  display: block;
+  margin: 100px 0 0 100px;
+}
+.burgerConstructor__element {
+  margin-left: 64px;
+}
+.burgerConstructor__elementsBox {
+  width: auto;
+  max-height: 630px;
+  overflow-y: auto;
+}
+.burgerConstructor__elementsBox::-webkit-scrollbar {
+  width: 8px;
+  background-color: #2f2f37;
+}
+
+.burgerConstructor__elementsBox::-webkit-scrollbar-thumb {
+  background-color: #8585ad;
+}
+.burgerConstructor__elementBox {
+  display: flex;
+  align-items: center;
 }
 .burgerConstructor__box {
-    display: flex;
-    margin: 50px 0 0 280px;
-    align-items: center;
+  display: flex;
+  margin: 50px 0 0 200px;
+  align-items: center;
 }

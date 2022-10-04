@@ -27,7 +27,15 @@ class AppHeader extends React.Component {
             </a>
           </div>
         </div>
+        <div className="p-5"></div>
+        <div className="p-5"></div>
+        <div className="p-5"></div>
+        <div className="p-5"></div>
         <Logo />
+        <div className="p-5"></div>
+        <div className="p-5"></div>
+        <div className="p-5"></div>
+        <div className="p-5"></div>
         <div className={`${styles.header__cabinet}`}>
           <div className="m-2">
             <ProfileIcon type="secondary" />
