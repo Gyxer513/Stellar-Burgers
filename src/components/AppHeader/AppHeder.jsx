@@ -31,7 +31,11 @@ class AppHeader extends React.Component {
         <div className="p-5"></div>
         <div className="p-5"></div>
         <div className="p-5"></div>
+        <div className="p-5"></div>
+        <div className="p-5"></div>
         <Logo />
+        <div className="p-5"></div>
+        <div className="p-5"></div>
         <div className="p-5"></div>
         <div className="p-5"></div>
         <div className="p-5"></div>

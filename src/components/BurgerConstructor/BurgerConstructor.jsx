@@ -63,16 +63,17 @@ const BurgerConstructor = () => {
             thumbnail={sauceOne}
           />
         </div>
-        <div className={styles.burgerConstructor__element}>
+        <div className={styles.burgerConstructor__elementBox}>
+          <DragIcon type="primary" />
+          <div className="m-5"></div>
           <ConstructorElement
-          
-          type="bottom"
-          isLocked={true}
-          text="Краторная булка N-200i (низ)"
-          price={200}
-          thumbnail={sauceOne}
-        />
-      </div>
+            type="bottom"
+            isLocked={true}
+            text="Краторная булка N-200i (низ)"
+            price={200}
+            thumbnail={sauceOne}
+          />
+        </div>
       <div className={styles.burgerConstructor__element}>
           <ConstructorElement
           type="bottom"
