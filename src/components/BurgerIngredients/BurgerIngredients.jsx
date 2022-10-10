@@ -7,6 +7,7 @@ import sauceTwo from "../../images/sauce-02.png";
 import sauceTree from "../../images/sauce-03.png";
 import sauceFour from "../../images/sauce-04.png";
 import styles from "./appIngredients.module.css";
+import ingridients from "../utils/data";
 import BurgerIngredient from "../BurgerIngridient/BurgerIngredient";
 
 const BurgerIngredients = () => {
@@ -34,40 +35,38 @@ const BurgerIngredients = () => {
           <div className="m-10"></div>
           <p className="text text_type_main-medium">Булки</p>
           <div className={styles.burgerConstructor_rolls}>
-            <BurgerIngredient
-              src={rollImageOne}
-              cost="20"
-              text="Краторная булка N-200i"
-            />
-            <BurgerIngredient
-              src={rollImageTwo}
-              cost="20"
-              text="Флюоресцентная булка R2-D3"
-            />
+            {ingridients.map((item, index) => {
+              if (item.type == "bun") {
+                return (
+                  <>
+                    <BurgerIngredient
+                      src={item.image}
+                      cost={item.price}
+                      text={item.name}
+                    />
+                  </>
+                );
+              }
+            })}
           </div>
           <div className="m-20"></div>
           <p className="text text_type_main-medium">Соусы</p>
           <div className={styles.burgerConstructor_rolls}>
-            <BurgerIngredient src={sauceTwo} cost="30" text="Соус Spicy-X" />
-            <BurgerIngredient
-              src={sauceFour}
-              cost="30"
-              text="Соус фирменный Space Sauce"
-            />
+          {ingridients.map((item, index) => {
+              if (item.type == "sauce") {
+                return (
+                  <>
+                    <BurgerIngredient
+                      src={item.image}
+                      cost={item.price}
+                      text={item.name}
+                    />
+                  </>
+                );
+              }
+            })}
           </div>
-          <div className="m-5"></div>
-          <div className={styles.burgerConstructor_rolls}>
-            <BurgerIngredient
-              src={sauceTree}
-              cost="20"
-              text="Краторная булка N-200i"
-            />
-            <BurgerIngredient
-              src={sauceOne}
-              cost="20"
-              text="Флюоресцентная булка R2-D3"
-            />
-          </div>
+          
         </div>
       </div>
     </section>

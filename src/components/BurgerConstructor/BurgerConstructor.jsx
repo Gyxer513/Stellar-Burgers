@@ -1,5 +1,4 @@
 import React from "react";
-import bun from "../../images/bun-02.png";
 import ingridients from "../utils/data";
 import {
   ConstructorElement,
@@ -61,5 +60,6 @@ const BurgerConstructor = () => {
     </section>
   );
 };
+
 
 export default BurgerConstructor;

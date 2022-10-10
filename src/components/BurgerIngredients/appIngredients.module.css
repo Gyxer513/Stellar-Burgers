@@ -23,4 +23,6 @@
 .burgerConstructor_rolls {
   display: flex;
   justify-content: space-around;
+  max-width: 700px;
+  flex-wrap: wrap;
 }
