@@ -14,33 +14,38 @@ const BurgerConstructor = () => {
     <section className={styles.burgerConstructor}>
       <div className={styles.burgerConstructor__element}>
         <ConstructorElement
-        
           type="top"
           isLocked={true}
-          text="Краторная булка N-200i (верх)"
-          price={20}
-          thumbnail={bun}
+          text={ingridients[0].name}
+          thumbnail={ingridients[0].image}
         />
       </div>
       <div className="m-4"></div>
       <ul className={styles.burgerConstructor__elementsBox}>
-          {ingridients.map((item, index) => (
-            <li key={index} className={styles.burgerConstructor__elementBox}>
-            <DragIcon type="primary" />
-            <div className="m-5"></div>
-            <ConstructorElement  isLocked={false} text={item.name} thumbnail={item.image} />
-            </li>
-          ))}
+        {ingridients.map((item, index) => {
+          if (item.type !== "bun") {
+            return (
+              <li key={index} className={styles.burgerConstructor__elementBox}>
+                <DragIcon type="primary" />
+                <div className="m-5"></div>
+                <ConstructorElement
+                  isLocked={false}
+                  text={item.name}
+                  thumbnail={item.image}
+                  price={item.price}
+                />
+              </li>
+            );
+          }
+        })}
       </ul>
-      <div className="m-4"></div>
+      <div className="m-1"></div>
       <div className={styles.burgerConstructor__element}>
         <ConstructorElement
-       
           type="bottom"
           isLocked={true}
-          text="Краторная булка N-200i (низ)"
-          price={20}
-          thumbnail={bun}
+          text={ingridients[0].name}
+          thumbnail={ingridients[0].image}
         />
       </div>
 
