@@ -7,8 +7,13 @@
   margin-left: 64px;
 }
 .burgerConstructor__elementsBox {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  gap: 20px; 
   width: auto;
-  max-height: 630px;
+  max-height: 496px;
   overflow-y: auto;
 }
 .burgerConstructor__elementsBox::-webkit-scrollbar {
@@ -20,6 +25,7 @@
   background-color: #8585ad;
 }
 .burgerConstructor__elementBox {
+  list-style-type: none;
   display: flex;
   align-items: center;
 }

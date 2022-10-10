@@ -9,7 +9,7 @@ import sauceFour from "../../images/sauce-04.png";
 import styles from "./appIngredients.module.css";
 import BurgerIngredient from "../BurgerIngridient/BurgerIngredient";
 
-const AppIngredients = () => {
+const BurgerIngredients = () => {
   const [current, setCurrent] = React.useState("one");
 
   return (
@@ -17,7 +17,7 @@ const AppIngredients = () => {
       <div className="p-5"></div>
       <h1 className="text text_type_main-large">Соберите бургер</h1>
       <div className="m-2"></div>
-      <div style={{ display: "flex" }}>
+      <div className={styles.burgerConstructor__TabBox}>
         <Tab value="one" active={current === "one"} onClick={setCurrent}>
           Булки
         </Tab>
@@ -31,7 +31,7 @@ const AppIngredients = () => {
       <div className="m-5"></div>
       <div className={`${styles.burgerConstructor__ingridientsBox}`}>
         <div className={styles.burgerConstructor_container}>
-        <div className="m-10"></div>
+          <div className="m-10"></div>
           <p className="text text_type_main-medium">Булки</p>
           <div className={styles.burgerConstructor_rolls}>
             <BurgerIngredient
@@ -74,4 +74,4 @@ const AppIngredients = () => {
   );
 };
 
-export default AppIngredients;
+export default BurgerIngredients;
