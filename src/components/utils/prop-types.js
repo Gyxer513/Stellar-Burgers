@@ -1,5 +1,6 @@
+import PropTypes from 'prop-types';
 
-export default ingredientPropType = PropTypes.shape({
+export const ingredientPropType = PropTypes.shape({
     _id: PropTypes.string.isRequired,
     type: PropTypes.oneOf(["bun", "main", "sauce"]).isRequired,
     name:PropTypes.string.isRequired,

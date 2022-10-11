@@ -1,5 +1,7 @@
 import React from "react";
+import PropTypes from 'prop-types';
 import ingridients from "../utils/data";
+import {ingredientPropType} from "../utils/prop-types"
 import {
   ConstructorElement,
   Button,
@@ -60,6 +62,7 @@ const BurgerConstructor = () => {
     </section>
   );
 };
-
-
+ConstructorElement.propTypes = {
+  ingredientPropType
+}
 export default BurgerConstructor;

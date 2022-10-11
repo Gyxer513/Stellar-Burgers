@@ -1,15 +1,10 @@
 import React from "react";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
-import rollImageOne from "../../images/bun-01.png";
-import rollImageTwo from "../../images/bun-02.png";
-import sauceOne from "../../images/sauce-01.png";
-import sauceTwo from "../../images/sauce-02.png";
-import sauceTree from "../../images/sauce-03.png";
-import sauceFour from "../../images/sauce-04.png";
 import styles from "./appIngredients.module.css";
 import ingridients from "../utils/data";
+import PropTypes from "prop-types";
 import BurgerIngredient from "../BurgerIngridient/BurgerIngredient";
-
+import ingredientPropType from "../utils/prop-types";
 const BurgerIngredients = () => {
   const [current, setCurrent] = React.useState("one");
 
@@ -38,13 +33,12 @@ const BurgerIngredients = () => {
             {ingridients.map((item, index) => {
               if (item.type == "bun") {
                 return (
-                  <>
-                    <BurgerIngredient
-                      src={item.image}
-                      cost={item.price}
-                      text={item.name}
-                    />
-                  </>
+                  <BurgerIngredient
+                    key={index}
+                    src={item.image}
+                    cost={item.price}
+                    text={item.name}
+                  />
                 );
               }
             })}
@@ -52,25 +46,43 @@ const BurgerIngredients = () => {
           <div className="m-20"></div>
           <p className="text text_type_main-medium">Соусы</p>
           <div className={styles.burgerConstructor_rolls}>
-          {ingridients.map((item, index) => {
+            {ingridients.map((item, index) => {
               if (item.type == "sauce") {
                 return (
-                  <>
-                    <BurgerIngredient
-                      src={item.image}
-                      cost={item.price}
-                      text={item.name}
-                    />
-                  </>
+                  <BurgerIngredient
+                    key={index}
+                    src={item.image}
+                    cost={item.price}
+                    text={item.name}
+                  />
                 );
               }
             })}
           </div>
-          
+          <div className={styles.burgerConstructor_rolls}>
+            {ingridients.map((item, index) => {
+              if (item.type == "main") {
+                return (
+                  <BurgerIngredient
+                    key={index}
+                    src={item.image}
+                    cost={item.price}
+                    text={item.name}
+                  />
+                );
+              }
+            })}
+          </div>
         </div>
       </div>
     </section>
   );
 };
 
+
+BurgerIngredient.propType = {
+  src: PropTypes.any.isRequired,
+  cost: PropTypes.number.isRequired,
+  text: PropTypes.string.isRequired,
+}
 export default BurgerIngredients;
