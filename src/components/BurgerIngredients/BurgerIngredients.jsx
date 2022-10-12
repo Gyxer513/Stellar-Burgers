@@ -1,11 +1,12 @@
 import React from "react";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./appIngredients.module.css";
-import ingridients from "../utils/data";
 import PropTypes from "prop-types";
 import BurgerIngredient from "../BurgerIngridient/BurgerIngredient";
-import ingredientPropType from "../utils/prop-types";
-const BurgerIngredients = () => {
+import ingredientPropType from "../../utils/prop-types";
+
+const BurgerIngredients = ({data}) => {
+
   const [current, setCurrent] = React.useState("one");
 
   return (
@@ -30,7 +31,7 @@ const BurgerIngredients = () => {
           <div className="m-10"></div>
           <p className="text text_type_main-medium">Булки</p>
           <div className={styles.burgerConstructor_rolls}>
-            {ingridients.map((item, index) => {
+            {data.map((item, index) => {
               if (item.type == "bun") {
                 return (
                   <BurgerIngredient
@@ -46,7 +47,7 @@ const BurgerIngredients = () => {
           <div className="m-20"></div>
           <p className="text text_type_main-medium">Соусы</p>
           <div className={styles.burgerConstructor_rolls}>
-            {ingridients.map((item, index) => {
+            {data.map((item, index) => {
               if (item.type == "sauce") {
                 return (
                   <BurgerIngredient
@@ -59,8 +60,10 @@ const BurgerIngredients = () => {
               }
             })}
           </div>
+          <div className="m-20"></div>
+          <p className="text text_type_main-medium">Начинки</p>
           <div className={styles.burgerConstructor_rolls}>
-            {ingridients.map((item, index) => {
+            {data.map((item, index) => {
               if (item.type == "main") {
                 return (
                   <BurgerIngredient
@@ -79,10 +82,4 @@ const BurgerIngredients = () => {
   );
 };
 
-
-BurgerIngredient.propType = {
-  src: PropTypes.any.isRequired,
-  cost: PropTypes.number.isRequired,
-  text: PropTypes.string.isRequired,
-}
 export default BurgerIngredients;

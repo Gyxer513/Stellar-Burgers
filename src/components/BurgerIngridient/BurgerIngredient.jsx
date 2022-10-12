@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import {
   Counter,
   CurrencyIcon,
@@ -21,5 +22,9 @@ const BurgerIngredient = ({ src, cost, name, text }) => {
     </div>
   );
 };
-
+BurgerIngredient.propType = {
+  src: PropTypes.any.isRequired,
+  cost: PropTypes.number.isRequired,
+  text: PropTypes.string.isRequired,
+}
 export default BurgerIngredient;

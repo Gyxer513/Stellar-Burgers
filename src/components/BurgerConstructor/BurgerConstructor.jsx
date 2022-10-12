@@ -1,7 +1,5 @@
 import React from "react";
-import PropTypes from "prop-types";
-import ingridients from "../utils/data";
-import { ingredientPropType } from "../utils/prop-types";
+import { ingredientPropType } from "../../utils/prop-types";
 import {
   ConstructorElement,
   Button,
@@ -10,20 +8,22 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./burgerConstructor.module.css";
 
-const BurgerConstructor = () => {
+const BurgerConstructor = ({ data }) => {
+  console.log(data);
   return (
     <section className={styles.burgerConstructor}>
       <div className={styles.burgerConstructor__element}>
         <ConstructorElement
           type="top"
           isLocked={true}
-          text={ingridients[0].name}
-          thumbnail={ingridients[0].image}
+          text={`${data[0]?.name} (верх)`}
+          price={data[0]?.price}
+          thumbnail={data[0]?.image}
         />
       </div>
       <div className="m-4"></div>
       <ul className={styles.burgerConstructor__elementsBox}>
-        {ingridients.map((item, index) => {
+        {data.map((item, index) => {
           if (item.type !== "bun") {
             return (
               <li key={index} className={styles.burgerConstructor__elementBox}>
@@ -45,8 +45,9 @@ const BurgerConstructor = () => {
         <ConstructorElement
           type="bottom"
           isLocked={true}
-          text={ingridients[0].name}
-          thumbnail={ingridients[0].image}
+          text={`${data[0]?.name} (Низ)`}
+          price={data[0]?.price}
+          thumbnail={data[0]?.image}
         />
       </div>
 
@@ -62,7 +63,5 @@ const BurgerConstructor = () => {
     </section>
   );
 };
-ConstructorElement.propTypes = {
-  ingredientPropType,
-};
+
 export default BurgerConstructor;
