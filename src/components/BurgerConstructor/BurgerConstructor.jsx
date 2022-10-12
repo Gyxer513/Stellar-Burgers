@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {ingredientPropType} from "../../utils/prop-types";
+import { ingredientPropType } from "../../utils/prop-types";
 import {
   ConstructorElement,
   Button,
@@ -9,8 +9,7 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./burgerConstructor.module.css";
 
-const BurgerConstructor = ({ data }) => {
-  console.log(data);
+const BurgerConstructor = ({ data, openOrder }) => {
   return (
     <section className={styles.burgerConstructor}>
       <div className={styles.burgerConstructor__element}>
@@ -51,13 +50,12 @@ const BurgerConstructor = ({ data }) => {
           thumbnail={data[0]?.image}
         />
       </div>
-
       <div className={styles.burgerConstructor__box}>
         <p className="text text_type_main-large">610</p>
         <div className="m-2"></div>
         <CurrencyIcon type="primary" />
         <div className="m-2"></div>
-        <Button htmlType="button" type="primary" size="medium">
+        <Button htmlType="button" type="primary" size="medium" onClick={openOrder}>
           Оформить заказ
         </Button>
       </div>
