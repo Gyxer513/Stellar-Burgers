@@ -3,7 +3,7 @@ import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./appIngredients.module.css";
 import PropTypes from "prop-types";
 import BurgerIngredient from "../BurgerIngridient/BurgerIngredient";
-import ingredientPropType from "../../utils/prop-types";
+
 
 const BurgerIngredients = ({data}) => {
 
@@ -44,7 +44,8 @@ const BurgerIngredients = ({data}) => {
               }
             })}
           </div>
-          <div className="m-20"></div>
+          <div className="m-20">
+          </div>
           <p className="text text_type_main-medium">Соусы</p>
           <div className={styles.burgerConstructor_rolls}>
             {data.map((item, index) => {

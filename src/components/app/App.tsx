@@ -3,7 +3,7 @@ import styles from "./app.module.css";
 import AppHeader from "../AppHeader/AppHeder";
 import BurgerIngredients from "../BurgerIngredients/BurgerIngredients";
 import BurgerConstructor from "../BurgerConstructor/BurgerConstructor";
-import { link } from "../../utils/data";
+import { link } from "../../utils/data"
 
 function App() {
   const [state, setState] = useState({ api: [], isLoading: false });

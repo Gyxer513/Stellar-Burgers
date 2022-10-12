@@ -1,5 +1,6 @@
 import React from "react";
-import { ingredientPropType } from "../../utils/prop-types";
+import PropTypes from "prop-types";
+import {ingredientPropType} from "../../utils/prop-types";
 import {
   ConstructorElement,
   Button,

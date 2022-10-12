@@ -8,7 +8,9 @@ import styles from "./burgerIngredient.module.css";
 
 const BurgerIngredient = ({ src, cost, name, text }) => {
   return (
+  
     <div className={styles.burgerIngredient}>
+      <Counter count={1} size="default" />
       <img className="ingridient__image" src={src} alt={name} />
       <div className={styles.burgerIngredient__costBox}>
         <p
@@ -20,6 +22,8 @@ const BurgerIngredient = ({ src, cost, name, text }) => {
       </div>
       <p className="text text_type_main-small">{text}</p>
     </div>
+
+   
   );
 };
 BurgerIngredient.propType = {
