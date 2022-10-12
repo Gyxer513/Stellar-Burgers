@@ -6,10 +6,10 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./burgerIngredient.module.css";
 
-const BurgerIngredient = ({ src, cost, name, text }) => {
+const BurgerIngredient = ({ src, cost, name, text, getData }) => {
   return (
   
-    <div className={styles.burgerIngredient}>
+    <div className={styles.burgerIngredient} onClick={getData}>
       <Counter count={1} size="default" />
       <img className="ingridient__image" src={src} alt={name} />
       <div className={styles.burgerIngredient__costBox}>

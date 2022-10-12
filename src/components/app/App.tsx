@@ -5,7 +5,8 @@ import BurgerIngredients from "../BurgerIngredients/BurgerIngredients";
 import BurgerConstructor from "../BurgerConstructor/BurgerConstructor";
 import { link } from "../../utils/data";
 import Modal from "../Modal/Modal";
-import OrderDetails from "../OrderDetails/OrderDetails"
+import OrderDetails from "../OrderDetails/OrderDetails";
+import IngredientDetails from "../IngredientDetails/IngredientDetails";
 
 function App() {
   const [state, setState] = useState({ api: [], isLoading: false });
@@ -17,13 +18,13 @@ function App() {
   useEffect(() => {
     getData();
   }, []);
- 
+
   const handleEscKeydown = (e: any) => {
     e.key === "Escape" && closeAllModals();
   };
   const openOrderDetails = () => {
     setOrderDetails({ ...orderDetails, isOpened: true });
-}
+  };
   const closeAllModals = () => {
     setOrderDetails({ ...orderDetails, isOpened: false });
     setIngredientDetails({ ...ingredientDetails, isOpened: false });
@@ -42,22 +43,36 @@ function App() {
         console.log(error);
       });
   };
-
+  const getCardsData = (cardData: any) => {
+    setIngredientDetails({ isOpened: true, ingredient: cardData })
+}
   return (
     <>
       <AppHeader />
       <main className={styles.main}>
-        <BurgerIngredients data={state.api} />
-        <BurgerConstructor data={state.api} openOrder={openOrderDetails}/>
+        <BurgerIngredients data={state.api} getCardsData={getCardsData}/>
+        <BurgerConstructor data={state.api} openOrder={openOrderDetails} />
       </main>
-      {orderDetails.isOpened &&
-      <Modal
-        title={""}
-        onOverlayClick={closeAllModals}
-        onEscKeydown={handleEscKeydown}
-      >
-        <OrderDetails orderId={`034536`} closeModal={closeAllModals} />
-      </Modal>}
+      {orderDetails.isOpened && (
+        <Modal
+          onOverlayClick={closeAllModals}
+          onEscKeydown={handleEscKeydown}
+        >
+          <OrderDetails orderId={`034536`} closeModal={closeAllModals} />
+        </Modal>
+      )}
+      {ingredientDetails.isOpened && (
+        <Modal
+          onOverlayClick={closeAllModals}
+          onEscKeydown={handleEscKeydown}
+        >
+          <IngredientDetails
+            title={`Детали ингредиента`}
+            ingredientData={ingredientDetails}
+            closeModal={closeAllModals}
+          />
+        </Modal>
+      )}
     </>
   );
 }

@@ -4,9 +4,7 @@ import styles from "./appIngredients.module.css";
 import PropTypes from "prop-types";
 import BurgerIngredient from "../BurgerIngridient/BurgerIngredient";
 
-
-const BurgerIngredients = ({data}) => {
-
+const BurgerIngredients = ({ data, getCardsData }) => {
   const [current, setCurrent] = React.useState("one");
 
   return (
@@ -39,15 +37,18 @@ const BurgerIngredients = ({data}) => {
                     src={item.image}
                     cost={item.price}
                     text={item.name}
+                    getData={(item) => getCardsData(item)}
                   />
+                  
                 );
               }
             })}
           </div>
-          <div className="m-20">
-          </div>
+          <div className="m-20"></div>
           <p className="text text_type_main-medium">Соусы</p>
-          <div className={styles.burgerConstructor_rolls}>
+          <div
+            className={styles.burgerConstructor_rolls}
+          >
             {data.map((item, index) => {
               if (item.type == "sauce") {
                 return (
@@ -56,6 +57,7 @@ const BurgerIngredients = ({data}) => {
                     src={item.image}
                     cost={item.price}
                     text={item.name}
+                    onClick={() => getCardsData(item)}
                   />
                 );
               }
@@ -63,7 +65,9 @@ const BurgerIngredients = ({data}) => {
           </div>
           <div className="m-20"></div>
           <p className="text text_type_main-medium">Начинки</p>
-          <div className={styles.burgerConstructor_rolls}>
+          <div
+            className={styles.burgerConstructor_rolls}
+          >
             {data.map((item, index) => {
               if (item.type == "main") {
                 return (
@@ -72,6 +76,7 @@ const BurgerIngredients = ({data}) => {
                     src={item.image}
                     cost={item.price}
                     text={item.name}
+                    onClick={() => getCardsData(item)}
                   />
                 );
               }

@@ -6,7 +6,7 @@ import PropTypes from "prop-types";
 
 const modalsContainer = document.querySelector("#modals");
 
-const Modal = ({ title, onOverlayClick, onEscKeydown, children }) => {
+const Modal = ({ onOverlayClick, onEscKeydown, children }) => {
   useEffect(() => {
     document.addEventListener("keydown", onEscKeydown);
 
@@ -18,7 +18,6 @@ const Modal = ({ title, onOverlayClick, onEscKeydown, children }) => {
   return ReactDOM.createPortal(
     <>
       <div className={styles.modal}>
-        <h3>{title}</h3>
         {children}
       </div>
       <ModalOverlay onClick={onOverlayClick} />
@@ -29,7 +28,6 @@ const Modal = ({ title, onOverlayClick, onEscKeydown, children }) => {
 
 export default Modal
 Modal.propTypes = {
-  title: PropTypes.string.isRequired,
   onOverlayClick: PropTypes.func.isRequired,
   onEscKeydown: PropTypes.func.isRequired,
   children: PropTypes.node.isRequired,
