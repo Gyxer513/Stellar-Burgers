@@ -43,14 +43,14 @@ function App() {
         console.log(error);
       });
   };
-  const getCardsData = (cardData: any) => {
+  const getIngridientsData = (cardData: any) => {
     setIngredientDetails({ isOpened: true, ingredient: cardData })
 }
   return (
     <>
       <AppHeader />
       <main className={styles.main}>
-        <BurgerIngredients data={state.api} getCardsData={getCardsData}/>
+        <BurgerIngredients data={state.api} getData={getIngridientsData}/>
         <BurgerConstructor data={state.api} openOrder={openOrderDetails} />
       </main>
       {orderDetails.isOpened && (
@@ -68,7 +68,7 @@ function App() {
         >
           <IngredientDetails
             title={`Детали ингредиента`}
-            ingredientData={ingredientDetails}
+            ingredientData={ingredientDetails.ingredient}
             closeModal={closeAllModals}
           />
         </Modal>

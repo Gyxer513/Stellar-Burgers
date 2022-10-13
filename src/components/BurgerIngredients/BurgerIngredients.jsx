@@ -1,10 +1,10 @@
 import React from "react";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
-import styles from "./appIngredients.module.css";
+import styles from "./burgerIngredients.module.css";
 import PropTypes from "prop-types";
 import BurgerIngredient from "../BurgerIngridient/BurgerIngredient";
 
-const BurgerIngredients = ({ data, getCardsData }) => {
+const BurgerIngredients = ({ data, getData }) => {
   const [current, setCurrent] = React.useState("one");
 
   return (
@@ -37,7 +37,8 @@ const BurgerIngredients = ({ data, getCardsData }) => {
                     src={item.image}
                     cost={item.price}
                     text={item.name}
-                    getData={(item) => getCardsData(item)}
+                    data={item}
+                    getData={getData}
                   />
                   
                 );
@@ -57,7 +58,8 @@ const BurgerIngredients = ({ data, getCardsData }) => {
                     src={item.image}
                     cost={item.price}
                     text={item.name}
-                    onClick={() => getCardsData(item)}
+                    data={item}
+                    getData={getData}
                   />
                 );
               }
@@ -76,7 +78,8 @@ const BurgerIngredients = ({ data, getCardsData }) => {
                     src={item.image}
                     cost={item.price}
                     text={item.name}
-                    onClick={() => getCardsData(item)}
+                    data={item}
+                    getData={getData}
                   />
                 );
               }

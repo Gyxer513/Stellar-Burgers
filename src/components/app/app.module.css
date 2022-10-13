@@ -6,6 +6,5 @@
 }
 .main {
   display: flex;
-  margin-left: 320px;
-
+  justify-content: center;
 }
