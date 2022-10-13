@@ -1,34 +1,31 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { ingredientPropType } from "../../utils/prop-types";
 import {
   Counter,
   CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./burgerIngredient.module.css";
 
-const BurgerIngredient = ({ src, cost, name, text, data, getData }) => {
+const BurgerIngredient = ({ data, getData }) => {
   return (
-  
     <div className={styles.burgerIngredient} onClick={() => getData(data)}>
       <Counter count={1} size="default" />
-      <img className="ingridient__image" src={src} alt={name} />
+      <img className="ingridient__image" src={data.src} alt={data.name} />
       <div className={styles.burgerIngredient__costBox}>
         <p
           className={`text text_type_main-small ${styles.burgerIngredient__cost}`}
         >
-          {cost}
+          {data.cost}
         </p>
         <CurrencyIcon type="primary" />
       </div>
-      <p className="text text_type_main-small">{text}</p>
+      <p className="text text_type_main-small">{data.text}</p>
     </div>
-
-   
   );
 };
 BurgerIngredient.propType = {
-  src: PropTypes.any.isRequired,
-  cost: PropTypes.number.isRequired,
-  text: PropTypes.string.isRequired,
-}
+  data: PropTypes.arrayOf(ingredientPropType),
+  getData: PropTypes.func.isRequired
+};
 export default BurgerIngredient;

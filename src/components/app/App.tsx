@@ -19,9 +19,6 @@ function App() {
     getData();
   }, []);
 
-  const handleEscKeydown = (e: any) => {
-    e.key === "Escape" && closeAllModals();
-  };
   const openOrderDetails = () => {
     setOrderDetails({ ...orderDetails, isOpened: true });
   };
@@ -31,41 +28,37 @@ function App() {
   };
   const getData = async () => {
     return fetch(link)
-      .then((response) => {
-        return response.ok
-          ? response.json()
-          : setState({ ...state, isLoading: false });
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+        return Promise.reject(`Ошибка ${res.status}`);
       })
       .then((data) => {
-        setState({ api: data.data, isLoading: true });
+        setState({ api: data.data, isLoading: false });
       })
       .catch((error) => {
         console.log(error);
-      });
+      })
+      .finally(() => setState({ ...state, isLoading: false }));
   };
   const getIngridientsData = (cardData: any) => {
-    setIngredientDetails({ isOpened: true, ingredient: cardData })
-}
+    setIngredientDetails({ isOpened: true, ingredient: cardData });
+  };
   return (
     <>
       <AppHeader />
       <main className={styles.main}>
-        <BurgerIngredients data={state.api} getData={getIngridientsData}/>
+        <BurgerIngredients data={state.api} getData={getIngridientsData} />
         <BurgerConstructor data={state.api} openOrder={openOrderDetails} />
       </main>
       {orderDetails.isOpened && (
-        <Modal
-          onOverlayClick={closeAllModals}
-          onEscKeydown={handleEscKeydown}
-        >
+        <Modal onClose={closeAllModals}>
           <OrderDetails orderId={`034536`} closeModal={closeAllModals} />
         </Modal>
       )}
       {ingredientDetails.isOpened && (
-        <Modal
-          onOverlayClick={closeAllModals}
-          onEscKeydown={handleEscKeydown}
-        >
+        <Modal onClose={closeAllModals}>
           <IngredientDetails
             title={`Детали ингредиента`}
             ingredientData={ingredientDetails.ingredient}

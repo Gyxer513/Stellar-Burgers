@@ -62,5 +62,9 @@ const BurgerConstructor = ({ data, openOrder }) => {
     </section>
   );
 };
+BurgerConstructor.propTypes = {
+  data: PropTypes.arrayOf(ingredientPropType),
+  openOrder: PropTypes.func.isRequired,
+}
 
 export default BurgerConstructor;

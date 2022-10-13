@@ -6,13 +6,6 @@ import closeButtonImg from "../../images/closeButton.svg";
 function OrderDetails({ orderId, closeModal }) {
   return (
     <div className={styles.order}>
-      <button
-        onClick={closeModal}
-        type="button"
-        className={`${styles.order__closeButton}`}
-      >
-        <img src={closeButtonImg} alt="Закрыть окно" />
-      </button>
       <div className="m-10"></div>
       <h2 className="text text_type_digits-large">{orderId}</h2>
       <div className="m-5"></div>

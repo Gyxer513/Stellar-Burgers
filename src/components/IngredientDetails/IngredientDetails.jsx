@@ -2,7 +2,7 @@ import styles from "./ingredientDetails.module.css";
 import PropTypes from "prop-types";
 import closeButtonImg from "../../images/closeButton.svg";
 
-function IngredientDetails({ closeModal, title, ingredientData }) {
+function IngredientDetails({ title, ingredientData }) {
   const { image_large, name, calories, carbohydrates, fat, proteins } =
     ingredientData;
 
@@ -10,13 +10,6 @@ function IngredientDetails({ closeModal, title, ingredientData }) {
     <div className={`pl-10 pr-10 ${styles.ingredient}`}>
       <div className={`mt-10 ${styles.ingredient__top}`}>
         <h2 className="text text_type_main-large">{title}</h2>
-        <button
-          onClick={closeModal}
-          type="button"
-          className={`${styles.ingredient__closeButton}`}
-        >
-          <img src={closeButtonImg} alt="Закрыть окно" />
-        </button>
       </div>
       <img
         className="mt-15 mb-15"
