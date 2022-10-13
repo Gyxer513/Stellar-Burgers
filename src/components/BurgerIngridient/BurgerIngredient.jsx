@@ -25,7 +25,7 @@ const BurgerIngredient = ({ data, getData }) => {
   );
 };
 BurgerIngredient.propType = {
-  data: PropTypes.arrayOf(ingredientPropType),
-  getData: PropTypes.func.isRequired
+  data: PropTypes.arrayOf(ingredientPropType).isRequired,
+  getData: PropTypes.func.isRequired,
 };
 export default BurgerIngredient;

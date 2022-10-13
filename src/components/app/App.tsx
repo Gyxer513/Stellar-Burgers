@@ -58,7 +58,7 @@ function App() {
       </main>
       {orderDetails.isOpened && (
         <Modal onClose={closeAllModals}>
-          <OrderDetails orderId={`034536`} closeModal={closeAllModals} />
+          <OrderDetails orderId={`034536`} />
         </Modal>
       )}
       {ingredientDetails.isOpened && (

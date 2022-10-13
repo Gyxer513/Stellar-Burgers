@@ -11,11 +11,7 @@ function IngredientDetails({ title, ingredientData }) {
       <div className={`mt-10 ${styles.ingredient__top}`}>
         <h2 className="text text_type_main-large">{title}</h2>
       </div>
-      <img
-        className="mt-15 mb-15"
-        src={image_large}
-        alt="Ингредиент"
-      />
+      <img className="mt-15 mb-15" src={image_large} alt="Ингредиент" />
       <p
         className={`text text_type_main-medium mt-4 mb-8 ${styles.ingredient__name}`}
       >

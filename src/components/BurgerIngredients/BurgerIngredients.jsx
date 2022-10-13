@@ -3,6 +3,7 @@ import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./burgerIngredients.module.css";
 import PropTypes from "prop-types";
 import BurgerIngredient from "../BurgerIngridient/BurgerIngredient";
+import { ingredientPropType } from "../../utils/prop-types";
 
 const BurgerIngredients = ({ data, getData }) => {
   const [current, setCurrent] = React.useState("one");
@@ -37,24 +38,18 @@ const BurgerIngredients = ({ data, getData }) => {
                     data={item}
                     getData={getData}
                   />
-                  
                 );
               }
             })}
           </div>
           <div className="m-20"></div>
           <p className="text text_type_main-medium">Соусы</p>
-          <div
-            className={styles.burgerConstructor_rolls}
-          >
+          <div className={styles.burgerConstructor_rolls}>
             {data.map((item, index) => {
               if (item.type == "sauce") {
                 return (
                   <BurgerIngredient
-                    key={index}
-                    src={item.image}
-                    cost={item.price}
-                    text={item.name}
+                    key={item._id}
                     data={item}
                     getData={getData}
                   />
@@ -64,17 +59,12 @@ const BurgerIngredients = ({ data, getData }) => {
           </div>
           <div className="m-20"></div>
           <p className="text text_type_main-medium">Начинки</p>
-          <div
-            className={styles.burgerConstructor_rolls}
-          >
+          <div className={styles.burgerConstructor_rolls}>
             {data.map((item, index) => {
               if (item.type == "main") {
                 return (
                   <BurgerIngredient
-                    key={index}
-                    src={item.image}
-                    cost={item.price}
-                    text={item.name}
+                    key={item._id}
                     data={item}
                     getData={getData}
                   />
@@ -87,5 +77,8 @@ const BurgerIngredients = ({ data, getData }) => {
     </section>
   );
 };
-
+BurgerIngredient.propType = {
+  data: PropTypes.arrayOf(ingredientPropType).isRequired,
+  getData: PropTypes.func.isRequired,
+};
 export default BurgerIngredients;
