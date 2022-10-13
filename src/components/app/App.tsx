@@ -26,21 +26,25 @@ function App() {
     setOrderDetails({ ...orderDetails, isOpened: false });
     setIngredientDetails({ ...ingredientDetails, isOpened: false });
   };
+
   const getData = async () => {
     return fetch(link)
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-        return Promise.reject(`Ошибка ${res.status}`);
-      })
+    .then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
+      return Promise.reject(`Ошибка ${res.status}`);
+    })
       .then((data) => {
         setState({ api: data.data, isLoading: false });
       })
       .catch((error) => {
         console.log(error);
+      }).finally(()=>{
+       /*  setState({ ...state, isLoading: false }); */
       })
-      .finally(() => setState({ ...state, isLoading: false }));
+
+ 
   };
   const getIngridientsData = (cardData: any) => {
     setIngredientDetails({ isOpened: true, ingredient: cardData });

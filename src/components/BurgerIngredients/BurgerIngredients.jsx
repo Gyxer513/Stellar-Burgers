@@ -29,14 +29,11 @@ const BurgerIngredients = ({ data, getData }) => {
           <div className="m-10"></div>
           <p className="text text_type_main-medium">Булки</p>
           <div className={styles.burgerConstructor_rolls}>
-            {data.map((item, index) => {
+            {data.map((item) => {
               if (item.type == "bun") {
                 return (
                   <BurgerIngredient
-                    key={index}
-                    src={item.image}
-                    cost={item.price}
-                    text={item.name}
+                    key={item._id}
                     data={item}
                     getData={getData}
                   />

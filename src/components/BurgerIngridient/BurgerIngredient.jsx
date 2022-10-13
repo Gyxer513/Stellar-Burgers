@@ -11,16 +11,16 @@ const BurgerIngredient = ({ data, getData }) => {
   return (
     <div className={styles.burgerIngredient} onClick={() => getData(data)}>
       <Counter count={1} size="default" />
-      <img className="ingridient__image" src={data.src} alt={data.name} />
+      <img className="ingridient__image" src={data.image} alt={data.name} />
       <div className={styles.burgerIngredient__costBox}>
         <p
           className={`text text_type_main-small ${styles.burgerIngredient__cost}`}
         >
-          {data.cost}
+          {data.price}
         </p>
         <CurrencyIcon type="primary" />
       </div>
-      <p className="text text_type_main-small">{data.text}</p>
+      <p className="text text_type_main-small">{data.name}</p>
     </div>
   );
 };
