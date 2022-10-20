@@ -3,10 +3,11 @@ import styles from "./app.module.css";
 import AppHeader from "../AppHeader/AppHeder";
 import BurgerIngredients from "../BurgerIngredients/BurgerIngredients";
 import BurgerConstructor from "../BurgerConstructor/BurgerConstructor";
-import { link } from "../../utils/data";
+import { componentLink } from "../../utils/data";
 import Modal from "../Modal/Modal";
 import OrderDetails from "../OrderDetails/OrderDetails";
 import IngredientDetails from "../IngredientDetails/IngredientDetails";
+import { IngredientContext } from "../../services/appContext"
 
 function App() {
   const [state, setState] = useState({ api: [], isLoading: false });
@@ -15,6 +16,8 @@ function App() {
     isOpened: false,
     ingredient: null,
   });
+  const [ingredients, setIngredients] = useState([])
+
   useEffect(() => {
     getData();
   }, []);
@@ -28,15 +31,17 @@ function App() {
   };
 
   const getData = async () => {
-    return fetch(link)
+    return fetch(componentLink)
     .then((res) => {
       if (res.ok) {
         return res.json();
       }
       return Promise.reject(`Ошибка ${res.status}`);
     })
-      .then((data) => {
-        setState({ api: data.data, isLoading: false });
+      .then(ingredients => {
+        if (ingredients) {
+          setIngredients(ingredients.data)
+        }
       })
       .catch((error) => {
         console.log(error);
@@ -50,11 +55,11 @@ function App() {
     setIngredientDetails({ isOpened: true, ingredient: cardData });
   };
   return (
-    <>
+    <IngredientContext.Provider value={ingredients}>
       <AppHeader />
       <main className={styles.main}>
-        <BurgerIngredients data={state.api} getData={getIngridientsData} />
-        <BurgerConstructor data={state.api} openOrder={openOrderDetails} />
+        <BurgerIngredients  getData={getIngridientsData} />
+        <BurgerConstructor  openOrder={openOrderDetails} />
       </main>
       {orderDetails.isOpened && (
         <Modal onClose={closeAllModals}>
@@ -70,7 +75,7 @@ function App() {
           />
         </Modal>
       )}
-    </>
+    </IngredientContext.Provider>
   );
 }
 

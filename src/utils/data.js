@@ -210,5 +210,9 @@
      "__v":0
     }
 ] */
-export const link = `https://norma.nomoreparties.space/api/ingredients`;
+export const componentLink = `https://norma.nomoreparties.space/api/ingredients`;
+
+
+
+
 

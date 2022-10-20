@@ -8,22 +8,24 @@ import {
   DragIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./burgerConstructor.module.css";
+import { IngredientContext } from "../../services/appContext";
 
-const BurgerConstructor = ({ data, openOrder }) => {
+const BurgerConstructor = ({ openOrder }) => {
+  const ingredients = React.useContext(IngredientContext);
   return (
     <section className={styles.burgerConstructor}>
       <div className={styles.burgerConstructor__element}>
         <ConstructorElement
           type="top"
           isLocked={true}
-          text={`${data[0]?.name} (верх)`}
-          price={data[0]?.price}
-          thumbnail={data[0]?.image}
+          text={`${ingredients[0]?.name} (верх)`}
+          price={ingredients[0]?.price}
+          thumbnail={ingredients[0]?.image}
         />
       </div>
       <div className="m-4"></div>
       <ul className={styles.burgerConstructor__elementsBox}>
-        {data.map((item, index) => {
+        {ingredients.map((item, index) => {
           if (item.type !== "bun") {
             return (
               <li key={index} className={styles.burgerConstructor__elementBox}>
@@ -45,9 +47,9 @@ const BurgerConstructor = ({ data, openOrder }) => {
         <ConstructorElement
           type="bottom"
           isLocked={true}
-          text={`${data[0]?.name} (Низ)`}
-          price={data[0]?.price}
-          thumbnail={data[0]?.image}
+          text={`${ingredients[0]?.name} (Низ)`}
+          price={ingredients[0]?.price}
+          thumbnail={ingredients[0]?.image}
         />
       </div>
       <div className={styles.burgerConstructor__box}>
