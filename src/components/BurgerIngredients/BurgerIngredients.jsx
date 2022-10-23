@@ -6,6 +6,7 @@ import BurgerIngredient from "../BurgerIngridient/BurgerIngredient";
 import { ingredientPropType } from "../../utils/prop-types";
 import { IngredientContext } from "../../services/appContext";
 
+
 const BurgerIngredients = ({ getData }) => {
   const [current, setCurrent] = React.useState("one");
   const ingredients = React.useContext(IngredientContext);

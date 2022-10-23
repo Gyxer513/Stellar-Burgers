@@ -10,8 +10,22 @@ import {
 import styles from "./burgerConstructor.module.css";
 import { IngredientContext } from "../../services/appContext";
 
-const BurgerConstructor = ({ openOrder }) => {
+
+const BurgerConstructor = ({ openOrder}) => {
   const ingredients = React.useContext(IngredientContext);
+
+  const totalPrice = React.useMemo(
+    () =>
+      ingredients.reduce(
+        (res, currentElement) =>
+          currentElement.type === "bun"
+            ? res + currentElement.price * 2
+            : res + currentElement.price,
+        0
+      ),
+    [ingredients]
+  );
+
   return (
     <section className={styles.burgerConstructor}>
       <div className={styles.burgerConstructor__element}>
@@ -53,11 +67,16 @@ const BurgerConstructor = ({ openOrder }) => {
         />
       </div>
       <div className={styles.burgerConstructor__box}>
-        <p className="text text_type_main-large">610</p>
+        <p className="text text_type_main-large">{totalPrice}</p>
         <div className="m-2"></div>
         <CurrencyIcon type="primary" />
         <div className="m-2"></div>
-        <Button htmlType="button" type="primary" size="medium" onClick={openOrder}>
+        <Button
+          htmlType="button"
+          type="primary"
+          size="medium"
+          onClick={openOrder}
+        >
           Оформить заказ
         </Button>
       </div>
@@ -67,6 +86,6 @@ const BurgerConstructor = ({ openOrder }) => {
 BurgerConstructor.propTypes = {
   data: PropTypes.arrayOf(ingredientPropType),
   openOrder: PropTypes.func.isRequired,
-}
+};
 
 export default BurgerConstructor;

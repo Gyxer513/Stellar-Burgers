@@ -1,9 +1,10 @@
+
 import PropTypes from "prop-types";
 import styles from "./orderDetails.module.css";
 import doneImg from "../../images/done.png";
-import closeButtonImg from "../../images/closeButton.svg";
 
 function OrderDetails({ orderId }) {
+
   return (
     <div className={styles.order}>
       <div className="m-10"></div>
@@ -23,7 +24,7 @@ function OrderDetails({ orderId }) {
 }
 
 OrderDetails.propTypes = {
-  orderId: PropTypes.string.isRequired,
+  orderId: PropTypes.any.isRequired,
 };
 
 export default OrderDetails;

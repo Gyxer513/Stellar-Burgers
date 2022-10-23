@@ -210,7 +210,8 @@
      "__v":0
     }
 ] */
-export const componentLink = `https://norma.nomoreparties.space/api/ingredients`;
+export const ingredientsLink = `https://norma.nomoreparties.space/api/ingredients`;
+export const orderLink = `https://norma.nomoreparties.space/api/orders`;
 
 
 
