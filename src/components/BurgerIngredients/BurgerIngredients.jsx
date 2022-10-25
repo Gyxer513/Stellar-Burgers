@@ -9,7 +9,7 @@ import { IngredientContext } from "../../services/appContext";
 
 const BurgerIngredients = ({ getData }) => {
   const [current, setCurrent] = React.useState("one");
-  const ingredients = React.useContext(IngredientContext);
+  const Ingredients = React.useContext(IngredientContext);
   return (
     <section className={styles.burgerConstructor}>
       <div className="p-5"></div>
@@ -32,7 +32,7 @@ const BurgerIngredients = ({ getData }) => {
           <div className="m-10"></div>
           <p className="text text_type_main-medium">Булки</p>
           <div className={styles.burgerConstructor_rolls}>
-            {ingredients.map((item) => {
+            {Ingredients.map((item) => {
               if (item.type == "bun") {
                 return (
                   <BurgerIngredient
@@ -47,7 +47,7 @@ const BurgerIngredients = ({ getData }) => {
           <div className="m-20"></div>
           <p className="text text_type_main-medium">Соусы</p>
           <div className={styles.burgerConstructor_rolls}>
-            {ingredients.map((item, index) => {
+            {Ingredients.map((item, index) => {
               if (item.type == "sauce") {
                 return (
                   <BurgerIngredient
@@ -62,7 +62,7 @@ const BurgerIngredients = ({ getData }) => {
           <div className="m-20"></div>
           <p className="text text_type_main-medium">Начинки</p>
           <div className={styles.burgerConstructor_rolls}>
-            {ingredients.map((item, index) => {
+            {Ingredients.map((item, index) => {
               if (item.type == "main") {
                 return (
                   <BurgerIngredient
