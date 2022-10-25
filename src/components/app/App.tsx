@@ -3,21 +3,36 @@ import styles from "./app.module.css";
 import AppHeader from "../AppHeader/AppHeder";
 import BurgerIngredients from "../BurgerIngredients/BurgerIngredients";
 import BurgerConstructor from "../BurgerConstructor/BurgerConstructor";
-import { link } from "../../utils/data";
 import Modal from "../Modal/Modal";
 import OrderDetails from "../OrderDetails/OrderDetails";
 import IngredientDetails from "../IngredientDetails/IngredientDetails";
+import { IngredientContext } from "../../services/appContext";
+import { api } from "../../utils/Api";
 
 function App() {
-  const [state, setState] = useState({ api: [], isLoading: false });
   const [orderDetails, setOrderDetails] = useState({ isOpened: false });
   const [ingredientDetails, setIngredientDetails] = useState({
     isOpened: false,
     ingredient: null,
   });
+  const [ingredients, setIngredients] = useState([]);
+  const [modalData, setModalData] = useState([]);
+
   useEffect(() => {
     getData();
   }, []);
+
+  const orderList = React.useMemo(
+    () => ingredients.map((ingredient: any) => ingredient._id),
+    [ingredients]
+  );
+  const handleOrderClick = () => {
+    api.sendData(orderList).then((data) => setModalData(data.order.number)).catch((error) => {
+      console.log(error);
+    })
+    openOrderDetails();
+  };
+
 
   const openOrderDetails = () => {
     setOrderDetails({ ...orderDetails, isOpened: true });
@@ -26,39 +41,35 @@ function App() {
     setOrderDetails({ ...orderDetails, isOpened: false });
     setIngredientDetails({ ...ingredientDetails, isOpened: false });
   };
-
   const getData = async () => {
-    return fetch(link)
-    .then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Ошибка ${res.status}`);
-    })
-      .then((data) => {
-        setState({ api: data.data, isLoading: false });
+    return api
+      .getData()
+      .then((ingredients) => {
+        if (ingredients) {
+          setIngredients(ingredients.data);
+        }
       })
       .catch((error) => {
         console.log(error);
-      }).finally(()=>{
-       /*  setState({ ...state, isLoading: false }); */
       })
-
- 
+      .finally(() => {
+        /*  setState({ ...state, isLoading: false }); */
+      });
   };
+
   const getIngridientsData = (cardData: any) => {
     setIngredientDetails({ isOpened: true, ingredient: cardData });
   };
   return (
-    <>
+    <IngredientContext.Provider value={ingredients}>
       <AppHeader />
       <main className={styles.main}>
-        <BurgerIngredients data={state.api} getData={getIngridientsData} />
-        <BurgerConstructor data={state.api} openOrder={openOrderDetails} />
+        <BurgerIngredients getData={getIngridientsData} />
+        <BurgerConstructor openOrder={handleOrderClick} />
       </main>
       {orderDetails.isOpened && (
         <Modal onClose={closeAllModals}>
-          <OrderDetails orderId={`034536`} />
+          <OrderDetails orderId={modalData} />
         </Modal>
       )}
       {ingredientDetails.isOpened && (
@@ -70,7 +81,7 @@ function App() {
           />
         </Modal>
       )}
-    </>
+    </IngredientContext.Provider>
   );
 }
 

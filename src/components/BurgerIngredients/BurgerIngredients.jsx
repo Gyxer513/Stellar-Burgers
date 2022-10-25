@@ -4,10 +4,12 @@ import styles from "./burgerIngredients.module.css";
 import PropTypes from "prop-types";
 import BurgerIngredient from "../BurgerIngridient/BurgerIngredient";
 import { ingredientPropType } from "../../utils/prop-types";
+import { IngredientContext } from "../../services/appContext";
 
-const BurgerIngredients = ({ data, getData }) => {
+
+const BurgerIngredients = ({ getData }) => {
   const [current, setCurrent] = React.useState("one");
-
+  const Ingredients = React.useContext(IngredientContext);
   return (
     <section className={styles.burgerConstructor}>
       <div className="p-5"></div>
@@ -30,7 +32,7 @@ const BurgerIngredients = ({ data, getData }) => {
           <div className="m-10"></div>
           <p className="text text_type_main-medium">Булки</p>
           <div className={styles.burgerConstructor_rolls}>
-            {data.map((item) => {
+            {Ingredients.map((item) => {
               if (item.type == "bun") {
                 return (
                   <BurgerIngredient
@@ -45,7 +47,7 @@ const BurgerIngredients = ({ data, getData }) => {
           <div className="m-20"></div>
           <p className="text text_type_main-medium">Соусы</p>
           <div className={styles.burgerConstructor_rolls}>
-            {data.map((item, index) => {
+            {Ingredients.map((item, index) => {
               if (item.type == "sauce") {
                 return (
                   <BurgerIngredient
@@ -60,7 +62,7 @@ const BurgerIngredients = ({ data, getData }) => {
           <div className="m-20"></div>
           <p className="text text_type_main-medium">Начинки</p>
           <div className={styles.burgerConstructor_rolls}>
-            {data.map((item, index) => {
+            {Ingredients.map((item, index) => {
               if (item.type == "main") {
                 return (
                   <BurgerIngredient
@@ -78,7 +80,7 @@ const BurgerIngredients = ({ data, getData }) => {
   );
 };
 BurgerIngredient.propType = {
-  data: PropTypes.arrayOf(ingredientPropType).isRequired,
+  ingredients: PropTypes.arrayOf(ingredientPropType).isRequired,
   getData: PropTypes.func.isRequired,
 };
 export default BurgerIngredients;

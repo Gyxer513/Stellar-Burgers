@@ -7,6 +7,7 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./burgerIngredient.module.css";
 
+
 const BurgerIngredient = ({ data, getData }) => {
   return (
     <div className={styles.burgerIngredient} onClick={() => getData(data)}>

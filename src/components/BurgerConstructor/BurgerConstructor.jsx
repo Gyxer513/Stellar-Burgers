@@ -8,22 +8,38 @@ import {
   DragIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./burgerConstructor.module.css";
+import { IngredientContext } from "../../services/appContext";
 
-const BurgerConstructor = ({ data, openOrder }) => {
+
+const BurgerConstructor = ({ openOrder }) => {
+  const Ingredients = React.useContext(IngredientContext);
+
+  const totalPrice = React.useMemo(
+    () =>
+    Ingredients.reduce(
+        (res, currentElement) =>
+          currentElement.type === "bun"
+            ? res + currentElement.price * 2
+            : res + currentElement.price,
+        0
+      ),
+    [Ingredients]
+  );
+
   return (
     <section className={styles.burgerConstructor}>
       <div className={styles.burgerConstructor__element}>
         <ConstructorElement
           type="top"
           isLocked={true}
-          text={`${data[0]?.name} (верх)`}
-          price={data[0]?.price}
-          thumbnail={data[0]?.image}
+          text={`${Ingredients[0]?.name} (верх)`}
+          price={Ingredients[0]?.price}
+          thumbnail={Ingredients[0]?.image}
         />
       </div>
       <div className="m-4"></div>
       <ul className={styles.burgerConstructor__elementsBox}>
-        {data.map((item, index) => {
+        {Ingredients.map((item, index) => {
           if (item.type !== "bun") {
             return (
               <li key={index} className={styles.burgerConstructor__elementBox}>
@@ -45,17 +61,22 @@ const BurgerConstructor = ({ data, openOrder }) => {
         <ConstructorElement
           type="bottom"
           isLocked={true}
-          text={`${data[0]?.name} (Низ)`}
-          price={data[0]?.price}
-          thumbnail={data[0]?.image}
+          text={`${Ingredients[0]?.name} (Низ)`}
+          price={Ingredients[0]?.price}
+          thumbnail={Ingredients[0]?.image}
         />
       </div>
       <div className={styles.burgerConstructor__box}>
-        <p className="text text_type_main-large">610</p>
+        <p className="text text_type_main-large">{totalPrice}</p>
         <div className="m-2"></div>
         <CurrencyIcon type="primary" />
         <div className="m-2"></div>
-        <Button htmlType="button" type="primary" size="medium" onClick={openOrder}>
+        <Button
+          htmlType="button"
+          type="primary"
+          size="medium"
+          onClick={openOrder}
+        >
           Оформить заказ
         </Button>
       </div>
@@ -65,6 +86,6 @@ const BurgerConstructor = ({ data, openOrder }) => {
 BurgerConstructor.propTypes = {
   data: PropTypes.arrayOf(ingredientPropType),
   openOrder: PropTypes.func.isRequired,
-}
+};
 
 export default BurgerConstructor;
