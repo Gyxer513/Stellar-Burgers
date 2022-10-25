@@ -1,3 +1,4 @@
+cSpell:disable
 import { BASE_URL } from "./data";
 
 class Api {

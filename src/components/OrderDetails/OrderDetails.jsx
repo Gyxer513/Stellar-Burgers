@@ -1,4 +1,4 @@
-
+cSpell:disable
 import PropTypes from "prop-types";
 import styles from "./orderDetails.module.css";
 import doneImg from "../../images/done.png";

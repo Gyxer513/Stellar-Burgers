@@ -57,14 +57,14 @@ function App() {
       });
   };
 
-  const getIngridientsData = (cardData: any) => {
+  const getIngredientsData = (cardData: any) => {
     setIngredientDetails({ isOpened: true, ingredient: cardData });
   };
   return (
     <IngredientContext.Provider value={ingredients}>
       <AppHeader />
       <main className={styles.main}>
-        <BurgerIngredients getData={getIngridientsData} />
+        <BurgerIngredients getData={getIngredientsData} />
         <BurgerConstructor openOrder={handleOrderClick} />
       </main>
       {orderDetails.isOpened && (
