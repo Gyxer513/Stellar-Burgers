@@ -24,7 +24,12 @@ function OrderDetails({ orderId }) {
 }
 
 OrderDetails.propTypes = {
-  orderId: PropTypes.any.isRequired,
+  orderId: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+    PropTypes.object,
+    PropTypes.array,
+  ]).isRequired
 };
 
 export default OrderDetails;

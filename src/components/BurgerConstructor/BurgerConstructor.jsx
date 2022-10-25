@@ -11,19 +11,19 @@ import styles from "./burgerConstructor.module.css";
 import { IngredientContext } from "../../services/appContext";
 
 
-const BurgerConstructor = ({ openOrder}) => {
-  const ingredients = React.useContext(IngredientContext);
+const BurgerConstructor = ({ openOrder }) => {
+  const Ingredients = React.useContext(IngredientContext);
 
   const totalPrice = React.useMemo(
     () =>
-      ingredients.reduce(
+    Ingredients.reduce(
         (res, currentElement) =>
           currentElement.type === "bun"
             ? res + currentElement.price * 2
             : res + currentElement.price,
         0
       ),
-    [ingredients]
+    [Ingredients]
   );
 
   return (
@@ -32,14 +32,14 @@ const BurgerConstructor = ({ openOrder}) => {
         <ConstructorElement
           type="top"
           isLocked={true}
-          text={`${ingredients[0]?.name} (верх)`}
-          price={ingredients[0]?.price}
-          thumbnail={ingredients[0]?.image}
+          text={`${Ingredients[0]?.name} (верх)`}
+          price={Ingredients[0]?.price}
+          thumbnail={Ingredients[0]?.image}
         />
       </div>
       <div className="m-4"></div>
       <ul className={styles.burgerConstructor__elementsBox}>
-        {ingredients.map((item, index) => {
+        {Ingredients.map((item, index) => {
           if (item.type !== "bun") {
             return (
               <li key={index} className={styles.burgerConstructor__elementBox}>
@@ -61,9 +61,9 @@ const BurgerConstructor = ({ openOrder}) => {
         <ConstructorElement
           type="bottom"
           isLocked={true}
-          text={`${ingredients[0]?.name} (Низ)`}
-          price={ingredients[0]?.price}
-          thumbnail={ingredients[0]?.image}
+          text={`${Ingredients[0]?.name} (Низ)`}
+          price={Ingredients[0]?.price}
+          thumbnail={Ingredients[0]?.image}
         />
       </div>
       <div className={styles.burgerConstructor__box}>

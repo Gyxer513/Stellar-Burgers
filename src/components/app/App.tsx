@@ -3,12 +3,11 @@ import styles from "./app.module.css";
 import AppHeader from "../AppHeader/AppHeder";
 import BurgerIngredients from "../BurgerIngredients/BurgerIngredients";
 import BurgerConstructor from "../BurgerConstructor/BurgerConstructor";
-import { ingredientsLink } from "../../utils/data";
 import Modal from "../Modal/Modal";
 import OrderDetails from "../OrderDetails/OrderDetails";
 import IngredientDetails from "../IngredientDetails/IngredientDetails";
 import { IngredientContext } from "../../services/appContext";
-import { orderLink } from "../../utils/data";
+import { api } from "../../utils/Api";
 
 function App() {
   const [orderDetails, setOrderDetails] = useState({ isOpened: false });
@@ -22,32 +21,29 @@ function App() {
   useEffect(() => {
     getData();
   }, []);
-  
-  const orderList = React.useMemo(()=>
-    ingredients.map((ingredient: any) => ingredient._id), [ingredients]
-  )
-  const handleOrderClick = () => {
-    getOrderId(orderList)
-    .then((data) => setModalData(data.order.number))
-  };
-console.log(modalData);
 
+  const orderList = React.useMemo(
+    () => ingredients.map((ingredient: any) => ingredient._id),
+    [ingredients]
+  );
+  const handleOrderClick = () => {
+    api.sendData(orderList).then((data) => setModalData(data.order.number)).catch((error) => {
+      console.log(error);
+    })
+    openOrderDetails();
+  };
 
 
   const openOrderDetails = () => {
     setOrderDetails({ ...orderDetails, isOpened: true });
-    handleOrderClick()
   };
   const closeAllModals = () => {
     setOrderDetails({ ...orderDetails, isOpened: false });
     setIngredientDetails({ ...ingredientDetails, isOpened: false });
   };
-  const checkReponse = (res: any) =>
-    res.ok ? res.json() : res.json().then((err: any) => Promise.reject(err));
-
   const getData = async () => {
-    return fetch(ingredientsLink)
-      .then(checkReponse)
+    return api
+      .getData()
       .then((ingredients) => {
         if (ingredients) {
           setIngredients(ingredients.data);
@@ -61,20 +57,6 @@ console.log(modalData);
       });
   };
 
-  const getOrderId = async (orderList: any) =>
-    await fetch(orderLink, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({"ingredients": orderList}),
-    }).then(checkReponse)
-    
-
-
-
-
-
   const getIngridientsData = (cardData: any) => {
     setIngredientDetails({ isOpened: true, ingredient: cardData });
   };
@@ -83,7 +65,7 @@ console.log(modalData);
       <AppHeader />
       <main className={styles.main}>
         <BurgerIngredients getData={getIngridientsData} />
-        <BurgerConstructor openOrder={openOrderDetails} />
+        <BurgerConstructor openOrder={handleOrderClick} />
       </main>
       {orderDetails.isOpened && (
         <Modal onClose={closeAllModals}>
