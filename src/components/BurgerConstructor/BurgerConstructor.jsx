@@ -1,4 +1,4 @@
-cSpell:disable
+/* cSpell:disable; */
 import React from "react";
 import PropTypes from "prop-types";
 import { ingredientPropType } from "../../utils/prop-types";
@@ -9,15 +9,13 @@ import {
   DragIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./burgerConstructor.module.css";
-import { IngredientContext } from "../../services/appContext";
-
 
 const BurgerConstructor = ({ openOrder }) => {
-  const Ingredients = React.useContext(IngredientContext);
+  const Ingredients = [];
 
   const totalPrice = React.useMemo(
     () =>
-    Ingredients.reduce(
+      Ingredients.reduce(
         (res, currentElement) =>
           currentElement.type === "bun"
             ? res + currentElement.price * 2

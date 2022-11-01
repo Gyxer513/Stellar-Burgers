@@ -1,4 +1,4 @@
-cSpell:disable
+/* cSpell:disable */
 import React from "react";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./burgerIngredients.module.css";
@@ -7,23 +7,34 @@ import BurgerIngredient from "../BurgerIngridient/BurgerIngredient";
 import { ingredientPropType } from "../../utils/prop-types";
 import { IngredientContext } from "../../services/appContext";
 
-
 const BurgerIngredients = ({ getData }) => {
   const [current, setCurrent] = React.useState("one");
   const Ingredients = React.useContext(IngredientContext);
+
+  const handleTabClick = (type) => {
+    setCurrent(type);
+    document
+      .querySelector(`#${type}`)
+      .scrollIntoView({ block: "start", behavior: "smooth" });
+  };
+
   return (
     <section className={styles.burgerConstructor}>
       <div className="p-5"></div>
       <h1 className="text text_type_main-large">Соберите бургер</h1>
       <div className="m-2"></div>
       <div className={styles.burgerConstructor__TabBox}>
-        <Tab value="one" active={current === "one"} onClick={setCurrent}>
+        <Tab value="one" active={current === "one"} onClick={handleTabClick}>
           Булки
         </Tab>
-        <Tab value="two" active={current === "two"} onClick={setCurrent}>
+        <Tab
+          value="two"
+          active={current === "two"}
+          onClick={handleTabClick}
+        >
           Соусы
         </Tab>
-        <Tab value="three" active={current === "three"} onClick={setCurrent}>
+        <Tab value="three" active={current === "three"} onClick={handleTabClick}>
           Начинки
         </Tab>
       </div>
@@ -31,7 +42,7 @@ const BurgerIngredients = ({ getData }) => {
       <div className={`${styles.burgerConstructor__ingridientsBox}`}>
         <div className={styles.burgerConstructor_container}>
           <div className="m-10"></div>
-          <p className="text text_type_main-medium">Булки</p>
+          <p id="one" className="text text_type_main-medium">Булки</p>
           <div className={styles.burgerConstructor_rolls}>
             {Ingredients.map((item) => {
               if (item.type == "bun") {
@@ -46,7 +57,7 @@ const BurgerIngredients = ({ getData }) => {
             })}
           </div>
           <div className="m-20"></div>
-          <p className="text text_type_main-medium">Соусы</p>
+          <p id="two" className="text text_type_main-medium">Соусы</p>
           <div className={styles.burgerConstructor_rolls}>
             {Ingredients.map((item, index) => {
               if (item.type == "sauce") {
@@ -61,7 +72,7 @@ const BurgerIngredients = ({ getData }) => {
             })}
           </div>
           <div className="m-20"></div>
-          <p className="text text_type_main-medium">Начинки</p>
+          <p id="three" className="text text_type_main-medium">Начинки</p>
           <div className={styles.burgerConstructor_rolls}>
             {Ingredients.map((item, index) => {
               if (item.type == "main") {

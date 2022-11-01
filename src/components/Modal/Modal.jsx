@@ -1,11 +1,9 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import styles from "./modal.module.css";
 import ReactDOM from "react-dom";
 import ModalOverlay from "../ModalOverlay/ModalOverlay";
 import PropTypes from "prop-types";
-import {
-  CloseIcon
-} from "@ya.praktikum/react-developer-burger-ui-components";
+import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 
 const modalsContainer = document.querySelector("#modals");
 
@@ -25,7 +23,7 @@ const Modal = ({ onClose, children }) => {
   return ReactDOM.createPortal(
     <>
       <div className={styles.modal}>
-      <button
+        <button
           onClick={onClose}
           type="button"
           className={`${styles.modal__closeButton}`}
@@ -40,7 +38,7 @@ const Modal = ({ onClose, children }) => {
   );
 };
 
-export default Modal
+export default Modal;
 Modal.propTypes = {
   onClose: PropTypes.func.isRequired,
   children: PropTypes.node.isRequired,

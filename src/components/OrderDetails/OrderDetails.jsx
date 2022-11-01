@@ -1,10 +1,9 @@
-cSpell:disable
+/* cSpell:disable */
 import PropTypes from "prop-types";
 import styles from "./orderDetails.module.css";
 import doneImg from "../../images/done.png";
 
 function OrderDetails({ orderId }) {
-
   return (
     <div className={styles.order}>
       <div className="m-10"></div>
@@ -29,7 +28,7 @@ OrderDetails.propTypes = {
     PropTypes.number,
     PropTypes.object,
     PropTypes.array,
-  ]).isRequired
+  ]).isRequired,
 };
 
 export default OrderDetails;

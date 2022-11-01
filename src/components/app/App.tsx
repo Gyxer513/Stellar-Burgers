@@ -1,3 +1,4 @@
+/* cSpell:disable */
 import React, { useState, useEffect } from "react";
 import styles from "./app.module.css";
 import AppHeader from "../AppHeader/AppHeder";
@@ -27,12 +28,14 @@ function App() {
     [ingredients]
   );
   const handleOrderClick = () => {
-    api.sendData(orderList).then((data) => setModalData(data.order.number)).catch((error) => {
-      console.log(error);
-    })
+    api
+      .sendData(orderList)
+      .then((data) => setModalData(data.order.number))
+      .catch((error) => {
+        console.log(error);
+      });
     openOrderDetails();
   };
-
 
   const openOrderDetails = () => {
     setOrderDetails({ ...orderDetails, isOpened: true });

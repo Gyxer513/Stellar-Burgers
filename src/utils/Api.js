@@ -1,8 +1,8 @@
-cSpell:disable
+/* cSpell:disable */
 import { BASE_URL } from "./data";
 
 class Api {
-  constructor(link,) {
+  constructor(link) {
     this._link = link;
   }
   _checkResponse(res) {
@@ -24,5 +24,4 @@ class Api {
   }
 }
 
-
-export const api = new Api(BASE_URL)
+export const api = new Api(BASE_URL);
