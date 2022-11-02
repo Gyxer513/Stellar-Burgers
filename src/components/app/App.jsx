@@ -1,5 +1,7 @@
 /* cSpell:disable */
 import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from 'react-redux';
+import { HTML5Backend } from "react-dnd-html5-backend";
 import styles from "./app.module.css";
 import AppHeader from "../AppHeader/AppHeder";
 import BurgerIngredients from "../BurgerIngredients/BurgerIngredients";
@@ -9,6 +11,7 @@ import OrderDetails from "../OrderDetails/OrderDetails";
 import IngredientDetails from "../IngredientDetails/IngredientDetails";
 import { IngredientContext } from "../../services/appContext";
 import { api } from "../../utils/Api";
+import { getIngredients } from '../../services/actions/ingedients';
 
 function App() {
   const [orderDetails, setOrderDetails] = useState({ isOpened: false });
@@ -16,15 +19,16 @@ function App() {
     isOpened: false,
     ingredient: null,
   });
-  const [ingredients, setIngredients] = useState([]);
   const [modalData, setModalData] = useState([]);
+  const dispatch = useDispatch();
+  const ingredients = useSelector((state) => state.ingredients.ingredients)
 
   useEffect(() => {
-    getData();
-  }, []);
-
+    dispatch(getIngredients());
+  }, [dispatch])
+ 
   const orderList = React.useMemo(
-    () => ingredients.map((ingredient: any) => ingredient._id),
+    () => ingredients.map((ingredient) => ingredient._id),
     [ingredients]
   );
   const handleOrderClick = () => {
@@ -44,23 +48,8 @@ function App() {
     setOrderDetails({ ...orderDetails, isOpened: false });
     setIngredientDetails({ ...ingredientDetails, isOpened: false });
   };
-  const getData = async () => {
-    return api
-      .getData()
-      .then((ingredients) => {
-        if (ingredients) {
-          setIngredients(ingredients.data);
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      })
-      .finally(() => {
-        /*  setState({ ...state, isLoading: false }); */
-      });
-  };
-
-  const getIngredientsData = (cardData: any) => {
+  
+  const getIngredientsData = (cardData) => {
     setIngredientDetails({ isOpened: true, ingredient: cardData });
   };
   return (
