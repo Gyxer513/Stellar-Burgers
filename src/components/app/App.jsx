@@ -1,6 +1,6 @@
 /* cSpell:disable */
 import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from "react-redux";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import styles from "./app.module.css";
 import AppHeader from "../AppHeader/AppHeder";
@@ -9,9 +9,8 @@ import BurgerConstructor from "../BurgerConstructor/BurgerConstructor";
 import Modal from "../Modal/Modal";
 import OrderDetails from "../OrderDetails/OrderDetails";
 import IngredientDetails from "../IngredientDetails/IngredientDetails";
-import { IngredientContext } from "../../services/appContext";
 import { api } from "../../utils/Api";
-import { getIngredients } from '../../services/actions/ingedients';
+import { getIngredients } from "../../services/actions/ingedients";
 
 function App() {
   const [orderDetails, setOrderDetails] = useState({ isOpened: false });
@@ -21,12 +20,12 @@ function App() {
   });
   const [modalData, setModalData] = useState([]);
   const dispatch = useDispatch();
-  const ingredients = useSelector((state) => state.ingredients.ingredients)
+  const ingredients = useSelector((state) => state.ingredients.ingredients);
 
   useEffect(() => {
     dispatch(getIngredients());
-  }, [dispatch])
- 
+  }, [dispatch]);
+
   const orderList = React.useMemo(
     () => ingredients.map((ingredient) => ingredient._id),
     [ingredients]
@@ -48,16 +47,18 @@ function App() {
     setOrderDetails({ ...orderDetails, isOpened: false });
     setIngredientDetails({ ...ingredientDetails, isOpened: false });
   };
-  
+
   const getIngredientsData = (cardData) => {
     setIngredientDetails({ isOpened: true, ingredient: cardData });
   };
   return (
-    <IngredientContext.Provider value={ingredients}>
+    <>
       <AppHeader />
       <main className={styles.main}>
-        <BurgerIngredients getData={getIngredientsData} />
-        <BurgerConstructor openOrder={handleOrderClick} />
+        <DndProvider backend={HTML5Backend}>
+          <BurgerIngredients getData={getIngredientsData} />
+          <BurgerConstructor openOrder={handleOrderClick} />
+        </DndProvider>
       </main>
       {orderDetails.isOpened && (
         <Modal onClose={closeAllModals}>
@@ -73,7 +74,7 @@ function App() {
           />
         </Modal>
       )}
-    </IngredientContext.Provider>
+    </>
   );
 }
 
