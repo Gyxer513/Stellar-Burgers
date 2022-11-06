@@ -1,6 +1,7 @@
 /* cSpell:disable */
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import styles from "./app.module.css";
 import AppHeader from "../AppHeader/AppHeder";
@@ -11,6 +12,7 @@ import OrderDetails from "../OrderDetails/OrderDetails";
 import IngredientDetails from "../IngredientDetails/IngredientDetails";
 import { api } from "../../utils/Api";
 import { getIngredients } from "../../services/actions/ingedients";
+import { sendData } from "../../services/actions/order";
 
 function App() {
   const [orderDetails, setOrderDetails] = useState({ isOpened: false });
@@ -21,22 +23,20 @@ function App() {
   const [modalData, setModalData] = useState([]);
   const dispatch = useDispatch();
   const ingredients = useSelector((state) => state.ingredients.ingredients);
-
+  const orderId = useSelector((state) => state.orderDetails);
+  const chousenIngredients = useSelector(
+    (state) => state.order.chosenIngredients
+  );
   useEffect(() => {
     dispatch(getIngredients());
   }, [dispatch]);
 
   const orderList = React.useMemo(
-    () => ingredients.map((ingredient) => ingredient._id),
+    () => chousenIngredients?.map((ingredient) => ingredient._id),
     [ingredients]
   );
   const handleOrderClick = () => {
-    api
-      .sendData(orderList)
-      .then((data) => setModalData(data.order.number))
-      .catch((error) => {
-        console.log(error);
-      });
+    dispatch(sendData(orderList));
     openOrderDetails();
   };
 
@@ -62,7 +62,7 @@ function App() {
       </main>
       {orderDetails.isOpened && (
         <Modal onClose={closeAllModals}>
-          <OrderDetails orderId={modalData} />
+          <OrderDetails orderId={orderId} />
         </Modal>
       )}
       {ingredientDetails.isOpened && (

@@ -7,7 +7,7 @@ export const SEND_ORDER_ERROR = "GET_INGREDIENTS_ERROR";
 export function sendData() {
   return function (dispatch) {
     dispatch({
-      type: GET_INGREDIENTS_DATA,
+      type: SEND_ORDER_DATA,
     });
     api
       .sendData()

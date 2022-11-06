@@ -5,12 +5,12 @@ import styles from "./burgerIngredients.module.css";
 import PropTypes from "prop-types";
 import BurgerIngredient from "../BurgerIngridient/BurgerIngredient";
 import { ingredientPropType } from "../../utils/prop-types";
-import { IngredientContext } from "../../services/appContext";
+import { useDispatch, useSelector } from "react-redux";
 
 const BurgerIngredients = ({ getData }) => {
   const [current, setCurrent] = React.useState("one");
-  const Ingredients = React.useContext(IngredientContext);
-
+  const ingredients = useSelector((state) => state.ingredients.ingredients);
+  
   const handleTabClick = (type) => {
     setCurrent(type);
     document
@@ -27,14 +27,14 @@ const BurgerIngredients = ({ getData }) => {
         <Tab value="one" active={current === "one"} onClick={handleTabClick}>
           Булки
         </Tab>
-        <Tab
-          value="two"
-          active={current === "two"}
-          onClick={handleTabClick}
-        >
+        <Tab value="two" active={current === "two"} onClick={handleTabClick}>
           Соусы
         </Tab>
-        <Tab value="three" active={current === "three"} onClick={handleTabClick}>
+        <Tab
+          value="three"
+          active={current === "three"}
+          onClick={handleTabClick}
+        >
           Начинки
         </Tab>
       </div>
@@ -42,9 +42,11 @@ const BurgerIngredients = ({ getData }) => {
       <div className={`${styles.burgerConstructor__ingridientsBox}`}>
         <div className={styles.burgerConstructor_container}>
           <div className="m-10"></div>
-          <p id="one" className="text text_type_main-medium">Булки</p>
+          <p id="one" className="text text_type_main-medium">
+            Булки
+          </p>
           <div className={styles.burgerConstructor_rolls}>
-            {Ingredients.map((item) => {
+            {ingredients.map((item) => {
               if (item.type == "bun") {
                 return (
                   <BurgerIngredient
@@ -57,9 +59,11 @@ const BurgerIngredients = ({ getData }) => {
             })}
           </div>
           <div className="m-20"></div>
-          <p id="two" className="text text_type_main-medium">Соусы</p>
+          <p id="two" className="text text_type_main-medium">
+            Соусы
+          </p>
           <div className={styles.burgerConstructor_rolls}>
-            {Ingredients.map((item, index) => {
+            {ingredients.map((item, index) => {
               if (item.type == "sauce") {
                 return (
                   <BurgerIngredient
@@ -72,9 +76,11 @@ const BurgerIngredients = ({ getData }) => {
             })}
           </div>
           <div className="m-20"></div>
-          <p id="three" className="text text_type_main-medium">Начинки</p>
+          <p id="three" className="text text_type_main-medium">
+            Начинки
+          </p>
           <div className={styles.burgerConstructor_rolls}>
-            {Ingredients.map((item, index) => {
+            {ingredients.map((item, index) => {
               if (item.type == "main") {
                 return (
                   <BurgerIngredient
