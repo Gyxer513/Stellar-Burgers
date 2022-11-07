@@ -12,3 +12,7 @@
 .burgerIngredient__cost {
     margin-right: 10px;
 }
+.burgerIngredient__text {
+    padding: 0;
+    margin: 0;
+}

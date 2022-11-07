@@ -2,7 +2,8 @@ import {
   GET_INGREDIENTS_DATA,
   GET_INGREDIENTS_SUCCESS,
   GET_INGREDIENTS_ERROR,
-} from "../actions/ingedients";
+  ADD_INGREDIENT,
+} from "../actions/ingredients";
 
 const initialState = {
   ingredients: [],
@@ -31,6 +32,12 @@ export const ingredientsReducer = (state = initialState, action) => {
           ...state,
           ingredientsRequest: false,
           ingredientsFailed: true,
+        };
+      }
+      case ADD_INGREDIENT: {
+        return {
+          ...state,
+          chosenIngredients: action.payload
         };
       }
       default: {

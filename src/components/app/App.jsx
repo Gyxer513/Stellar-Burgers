@@ -10,8 +10,7 @@ import BurgerConstructor from "../BurgerConstructor/BurgerConstructor";
 import Modal from "../Modal/Modal";
 import OrderDetails from "../OrderDetails/OrderDetails";
 import IngredientDetails from "../IngredientDetails/IngredientDetails";
-import { api } from "../../utils/Api";
-import { getIngredients } from "../../services/actions/ingedients";
+import { getIngredients, addIngredient  } from "../../services/actions/ingredients";
 import { sendData } from "../../services/actions/order";
 
 function App() {
@@ -20,7 +19,7 @@ function App() {
     isOpened: false,
     ingredient: null,
   });
-  const [modalData, setModalData] = useState([]);
+  /* const [modalData, setModalData] = useState([]); */
   const dispatch = useDispatch();
   const ingredients = useSelector((state) => state.ingredients.ingredients);
   const orderId = useSelector((state) => state.orderDetails);
@@ -38,6 +37,7 @@ function App() {
   const handleOrderClick = () => {
     dispatch(sendData(orderList));
     openOrderDetails();
+    console.log(dispatch(addIngredient(ingredients)));
   };
 
   const openOrderDetails = () => {

@@ -8,10 +8,16 @@ import {
   CurrencyIcon,
   DragIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import { useDispatch, useSelector } from 'react-redux';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 import styles from "./burgerConstructor.module.css";
 
 const BurgerConstructor = ({ openOrder }) => {
   const Ingredients = [];
+  const [buttonDisable, setButtonDisable] = React.useState("disabled");
+  const chosenIngredients = useSelector(state => state.ingredients.chosenIngredients);
+ 
 
   const totalPrice = React.useMemo(
     () =>
@@ -26,8 +32,9 @@ const BurgerConstructor = ({ openOrder }) => {
   );
 
   return (
+    <DndProvider backend={HTML5Backend}>
     <section className={styles.burgerConstructor}>
-      <div className={styles.burgerConstructor__element}>
+      {chosenIngredients.length > 0 ? <div className={styles.burgerConstructor__element}>
         <ConstructorElement
           type="top"
           isLocked={true}
@@ -35,7 +42,9 @@ const BurgerConstructor = ({ openOrder }) => {
           price={Ingredients[0]?.price}
           thumbnail={Ingredients[0]?.image}
         />
-      </div>
+      </div> : <p className="text text_type_main-large pt-20">
+              Перетащите булку сюда
+            </p>}
       <div className="m-4"></div>
       <ul className={styles.burgerConstructor__elementsBox}>
         {Ingredients.map((item, index) => {
@@ -55,8 +64,8 @@ const BurgerConstructor = ({ openOrder }) => {
           }
         })}
       </ul>
-      <div className="m-1"></div>
-      <div className={styles.burgerConstructor__element}>
+       <div className="m-1"></div>
+       {chosenIngredients.length > 0 && <div className={styles.burgerConstructor__element}>
         <ConstructorElement
           type="bottom"
           isLocked={true}
@@ -64,13 +73,14 @@ const BurgerConstructor = ({ openOrder }) => {
           price={Ingredients[0]?.price}
           thumbnail={Ingredients[0]?.image}
         />
-      </div>
+      </div>}
       <div className={styles.burgerConstructor__box}>
         <p className="text text_type_main-large">{totalPrice}</p>
         <div className="m-2"></div>
         <CurrencyIcon type="primary" />
         <div className="m-2"></div>
         <Button
+          disabled={buttonDisable}
           htmlType="button"
           type="primary"
           size="medium"
@@ -80,6 +90,7 @@ const BurgerConstructor = ({ openOrder }) => {
         </Button>
       </div>
     </section>
+    </DndProvider>
   );
 };
 BurgerConstructor.propTypes = {
