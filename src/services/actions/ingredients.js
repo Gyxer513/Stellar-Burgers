@@ -6,6 +6,8 @@ export const GET_INGREDIENTS_SUCCESS = "GET_INGREDIENTS_SUCCESS";
 export const GET_INGREDIENTS_ERROR = "GET_INGREDIENTS_ERROR";
 export const SELECT_INGREDIENT = "SELECT_INGREDIENT";
 export const ADD_INGREDIENT = "ADD_INGREDIENT";
+export const GET_BUN_DATA = "GET_BUN_DATA";
+export const CLEAR_BUN_DATA = "CLEAR_BUN_DATA"
 
 export function getIngredients() {
   return function (dispatch) {
