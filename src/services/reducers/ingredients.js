@@ -3,14 +3,13 @@ import {
   GET_INGREDIENTS_SUCCESS,
   GET_INGREDIENTS_ERROR,
   ADD_INGREDIENT,
-  GET_BUN_DATA,
-  CLEAR_BUN_DATA
+  ADD_BUN,
 } from "../actions/ingredients";
 
 const initialState = {
   ingredients: [],
   chosenIngredients: [],
-  chousenBun: null,
+  chosenBun: null,
   ingredientsRequest: false,
   ingredientsFailed: false,
 };
@@ -43,16 +42,10 @@ export const ingredientsReducer = (state = initialState, action) => {
         chosenIngredients: action.payload,
       };
     }
-    case GET_BUN_DATA: {
+    case ADD_BUN: {
       return {
         ...state,
-        constructerBun: action.constructerBun,
-      };
-    }
-    case CLEAR_BUN_DATA: {
-      return {
-        ...state,
-        chousenBun: null,
+        chosenBun: action.payload,
       };
     }
     default: {

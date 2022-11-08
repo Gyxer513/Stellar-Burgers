@@ -11,8 +11,8 @@ import { useSelector } from "react-redux";
 import { useDrag } from "react-dnd";
 
 const BurgerIngredient = ({ data, getData }) => {
-
   const { image, price, name, _id } = data;
+  const chosenBun = useSelector((state) => state.ingredients.chosenBun);
 
   const chosenIngredients = useSelector(
     (state) => state.ingredients.chosenIngredients
@@ -30,14 +30,23 @@ const BurgerIngredient = ({ data, getData }) => {
 
   chosenIngredients?.forEach(
     (ingredient) =>
+      chosenBun._id === ingredient._id &&
       ingredient.name === name &&
       (ingredient.type === "bun"
         ? (ingredientCounter += 2)
         : (ingredientCounter += 1))
   );
+  const isBunUse = () => {};
+
   return (
-    <div ref={dragRef} className={styles.burgerIngredient} onClick={() => getData(data)}>
-      {ingredientCounter > 0 && <Counter count={ingredientCounter} size="default" />}
+    <div
+      ref={dragRef}
+      className={styles.burgerIngredient}
+      onClick={() => getData(data)}
+    >
+      {ingredientCounter > 0 && (
+        <Counter count={ingredientCounter} size="default" />
+      )}
       <img className="ingridient__image" src={image} alt={name} id={_id} />
       <div className={styles.burgerIngredient__costBox}>
         <p
@@ -47,7 +56,11 @@ const BurgerIngredient = ({ data, getData }) => {
         </p>
         <CurrencyIcon type="primary" />
       </div>
-      <p className={`text text_type_main-small ${styles.burgerIngredient__text}`}>{name}</p>
+      <p
+        className={`text text_type_main-small ${styles.burgerIngredient__text}`}
+      >
+        {name}
+      </p>
     </div>
   );
 };

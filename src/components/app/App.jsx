@@ -23,21 +23,24 @@ function App() {
   const dispatch = useDispatch();
   const ingredients = useSelector((state) => state.ingredients.ingredients);
   const orderId = useSelector((state) => state.orderDetails);
-  const chousenIngredients = useSelector(
-    (state) => state.order.chosenIngredients
+  const chosenIngredients = useSelector(
+    (state) => state.ingredients.chosenIngredients
   );
   useEffect(() => {
     dispatch(getIngredients());
   }, [dispatch]);
 
   const orderList = React.useMemo(
-    () => chousenIngredients?.map((ingredient) => ingredient._id),
-    [ingredients]
+    () => chosenIngredients?.map((ingredient) => ingredient._id),
+    [chosenIngredients]
   );
+  
   const handleOrderClick = () => {
     dispatch(sendData(orderList));
     openOrderDetails();
-    console.log(dispatch(addIngredient(ingredients)));
+    console.log(chosenIngredients);
+    console.log(orderList);
+
   };
 
   const openOrderDetails = () => {

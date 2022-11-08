@@ -12,7 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import styles from "./burgerConstructor.module.css";
-import { addIngredient } from '../../services/actions/ingredients';
+import { addIngredient, addBun } from "../../services/actions/ingredients";
 import { useDrop } from "react-dnd";
 
 const BurgerConstructor = ({ openOrder }) => {
@@ -20,43 +20,35 @@ const BurgerConstructor = ({ openOrder }) => {
   const chosenIngredients = useSelector(
     (state) => state.ingredients.chosenIngredients
   );
-  const initialIngredients = useSelector(state => state.ingredients.ingredients);
-  const initialBun = useSelector(state => state.ingredients.chousenBun);
+  const ingredients = useSelector(
+    (state) => state.ingredients.ingredients
+  );
+  const chosenBun = useSelector((state) => state.ingredients.chosenBun);
 
   const handleDrop = (ingredientId) => {
-    const targetIngredient = initialIngredients.find(
+    const targetIngredient = ingredients.find(
       (ingredient) => ingredient._id === ingredientId._id
     );
-    /* console.log(targetIngredient);
-    console.log(chosenIngredients); */
-/*      const selectedBun = chosenIngredients.find(
-      (ingredient) => ingredient.type === "bun"
-    );
-    const selectedBunIndex = chosenIngredients.indexOf(selectedBun);
- */
-/* if (targetIngredient.type = "bun") {
-  console.log(targetIngredient.type);
-  dispatch(bunData([...initialBun, targetIngredient]))
-} else {
-  return targetIngredient
-} */
-   
+    if (targetIngredient.type === "bun") {
+      dispatch(addBun(targetIngredient));
       dispatch(addIngredient([...chosenIngredients, targetIngredient]));
-      
-    console.log(initialBun);
+      console.log(chosenBun);
+    } else {
+      dispatch(addIngredient([...chosenIngredients, targetIngredient]));
+    }
   };
   const [, burgerIngredientsContainer] = useDrop({
     accept: "ingredient",
     drop(ingredientId) {
       handleDrop(ingredientId);
     },
-    collect: monitor => ({
+    collect: (monitor) => ({
       isHover: monitor.isOver(),
-    })
+    }),
   });
   const totalPrice = React.useMemo(
     () =>
-    chosenIngredients.reduce(
+      chosenIngredients.reduce(
         (res, currentElement) =>
           currentElement.type === "bun"
             ? res + currentElement.price * 2
@@ -68,15 +60,18 @@ const BurgerConstructor = ({ openOrder }) => {
 
   return (
     <DndProvider backend={HTML5Backend}>
-      <section ref={burgerIngredientsContainer}  className={styles.burgerConstructor}>
+      <section
+        ref={burgerIngredientsContainer}
+        className={styles.burgerConstructor}
+      >
         {chosenIngredients.length > 0 ? (
           <div className={styles.burgerConstructor__element}>
             <ConstructorElement
               type="top"
               isLocked={true}
-              text={`${chosenIngredients[0]?.name} (верх)`}
-              price={chosenIngredients[0]?.price}
-              thumbnail={chosenIngredients[0]?.image}
+              text={`${chosenBun?.name} (верх)`}
+              price={chosenBun?.price}
+              thumbnail={chosenBun?.image}
             />
           </div>
         ) : (
@@ -112,9 +107,9 @@ const BurgerConstructor = ({ openOrder }) => {
             <ConstructorElement
               type="bottom"
               isLocked={true}
-              text={`${chosenIngredients[0]?.name} (Низ)`}
-              price={chosenIngredients[0]?.price}
-              thumbnail={chosenIngredients[0]?.image}
+              text={`${chosenBun?.name} (Низ)`}
+              price={chosenBun?.price}
+              thumbnail={chosenBun?.image}
             />
           </div>
         )}

@@ -11,6 +11,7 @@ const BurgerIngredients = ({ getData }) => {
   const [current, setCurrent] = React.useState("one");
   const ingredients = useSelector((state) => state.ingredients.ingredients);
   
+  
   const handleTabClick = (type) => {
     setCurrent(type);
     document
