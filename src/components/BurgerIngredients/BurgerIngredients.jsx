@@ -5,7 +5,8 @@ import styles from "./burgerIngredients.module.css";
 import PropTypes from "prop-types";
 import BurgerIngredient from "../BurgerIngridient/BurgerIngredient";
 import { ingredientPropType } from "../../utils/prop-types";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
+
 
 const BurgerIngredients = ({ getData }) => {
   const [current, setCurrent] = React.useState("one");

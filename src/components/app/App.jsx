@@ -23,13 +23,20 @@ function App() {
   const chosenIngredients = useSelector(
     (state) => state.ingredients.chosenIngredients
   );
+  const chosenBun = useSelector((state) => state.ingredients.chosenBun);
   useEffect(() => {
     dispatch(getIngredients());
+    console.log(chosenIngredients);
   }, [dispatch]);
 
   const orderList = React.useMemo(
-    () => chosenIngredients?.map((ingredient) => ingredient._id),
-    [chosenIngredients]
+    () => {
+      const ingredientsList = chosenIngredients?.map((ingredient) => ingredient._id)
+      ingredientsList.splice(0, 0, chosenBun?._id)
+      ingredientsList.splice(ingredientsList.length, 0, chosenBun?._id)
+      return ingredientsList
+    },
+    [chosenIngredients, chosenBun]
   );
   
   const handleOrderClick = () => {

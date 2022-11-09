@@ -13,17 +13,21 @@ import { useDispatch, useSelector } from "react-redux";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import styles from "./burgerConstructor.module.css";
-import { addIngredient, addBun, deleteIngredient } from "../../services/actions/ingredients";
+import {
+  addIngredient,
+  addBun,
+  deleteIngredient,
+} from "../../services/actions/ingredients";
 import { useDrop } from "react-dnd";
+
+
 
 const BurgerConstructor = ({ openOrder }) => {
   const dispatch = useDispatch();
   const chosenIngredients = useSelector(
     (state) => state.ingredients.chosenIngredients
   );
-  const ingredients = useSelector(
-    (state) => state.ingredients.ingredients
-  );
+  const ingredients = useSelector((state) => state.ingredients.ingredients);
   const chosenBun = useSelector((state) => state.ingredients.chosenBun);
 
   const handleDrop = (ingredientId) => {
@@ -32,11 +36,13 @@ const BurgerConstructor = ({ openOrder }) => {
     );
     if (targetIngredient.type === "bun") {
       dispatch(addBun(targetIngredient));
-    } else { if (chosenBun != null) {
-      dispatch(addIngredient([...chosenIngredients, targetIngredient]));
-    }
+    } else {
+      if (chosenBun != null) {
+        dispatch(addIngredient([...chosenIngredients, targetIngredient]));
+      }
     }
   };
+
   const [, burgerIngredientsContainer] = useDrop({
     accept: "ingredient",
     drop(ingredientId) {
@@ -46,16 +52,21 @@ const BurgerConstructor = ({ openOrder }) => {
       isHover: monitor.isOver(),
     }),
   });
+
   const totalPrice = React.useMemo(
     () =>
-    chosenBun?.price + chosenIngredients.reduce((res, currentElement) => res + currentElement.price, 0),
+      chosenBun?.price +
+      chosenIngredients.reduce(
+        (res, currentElement) => res + currentElement.price,
+        0
+      ),
     [chosenBun, chosenIngredients]
   );
   const handleDeleteIngredient = (item) => () => {
     const arrayClone = chosenIngredients.slice();
     arrayClone.splice(chosenIngredients.indexOf(item), 1);
-    dispatch(deleteIngredient(arrayClone))
-  }
+    dispatch(deleteIngredient(arrayClone));
+  };
 
   return (
     <DndProvider backend={HTML5Backend}>
@@ -65,7 +76,7 @@ const BurgerConstructor = ({ openOrder }) => {
       >
         {chosenBun != null ? (
           <div className={styles.burgerConstructor__element}>
-             <ConstructorElement
+            <ConstructorElement
               type="top"
               isLocked={true}
               text={`${chosenBun?.name} (верх)`}
@@ -79,28 +90,31 @@ const BurgerConstructor = ({ openOrder }) => {
           </p>
         )}
         <div className="m-4"></div>
-        {chosenBun != null && <ul className={styles.burgerConstructor__elementsBox}>
-          {chosenIngredients.map((item, index) => {
-            if (item.type != "bun") {
-              return (
-                <li
-                  key={index}
-                  className={styles.burgerConstructor__elementBox}
-                >
-                  <DragIcon type="primary" />
-                  <div className="m-5"></div>
-                  <ConstructorElement
-                    isLocked={false}
-                    text={item.name}
-                    thumbnail={item.image}
-                    price={item.price}
-                    handleClose={handleDeleteIngredient(item)}
-                  />
-                </li>
-              );
-            }
-          })}
-        </ul>}
+        {chosenBun != null && (
+          <ul className={styles.burgerConstructor__elementsBox}>
+            {chosenIngredients.map((item, index) => {
+              if (item.type != "bun") {
+                return (
+                  <li
+                    ref={drag}
+                    key={index}
+                    className={styles.burgerConstructor__elementBox}
+                  >
+                    <DragIcon type="primary" />
+                    <div className="m-5"></div>
+                    <ConstructorElement
+                      isLocked={false}
+                      text={item.name}
+                      thumbnail={item.image}
+                      price={item.price}
+                      handleClose={handleDeleteIngredient(item)}
+                    />
+                  </li>
+                );
+              }
+            })}
+          </ul>
+        )}
         <div className="m-1"></div>
         {chosenBun != null && (
           <div className={styles.burgerConstructor__element}>
@@ -114,12 +128,16 @@ const BurgerConstructor = ({ openOrder }) => {
           </div>
         )}
         <div className={styles.burgerConstructor__box}>
-          <p className="text text_type_main-large">{!totalPrice ? 0 : totalPrice}</p>
+          <p className="text text_type_main-large">
+            {!totalPrice ? 0 : totalPrice}
+          </p>
           <div className="m-2"></div>
           <CurrencyIcon type="primary" />
           <div className="m-2"></div>
           <Button
-            disabled={(chosenIngredients.length > 0 || chosenBun != null)  ? false : true}
+            disabled={
+              chosenIngredients.length > 0 || chosenBun != null ? false : true
+            }
             htmlType="button"
             type="primary"
             size="medium"
