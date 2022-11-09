@@ -1,5 +1,6 @@
 /* cSpell:disable; */
 import React from "react";
+
 import PropTypes from "prop-types";
 import { ingredientPropType } from "../../utils/prop-types";
 import {
@@ -32,7 +33,6 @@ const BurgerConstructor = ({ openOrder }) => {
     if (targetIngredient.type === "bun") {
       dispatch(addBun(targetIngredient));
       dispatch(addIngredient([...chosenIngredients, targetIngredient]));
-      console.log(chosenBun);
     } else {
       dispatch(addIngredient([...chosenIngredients, targetIngredient]));
     }

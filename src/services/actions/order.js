@@ -1,16 +1,16 @@
 import { api } from "../../utils/Api";
 
-export const SEND_ORDER_DATA = "GET_INGREDIENTS_DATA";
-export const SEND_ORDER_SUCCESS = "GET_INGREDIENTS_SUCCESS";
-export const SEND_ORDER_ERROR = "GET_INGREDIENTS_ERROR";
+export const SEND_ORDER_DATA = "SEND_ORDER_DATA";
+export const SEND_ORDER_SUCCESS = "SEND_ORDER_SUCCESS";
+export const SEND_ORDER_ERROR = "SEND_ORDER_ERROR";
 
-export function sendData() {
+export function sendData(list) {
   return function (dispatch) {
     dispatch({
       type: SEND_ORDER_DATA,
     });
     api
-      .sendData()
+      .sendData(list)
       .then((data) => {
         if (data) {
           dispatch({

@@ -19,10 +19,7 @@ function App() {
     isOpened: false,
     ingredient: null,
   });
-  /* const [modalData, setModalData] = useState([]); */
   const dispatch = useDispatch();
-  const ingredients = useSelector((state) => state.ingredients.ingredients);
-  const orderId = useSelector((state) => state.orderDetails);
   const chosenIngredients = useSelector(
     (state) => state.ingredients.chosenIngredients
   );
@@ -38,9 +35,6 @@ function App() {
   const handleOrderClick = () => {
     dispatch(sendData(orderList));
     openOrderDetails();
-    console.log(chosenIngredients);
-    console.log(orderList);
-
   };
 
   const openOrderDetails = () => {
@@ -65,7 +59,7 @@ function App() {
       </main>
       {orderDetails.isOpened && (
         <Modal onClose={closeAllModals}>
-          <OrderDetails orderId={orderId} />
+          <OrderDetails />
         </Modal>
       )}
       {ingredientDetails.isOpened && (

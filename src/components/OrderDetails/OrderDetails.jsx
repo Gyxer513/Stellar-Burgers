@@ -1,13 +1,16 @@
 /* cSpell:disable */
-import PropTypes from "prop-types";
 import styles from "./orderDetails.module.css";
 import doneImg from "../../images/done.png";
+import { useSelector } from "react-redux";
 
-function OrderDetails({ orderId }) {
+
+function OrderDetails() {
+  const orderData = useSelector((state) => state.order.orderDetails);
+
   return (
     <div className={styles.order}>
       <div className="m-10"></div>
-      <h2 className="text text_type_digits-large">{orderId}</h2>
+      <h2 className="text text_type_digits-large">{orderData}</h2>
       <div className="m-5"></div>
       <p className="text text_type_main-medium">Идентификатор заказа</p>
       <img className="m-10" src={doneImg} alt="Ваш заказ принят" />
@@ -22,13 +25,6 @@ function OrderDetails({ orderId }) {
   );
 }
 
-OrderDetails.propTypes = {
-  orderId: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number,
-    PropTypes.object,
-    PropTypes.array,
-  ]).isRequired,
-};
+
 
 export default OrderDetails;

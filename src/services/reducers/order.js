@@ -17,21 +17,22 @@ export const orderReducer = (state = initialState, action) => {
         ...state,
         orderRequest: true,
         orderFailed: false,
-      };
+      }
     }
     case SEND_ORDER_SUCCESS: {
       return {
         ...state,
+        orderDetails: action.payload.order.number,
         orderRequest: false,
-        orderFailed: action.payload,
-      };
+        orderFailed: false,
+      }
     }
     case SEND_ORDER_ERROR: {
       return {
         ...state,
         orderRequest: false,
         orderFailed: true,
-      };
+      }
     }
     default: {
       return state;
