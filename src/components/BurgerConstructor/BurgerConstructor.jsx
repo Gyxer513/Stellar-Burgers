@@ -32,8 +32,9 @@ const BurgerConstructor = ({ openOrder }) => {
     );
     if (targetIngredient.type === "bun") {
       dispatch(addBun(targetIngredient));
-    } else {
+    } else { if (chosenBun != null) {
       dispatch(addIngredient([...chosenIngredients, targetIngredient]));
+    }
     }
   };
   const [, burgerIngredientsContainer] = useDrop({
@@ -47,14 +48,8 @@ const BurgerConstructor = ({ openOrder }) => {
   });
   const totalPrice = React.useMemo(
     () =>
-      chosenIngredients.reduce(
-        (res, currentElement) =>
-          currentElement.type === "bun"
-            ? res + currentElement.price * 2
-            : res + currentElement.price,
-        0
-      ),
-    [chosenIngredients]
+    chosenBun?.price + chosenIngredients.reduce((res, currentElement) => res + currentElement.price, 0),
+    [chosenBun, chosenIngredients]
   );
   const handleDeleteIngredient = (item) => () => {
     const arrayClone = chosenIngredients.slice();
@@ -84,7 +79,7 @@ const BurgerConstructor = ({ openOrder }) => {
           </p>
         )}
         <div className="m-4"></div>
-        <ul className={styles.burgerConstructor__elementsBox}>
+        {chosenBun != null && <ul className={styles.burgerConstructor__elementsBox}>
           {chosenIngredients.map((item, index) => {
             if (item.type != "bun") {
               return (
@@ -105,7 +100,7 @@ const BurgerConstructor = ({ openOrder }) => {
               );
             }
           })}
-        </ul>
+        </ul>}
         <div className="m-1"></div>
         {chosenBun != null && (
           <div className={styles.burgerConstructor__element}>
@@ -119,7 +114,7 @@ const BurgerConstructor = ({ openOrder }) => {
           </div>
         )}
         <div className={styles.burgerConstructor__box}>
-          <p className="text text_type_main-large">{totalPrice}</p>
+          <p className="text text_type_main-large">{!totalPrice ? 0 : totalPrice}</p>
           <div className="m-2"></div>
           <CurrencyIcon type="primary" />
           <div className="m-2"></div>
