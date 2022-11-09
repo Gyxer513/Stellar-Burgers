@@ -10,7 +10,7 @@ import BurgerConstructor from "../BurgerConstructor/BurgerConstructor";
 import Modal from "../Modal/Modal";
 import OrderDetails from "../OrderDetails/OrderDetails";
 import IngredientDetails from "../IngredientDetails/IngredientDetails";
-import { getIngredients, addIngredient  } from "../../services/actions/ingredients";
+import { getIngredients } from "../../services/actions/ingredients";
 import { sendData } from "../../services/actions/order";
 
 function App() {

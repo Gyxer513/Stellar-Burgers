@@ -4,6 +4,7 @@ import {
   GET_INGREDIENTS_ERROR,
   ADD_INGREDIENT,
   ADD_BUN,
+  DELETE_INGREDIENT,
 } from "../actions/ingredients";
 
 const initialState = {
@@ -47,6 +48,9 @@ export const ingredientsReducer = (state = initialState, action) => {
         ...state,
         chosenBun: action.payload,
       };
+    }
+    case DELETE_INGREDIENT: {
+      return { ...state, chosenIngredients: action.payload };
     }
     default: {
       return state;

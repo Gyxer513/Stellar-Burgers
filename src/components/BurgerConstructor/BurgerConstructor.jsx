@@ -13,7 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import styles from "./burgerConstructor.module.css";
-import { addIngredient, addBun } from "../../services/actions/ingredients";
+import { addIngredient, addBun, deleteIngredient } from "../../services/actions/ingredients";
 import { useDrop } from "react-dnd";
 
 const BurgerConstructor = ({ openOrder }) => {
@@ -32,7 +32,6 @@ const BurgerConstructor = ({ openOrder }) => {
     );
     if (targetIngredient.type === "bun") {
       dispatch(addBun(targetIngredient));
-      dispatch(addIngredient([...chosenIngredients, targetIngredient]));
     } else {
       dispatch(addIngredient([...chosenIngredients, targetIngredient]));
     }
@@ -57,6 +56,11 @@ const BurgerConstructor = ({ openOrder }) => {
       ),
     [chosenIngredients]
   );
+  const handleDeleteIngredient = (item) => () => {
+    const arrayClone = chosenIngredients.slice();
+    arrayClone.splice(chosenIngredients.indexOf(item), 1);
+    dispatch(deleteIngredient(arrayClone))
+  }
 
   return (
     <DndProvider backend={HTML5Backend}>
@@ -64,9 +68,9 @@ const BurgerConstructor = ({ openOrder }) => {
         ref={burgerIngredientsContainer}
         className={styles.burgerConstructor}
       >
-        {chosenIngredients.length > 0 ? (
+        {chosenBun != null ? (
           <div className={styles.burgerConstructor__element}>
-            <ConstructorElement
+             <ConstructorElement
               type="top"
               isLocked={true}
               text={`${chosenBun?.name} (верх)`}
@@ -82,7 +86,7 @@ const BurgerConstructor = ({ openOrder }) => {
         <div className="m-4"></div>
         <ul className={styles.burgerConstructor__elementsBox}>
           {chosenIngredients.map((item, index) => {
-            if (item.type !== "bun") {
+            if (item.type != "bun") {
               return (
                 <li
                   key={index}
@@ -95,6 +99,7 @@ const BurgerConstructor = ({ openOrder }) => {
                     text={item.name}
                     thumbnail={item.image}
                     price={item.price}
+                    handleClose={handleDeleteIngredient(item)}
                   />
                 </li>
               );
@@ -102,7 +107,7 @@ const BurgerConstructor = ({ openOrder }) => {
           })}
         </ul>
         <div className="m-1"></div>
-        {chosenIngredients.length > 0 && (
+        {chosenBun != null && (
           <div className={styles.burgerConstructor__element}>
             <ConstructorElement
               type="bottom"
@@ -119,7 +124,7 @@ const BurgerConstructor = ({ openOrder }) => {
           <CurrencyIcon type="primary" />
           <div className="m-2"></div>
           <Button
-            disabled={chosenIngredients.length > 0 ? false : true}
+            disabled={(chosenIngredients.length > 0 || chosenBun != null)  ? false : true}
             htmlType="button"
             type="primary"
             size="medium"

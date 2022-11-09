@@ -7,7 +7,7 @@ export const GET_INGREDIENTS_ERROR = "GET_INGREDIENTS_ERROR";
 export const SELECT_INGREDIENT = "SELECT_INGREDIENT";
 export const ADD_INGREDIENT = "ADD_INGREDIENT";
 export const ADD_BUN = "ADD_BUN";
-
+export const DELETE_INGREDIENT = "DELETE_INGREDIENT";
 
 export function getIngredients() {
   return function (dispatch) {
@@ -49,3 +49,8 @@ export const addBun = (addedBun) => {
   const newBan = Object.assign(  {randomId: randomId()}, addedBun);
   return { type: ADD_BUN, payload: newBan };
 }
+
+export const deleteIngredient = (newArray) => ({
+  type: DELETE_INGREDIENT,
+  payload: newArray,
+});

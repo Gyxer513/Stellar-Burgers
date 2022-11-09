@@ -26,26 +26,31 @@ const BurgerIngredient = ({ data, getData }) => {
     }),
   });
 
-  let ingredientCounter = 0;
+  
 
-  chosenIngredients?.forEach(
-    (ingredient) =>
-      chosenBun._id === ingredient._id &&
-      ingredient.name === name &&
-      (ingredient.type === "bun"
-        ? (ingredientCounter += 2)
-        : (ingredientCounter += 1))
-  );
-  const isBunUse = () => {};
+  const count = () => {
+    let ingredientCounter = 0;
+    if (chosenBun?._id == _id) {
+      ingredientCounter = 2;
+    } else {
+      chosenIngredients?.forEach((ingredient) => {
+        if (ingredient.name === name) {
+          ingredientCounter += 1;
+        }
+      });
+    }
+    return ingredientCounter
+  };
 
   return (
     <div
+      disabled={true}
       ref={dragRef}
       className={styles.burgerIngredient}
       onClick={() => getData(data)}
     >
-      {ingredientCounter > 0 && (
-        <Counter count={ingredientCounter} size="default" />
+      {count() > 0 && (
+        <Counter count={count()} size="default" />
       )}
       <img className="ingridient__image" src={image} alt={name} id={_id} />
       <div className={styles.burgerIngredient__costBox}>
