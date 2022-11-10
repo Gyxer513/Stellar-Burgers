@@ -26,7 +26,6 @@ function App() {
   const chosenBun = useSelector((state) => state.ingredients.chosenBun);
   useEffect(() => {
     dispatch(getIngredients());
-    console.log(chosenIngredients);
   }, [dispatch]);
 
   const orderList = React.useMemo(

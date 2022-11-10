@@ -8,6 +8,7 @@ export const SELECT_INGREDIENT = "SELECT_INGREDIENT";
 export const ADD_INGREDIENT = "ADD_INGREDIENT";
 export const ADD_BUN = "ADD_BUN";
 export const DELETE_INGREDIENT = "DELETE_INGREDIENT";
+export const SORT_INGREDIENTS = "SORT_INGREDIENTS";
 
 export function getIngredients() {
   return function (dispatch) {
@@ -53,4 +54,8 @@ export const addBun = (addedBun) => {
 export const deleteIngredient = (newArray) => ({
   type: DELETE_INGREDIENT,
   payload: newArray,
+});
+export const sortIngredients = (sortArray) => ({
+  type: SORT_INGREDIENTS,
+  payload: sortArray,
 });

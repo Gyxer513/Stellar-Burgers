@@ -7,20 +7,19 @@ import {
   ConstructorElement,
   Button,
   CurrencyIcon,
-  DragIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDispatch, useSelector } from "react-redux";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import styles from "./burgerConstructor.module.css";
+import update from "immutability-helper";
 import {
   addIngredient,
   addBun,
-  deleteIngredient,
+  sortIngredients,
 } from "../../services/actions/ingredients";
 import { useDrop } from "react-dnd";
-
-
+import ConstructorItem from "./ConstructorItem";
 
 const BurgerConstructor = ({ openOrder }) => {
   const dispatch = useDispatch();
@@ -62,11 +61,23 @@ const BurgerConstructor = ({ openOrder }) => {
       ),
     [chosenBun, chosenIngredients]
   );
-  const handleDeleteIngredient = (item) => () => {
-    const arrayClone = chosenIngredients.slice();
-    arrayClone.splice(chosenIngredients.indexOf(item), 1);
-    dispatch(deleteIngredient(arrayClone));
-  };
+  const moveIngredient = React.useCallback(
+    (dragIndex, hoverIndex) => {
+      const sortedIngredients = update(
+        chosenIngredients,
+        {
+          $splice: [
+            [dragIndex, 1],
+            [hoverIndex, 0, chosenIngredients[dragIndex]],
+          ],
+        },
+        [chosenIngredients]
+      );
+
+      dispatch(sortIngredients([...sortedIngredients]));
+    },
+    [chosenIngredients, dispatch]
+  );
 
   return (
     <DndProvider backend={HTML5Backend}>
@@ -95,21 +106,13 @@ const BurgerConstructor = ({ openOrder }) => {
             {chosenIngredients.map((item, index) => {
               if (item.type != "bun") {
                 return (
-                  <li
-                    ref={drag}
-                    key={index}
-                    className={styles.burgerConstructor__elementBox}
-                  >
-                    <DragIcon type="primary" />
-                    <div className="m-5"></div>
-                    <ConstructorElement
-                      isLocked={false}
-                      text={item.name}
-                      thumbnail={item.image}
-                      price={item.price}
-                      handleClose={handleDeleteIngredient(item)}
-                    />
-                  </li>
+                  <ConstructorItem
+                    key={item.randomId}
+                    index={index}
+                    moveIngredient={moveIngredient}
+                    data={item}
+                    id={`${item._id}${index}`}
+                  />
                 );
               }
             })}

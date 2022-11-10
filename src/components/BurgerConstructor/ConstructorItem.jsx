@@ -1,34 +1,41 @@
-import React, { useRef } from "react";
-import PropTypes from "prop-types";
-import { useDrop, useDrag } from "react-dnd";
-
-import { REMOVE_CONSTRUCTER_DATA } from "../../services/actions/index";
+/* cSpell:disable; */
+import styles from "./burgerConstructor.module.css";
+import { useSelector, useDispatch } from "react-redux";
 import {
-  ConstructorElement,
   DragIcon,
+  ConstructorElement,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import { useDrag, useDrop } from "react-dnd";
+import { useRef } from "react";
+import { deleteIngredient } from "../../services/actions/ingredients";
+import { ingredientPropType } from "../../utils/prop-types";
+import PropTypes from "prop-types";
 
-export default function ConstructorItem({
-  constructerItemData,
-  id,
-  index,
-  moveCard,
-}) {
+const ConstructorItem = ({ data, id, moveIngredient, index }) => {
+  const { image, name, price } = data;
+  const chosenIngredients = useSelector(
+    (state) => state.ingredients.chosenIngredients
+  );
+  const ref = useRef(null);
+  const dispatch = useDispatch();
 
-
-  const [{ handlerId }, drop] = useDrop({
-    accept: "constrIng",
-    collect(monitor) {
-      return {
-        handlerId: monitor.getHandlerId(),
-      };
+  const [, drag] = useDrag({
+    type: "chosen-ingredients",
+    item: () => {
+      return { id, index };
     },
-    hover(item, monitor) {
+  });
+
+  const [, drop] = useDrop({
+    accept: "chosen-ingredients",
+    drop(item, monitor) {
       if (!ref.current) {
         return;
       }
+
       const dragIndex = item.index;
       const hoverIndex = index;
+
       if (dragIndex === hoverIndex) {
         return;
       }
@@ -40,57 +47,43 @@ export default function ConstructorItem({
       if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
         return;
       }
+
       if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
         return;
       }
-      moveCard(dragIndex, hoverIndex);
+
+      moveIngredient(dragIndex, hoverIndex);
+
       item.index = hoverIndex;
     },
-  });
-  const [, drag] = useDrag({
-    type: "constrIng",
-    item: () => {
-      return { id, index };
-    },
-    collect: (monitor) => ({
-      isDragging: monitor.isDragging(),
-    }),
   });
 
   drag(drop(ref));
 
-  return (
-    <div
-      ref={ref}
-      data-handler-id={handlerId}
-      style={{
-        display: "flex",
-        alignItems: "center",
-        flexDirection: "row",
-        gap: "10px",
-      }}
-      className="mt-4 mb-4"
-    >
-      <DragIcon type="primary" />
-      <div>
-        <ConstructorElement
-          text={constructerItemData.name}
-          handleClose={() => handleClose(constructerItemData._id)}
-          price={constructerItemData.price}
-          thumbnail={constructerItemData.image}
-        />
-      </div>
-    </div>
-  );
-}
+  const handleDeleteIngredient = (item) => () => {
+    const arrayClone = chosenIngredients.slice();
+    arrayClone.splice(chosenIngredients.indexOf(item), 1);
+    dispatch(deleteIngredient(arrayClone));
+  };
 
-ItemOfConstructor.propTypes = {
-  constructerItemData: PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    _id: PropTypes.string.isRequired,
-    price: PropTypes.number.isRequired,
-    image: PropTypes.string.isRequired,
-  }),
-  index: PropTypes.number.isRequired,
-  moveCard: PropTypes.func,
+  return (
+    <li ref={ref} className={styles.burgerConstructor__elementBox}>
+      <DragIcon type="primary" />
+      <div className="m-5"></div>
+      <ConstructorElement
+        text={name}
+        price={price}
+        thumbnail={image}
+        handleClose={handleDeleteIngredient(data)}
+      />
+    </li>
+  );
 };
+ConstructorItem.propTypes = {
+  id: PropTypes.string.isRequired,
+  moveIngredient: PropTypes.func.isRequired,
+  index: PropTypes.number.isRequired,
+  data: ingredientPropType,
+};
+
+export default ConstructorItem;
