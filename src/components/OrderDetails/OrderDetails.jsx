@@ -18,7 +18,7 @@ function OrderDetails() {
   );
 
   const chosenBun = useSelector((state) => state.ingredients.chosenBun);
-  
+
   const orderList = React.useMemo(
     () => {
       const ingredientsList = chosenIngredients?.map((ingredient) => ingredient._id)
@@ -26,7 +26,7 @@ function OrderDetails() {
       ingredientsList.splice(ingredientsList.length, 0, chosenBun?._id)
       return ingredientsList
     },
-    [chosenIngredients, chosenBun]
+    []
   );
   
   return (
