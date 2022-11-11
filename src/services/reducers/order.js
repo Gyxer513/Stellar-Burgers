@@ -2,6 +2,7 @@ import {
   SEND_ORDER_DATA,
   SEND_ORDER_SUCCESS,
   SEND_ORDER_ERROR,
+  DELETE_ORDER_DATA,
 } from "../actions/order";
 
 const initialState = {
@@ -33,6 +34,12 @@ export const orderReducer = (state = initialState, action) => {
         orderRequest: false,
         orderFailed: true,
       }
+    }
+    case DELETE_ORDER_DATA: {
+      return {
+        ...state,
+        orderDetails: null,
+      };
     }
     default: {
       return state;

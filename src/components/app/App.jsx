@@ -11,6 +11,7 @@ import Modal from "../Modal/Modal";
 import OrderDetails from "../OrderDetails/OrderDetails";
 import IngredientDetails from "../IngredientDetails/IngredientDetails";
 import { getIngredients } from "../../services/actions/ingredients";
+import { deleteOrder } from "../../services/actions/order"
 
 
 function App() {
@@ -37,6 +38,7 @@ function App() {
   const closeAllModals = () => {
     setOrderDetails({ ...orderDetails, isOpened: false });
     setIngredientDetails({ ...ingredientDetails, isOpened: false });
+    dispatch(deleteOrder());
   };
 
   const getIngredientsData = (cardData) => {
