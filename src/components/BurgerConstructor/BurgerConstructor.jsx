@@ -9,8 +9,6 @@ import {
   CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDispatch, useSelector } from "react-redux";
-import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
 import styles from "./burgerConstructor.module.css";
 import update from "immutability-helper";
 import {
@@ -54,7 +52,7 @@ const BurgerConstructor = ({ openOrder }) => {
 
   const totalPrice = React.useMemo(
     () =>
-      chosenBun?.price +
+      chosenBun?.price * 2  +
       chosenIngredients.reduce(
         (res, currentElement) => res + currentElement.price,
         0
@@ -80,77 +78,73 @@ const BurgerConstructor = ({ openOrder }) => {
   );
 
   return (
-    <DndProvider backend={HTML5Backend}>
-      <section
-        ref={burgerIngredientsContainer}
-        className={styles.burgerConstructor}
-      >
-        {chosenBun != null ? (
-          <div className={styles.burgerConstructor__element}>
-            <ConstructorElement
-              type="top"
-              isLocked={true}
-              text={`${chosenBun?.name} (верх)`}
-              price={chosenBun?.price}
-              thumbnail={chosenBun?.image}
-            />
-          </div>
-        ) : (
-          <p className="text text_type_main-large pt-20">
-            Перетащите булку сюда
-          </p>
-        )}
-        <div className="m-4"></div>
-        {chosenBun != null && (
-          <ul className={styles.burgerConstructor__elementsBox}>
-            {chosenIngredients.map((item, index) => {
-              if (item.type != "bun") {
-                return (
-                  <ConstructorItem
-                    key={item.randomId}
-                    index={index}
-                    moveIngredient={moveIngredient}
-                    data={item}
-                    id={`${item._id}${index}`}
-                  />
-                );
-              }
-            })}
-          </ul>
-        )}
-        <div className="m-1"></div>
-        {chosenBun != null && (
-          <div className={styles.burgerConstructor__element}>
-            <ConstructorElement
-              type="bottom"
-              isLocked={true}
-              text={`${chosenBun?.name} (Низ)`}
-              price={chosenBun?.price}
-              thumbnail={chosenBun?.image}
-            />
-          </div>
-        )}
-        <div className={styles.burgerConstructor__box}>
-          <p className="text text_type_main-large">
-            {!totalPrice ? 0 : totalPrice}
-          </p>
-          <div className="m-2"></div>
-          <CurrencyIcon type="primary" />
-          <div className="m-2"></div>
-          <Button
-            disabled={
-              chosenIngredients.length > 0 || chosenBun != null ? false : true
-            }
-            htmlType="button"
-            type="primary"
-            size="medium"
-            onClick={openOrder}
-          >
-            Оформить заказ
-          </Button>
+    <section
+      ref={burgerIngredientsContainer}
+      className={styles.burgerConstructor}
+    >
+      {chosenBun != null ? (
+        <div className={styles.burgerConstructor__element}>
+          <ConstructorElement
+            type="top"
+            isLocked={true}
+            text={`${chosenBun?.name} (верх)`}
+            price={chosenBun?.price}
+            thumbnail={chosenBun?.image}
+          />
         </div>
-      </section>
-    </DndProvider>
+      ) : (
+        <p className="text text_type_main-large pt-20">Перетащите булку сюда</p>
+      )}
+      <div className="m-4"></div>
+      {chosenBun != null && (
+        <ul className={styles.burgerConstructor__elementsBox}>
+          {chosenIngredients.map((item, index) => {
+            if (item.type != "bun") {
+              return (
+                <ConstructorItem
+                  key={item.randomId}
+                  index={index}
+                  moveIngredient={moveIngredient}
+                  data={item}
+                  id={`${item._id}${index}`}
+                />
+              );
+            }
+          })}
+        </ul>
+      )}
+      <div className="m-1"></div>
+      {chosenBun != null && (
+        <div className={styles.burgerConstructor__element}>
+          <ConstructorElement
+            type="bottom"
+            isLocked={true}
+            text={`${chosenBun?.name} (Низ)`}
+            price={chosenBun?.price}
+            thumbnail={chosenBun?.image}
+          />
+        </div>
+      )}
+      <div className={styles.burgerConstructor__box}>
+        <p className="text text_type_main-large">
+          {totalPrice || 0}
+        </p>
+        <div className="m-2"></div>
+        <CurrencyIcon type="primary" />
+        <div className="m-2"></div>
+        <Button
+          disabled={
+            !totalPrice || 0
+          }
+          htmlType="button"
+          type="primary"
+          size="medium"
+          onClick={openOrder}
+        >
+          Оформить заказ
+        </Button>
+      </div>
+    </section>
   );
 };
 BurgerConstructor.propTypes = {
