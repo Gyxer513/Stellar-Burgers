@@ -11,7 +11,7 @@ import Modal from "../Modal/Modal";
 import OrderDetails from "../OrderDetails/OrderDetails";
 import IngredientDetails from "../IngredientDetails/IngredientDetails";
 import { getIngredients } from "../../services/actions/ingredients";
-import { sendData } from "../../services/actions/order";
+
 
 function App() {
   const [orderDetails, setOrderDetails] = useState({ isOpened: false });
@@ -20,26 +20,14 @@ function App() {
     ingredient: null,
   });
   const dispatch = useDispatch();
-  const chosenIngredients = useSelector(
-    (state) => state.ingredients.chosenIngredients
-  );
-  const chosenBun = useSelector((state) => state.ingredients.chosenBun);
+
   useEffect(() => {
     dispatch(getIngredients());
   }, [dispatch]);
 
-  const orderList = React.useMemo(
-    () => {
-      const ingredientsList = chosenIngredients?.map((ingredient) => ingredient._id)
-      ingredientsList.splice(0, 0, chosenBun?._id)
-      ingredientsList.splice(ingredientsList.length, 0, chosenBun?._id)
-      return ingredientsList
-    },
-    [chosenIngredients, chosenBun]
-  );
+  
   
   const handleOrderClick = () => {
-    dispatch(sendData(orderList));
     openOrderDetails();
   };
 

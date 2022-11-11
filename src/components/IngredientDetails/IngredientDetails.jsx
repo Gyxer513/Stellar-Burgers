@@ -2,6 +2,7 @@
 import styles from "./ingredientDetails.module.css";
 import PropTypes from "prop-types";
 
+
 function IngredientDetails({ title, ingredientData }) {
   const { image_large, name, calories, carbohydrates, fat, proteins } =
     ingredientData;

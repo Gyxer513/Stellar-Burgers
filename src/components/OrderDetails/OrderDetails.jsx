@@ -1,12 +1,34 @@
 /* cSpell:disable */
 import styles from "./orderDetails.module.css";
 import doneImg from "../../images/done.png";
-import { useSelector } from "react-redux";
-
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { sendData } from "../../services/actions/order";
 
 function OrderDetails() {
-  const orderData = useSelector((state) => state.order.orderDetails);
+  
+  const dispatch = useDispatch();
+  React.useEffect(() => {
+    dispatch(sendData(orderList));
+  }, [dispatch]);
 
+  const orderData = useSelector((state) => state.order.orderDetails);
+  const chosenIngredients = useSelector(
+    (state) => state.ingredients.chosenIngredients
+  );
+
+  const chosenBun = useSelector((state) => state.ingredients.chosenBun);
+  
+  const orderList = React.useMemo(
+    () => {
+      const ingredientsList = chosenIngredients?.map((ingredient) => ingredient._id)
+      ingredientsList.splice(0, 0, chosenBun?._id)
+      ingredientsList.splice(ingredientsList.length, 0, chosenBun?._id)
+      return ingredientsList
+    },
+    [chosenIngredients, chosenBun]
+  );
+  
   return (
     <div className={styles.order}>
       <div className="m-10"></div>
