@@ -29,7 +29,7 @@ export function getIngredients() {
       .catch((error) => {
         dispatch({
           type: GET_INGREDIENTS_ERROR,
-          payload: console.log(error),
+          payload: error,
         });
       });
   };

@@ -52,7 +52,7 @@ const BurgerIngredient = ({ data, getData }) => {
       {count() > 0 && (
         <Counter count={count()} size="default" />
       )}
-      <img className="ingridient__image" src={image} alt={name} id={_id} />
+      <img className="ingredient__image" src={image} alt={name} id={_id} />
       <div className={styles.burgerIngredient__costBox}>
         <p
           className={`text text_type_main-small ${styles.burgerIngredient__cost}`}

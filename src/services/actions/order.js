@@ -22,7 +22,7 @@ export function sendData(list) {
       .catch((error) => {
         dispatch({
           type: SEND_ORDER_ERROR,
-          payload: console.log(error),
+          payload: error,
         });
       });
   };
