@@ -1,4 +1,8 @@
+/* cSpell:disable */
 import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
 import styles from "./app.module.css";
 import AppHeader from "../AppHeader/AppHeder";
 import BurgerIngredients from "../BurgerIngredients/BurgerIngredients";
@@ -6,8 +10,9 @@ import BurgerConstructor from "../BurgerConstructor/BurgerConstructor";
 import Modal from "../Modal/Modal";
 import OrderDetails from "../OrderDetails/OrderDetails";
 import IngredientDetails from "../IngredientDetails/IngredientDetails";
-import { IngredientContext } from "../../services/appContext";
-import { api } from "../../utils/Api";
+import { getIngredients } from "../../services/actions/ingredients";
+import { deleteOrder } from "../../services/actions/order"
+
 
 function App() {
   const [orderDetails, setOrderDetails] = useState({ isOpened: false });
@@ -15,24 +20,17 @@ function App() {
     isOpened: false,
     ingredient: null,
   });
-  const [ingredients, setIngredients] = useState([]);
-  const [modalData, setModalData] = useState([]);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    getData();
-  }, []);
+    dispatch(getIngredients());
+  }, [dispatch]);
 
-  const orderList = React.useMemo(
-    () => ingredients.map((ingredient: any) => ingredient._id),
-    [ingredients]
-  );
+  
+  
   const handleOrderClick = () => {
-    api.sendData(orderList).then((data) => setModalData(data.order.number)).catch((error) => {
-      console.log(error);
-    })
     openOrderDetails();
   };
-
 
   const openOrderDetails = () => {
     setOrderDetails({ ...orderDetails, isOpened: true });
@@ -40,36 +38,24 @@ function App() {
   const closeAllModals = () => {
     setOrderDetails({ ...orderDetails, isOpened: false });
     setIngredientDetails({ ...ingredientDetails, isOpened: false });
-  };
-  const getData = async () => {
-    return api
-      .getData()
-      .then((ingredients) => {
-        if (ingredients) {
-          setIngredients(ingredients.data);
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      })
-      .finally(() => {
-        /*  setState({ ...state, isLoading: false }); */
-      });
+    dispatch(deleteOrder());
   };
 
-  const getIngridientsData = (cardData: any) => {
+  const getIngredientsData = (cardData) => {
     setIngredientDetails({ isOpened: true, ingredient: cardData });
   };
   return (
-    <IngredientContext.Provider value={ingredients}>
+    <>
       <AppHeader />
       <main className={styles.main}>
-        <BurgerIngredients getData={getIngridientsData} />
-        <BurgerConstructor openOrder={handleOrderClick} />
+        <DndProvider backend={HTML5Backend}>
+          <BurgerIngredients getData={getIngredientsData} />
+          <BurgerConstructor openOrder={handleOrderClick} />
+        </DndProvider>
       </main>
       {orderDetails.isOpened && (
         <Modal onClose={closeAllModals}>
-          <OrderDetails orderId={modalData} />
+          <OrderDetails />
         </Modal>
       )}
       {ingredientDetails.isOpened && (
@@ -81,7 +67,7 @@ function App() {
           />
         </Modal>
       )}
-    </IngredientContext.Provider>
+    </>
   );
 }
 

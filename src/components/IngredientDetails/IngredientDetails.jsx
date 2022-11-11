@@ -1,6 +1,7 @@
+/* cSpell:disable */
 import styles from "./ingredientDetails.module.css";
 import PropTypes from "prop-types";
-import closeButtonImg from "../../images/closeButton.svg";
+
 
 function IngredientDetails({ title, ingredientData }) {
   const { image_large, name, calories, carbohydrates, fat, proteins } =
