@@ -2,6 +2,8 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+[GH Pages](https://gyxer513.github.io/Stellar-Burgers/).  
+
 ## Available Scripts
 
 In the project directory, you can run:
