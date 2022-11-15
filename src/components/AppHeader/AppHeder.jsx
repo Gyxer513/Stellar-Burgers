@@ -1,5 +1,6 @@
 /* cSpell:disable; */
 import React from "react";
+import { Link } from 'react-router-dom';
 import {
   Logo,
   BurgerIcon,
@@ -16,15 +17,15 @@ const AppHeader = () => {
           <BurgerIcon type="primary" />
         </div>
         <div className="p-3">
-          <a className="text text_type_main-default">Конструктор</a>
+          <Link to='/' className={`${styles.header__link} text text_type_main-default text_color_inactive `}>Конструктор</Link>
         </div>
         <div className="m-2">
           <ListIcon type="secondary" />
         </div>
         <div className="p-3">
-          <a className="text text_type_main-default text_color_inactive">
+          <Link to='/' className={`${styles.header__link} text text_type_main-default text_color_inactive `}>
             Лента заказов
-          </a>
+          </Link>
         </div>
       </div>
       <Logo />
@@ -34,9 +35,9 @@ const AppHeader = () => {
           <ProfileIcon type="secondary" />
         </div>
         <div className="p-3">
-          <a className="text text_type_main-default text_color_inactive">
+          <Link to='/' className={`${styles.header__link} text text_type_main-default text_color_inactive`}>
             Личный кабинет
-          </a>
+          </Link>
         </div>
       </div>
     </header>

@@ -1,6 +1,7 @@
 /* cSpell:disable */
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import styles from "./app.module.css";
@@ -46,12 +47,15 @@ function App() {
   };
   return (
     <>
+    <Router>
       <AppHeader />
       <main className={styles.main}>
+      <Switch path="/" exact={true}>
         <DndProvider backend={HTML5Backend}>
           <BurgerIngredients getData={getIngredientsData} />
           <BurgerConstructor openOrder={handleOrderClick} />
         </DndProvider>
+      </Switch>  
       </main>
       {orderDetails.isOpened && (
         <Modal onClose={closeAllModals}>
@@ -67,6 +71,7 @@ function App() {
           />
         </Modal>
       )}
+      </Router>
     </>
   );
 }
