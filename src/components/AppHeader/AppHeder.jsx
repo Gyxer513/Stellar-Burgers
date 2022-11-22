@@ -1,6 +1,6 @@
 /* cSpell:disable; */
 import React from "react";
-import { Link } from 'react-router-dom';
+import { NavLink } from "react-router-dom";
 import {
   Logo,
   BurgerIcon,
@@ -17,15 +17,26 @@ const AppHeader = () => {
           <BurgerIcon type="primary" />
         </div>
         <div className="p-3">
-          <Link to='/' className={`${styles.header__link} text text_type_main-default text_color_inactive `}>Конструктор</Link>
+          <NavLink
+            to="/"
+            className={`${styles.header__link} text text_type_main-default text_color_inactive `}
+            activeClassName={styles.header__link_active}
+          >
+            Конструктор
+          </NavLink>
         </div>
         <div className="m-2">
           <ListIcon type="secondary" />
         </div>
         <div className="p-3">
-          <Link to='/' className={`${styles.header__link} text text_type_main-default text_color_inactive `}>
+          <NavLink
+            exact 
+            to="/profile/orders"
+            className={`${styles.header__link} text text_type_main-default text_color_inactive `}
+            activeClassName={styles.header__link_active}
+          >
             Лента заказов
-          </Link>
+          </NavLink>
         </div>
       </div>
       <Logo />
@@ -35,9 +46,14 @@ const AppHeader = () => {
           <ProfileIcon type="secondary" />
         </div>
         <div className="p-3">
-          <Link to='/' className={`${styles.header__link} text text_type_main-default text_color_inactive`}>
+          <NavLink
+            exact
+            to="/login"
+            className={`${styles.header__link} text text_type_main-default text_color_inactive`}
+            activeClassName={styles.header__link_active}
+          >
             Личный кабинет
-          </Link>
+          </NavLink>
         </div>
       </div>
     </header>

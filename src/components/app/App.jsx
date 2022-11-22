@@ -1,7 +1,7 @@
 /* cSpell:disable */
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import styles from "./app.module.css";
@@ -12,8 +12,8 @@ import Modal from "../Modal/Modal";
 import OrderDetails from "../OrderDetails/OrderDetails";
 import IngredientDetails from "../IngredientDetails/IngredientDetails";
 import { getIngredients } from "../../services/actions/ingredients";
-import { deleteOrder } from "../../services/actions/order"
-
+import { deleteOrder } from "../../services/actions/order";
+import Login from "../Login/Login"
 
 function App() {
   const [orderDetails, setOrderDetails] = useState({ isOpened: false });
@@ -27,8 +27,6 @@ function App() {
     dispatch(getIngredients());
   }, [dispatch]);
 
-  
-  
   const handleOrderClick = () => {
     openOrderDetails();
   };
@@ -47,30 +45,37 @@ function App() {
   };
   return (
     <>
-    <Router>
-      <AppHeader />
-      <main className={styles.main}>
-      <Switch path="/" exact={true}>
-        <DndProvider backend={HTML5Backend}>
-          <BurgerIngredients getData={getIngredientsData} />
-          <BurgerConstructor openOrder={handleOrderClick} />
-        </DndProvider>
-      </Switch>  
-      </main>
-      {orderDetails.isOpened && (
-        <Modal onClose={closeAllModals}>
-          <OrderDetails />
-        </Modal>
-      )}
-      {ingredientDetails.isOpened && (
-        <Modal onClose={closeAllModals}>
-          <IngredientDetails
-            title={`Детали ингредиента`}
-            ingredientData={ingredientDetails.ingredient}
-            closeModal={closeAllModals}
-          />
-        </Modal>
-      )}
+      <Router>
+          <AppHeader />
+          <Switch>
+          <Route exact path="/">
+          <main className={styles.main}>
+            <DndProvider backend={HTML5Backend}>
+              <BurgerIngredients getData={getIngredientsData} />
+              <BurgerConstructor openOrder={handleOrderClick} />
+            </DndProvider>
+          </main>
+          </Route>
+          <Route exact path="/login">
+            <Login/>
+          </Route>
+          </Switch>
+          
+          {orderDetails.isOpened && (
+            <Modal onClose={closeAllModals}>
+              <OrderDetails />
+            </Modal>
+          )}
+          {ingredientDetails.isOpened && (
+            <Modal onClose={closeAllModals}>
+              <IngredientDetails
+                title={`Детали ингредиента`}
+                ingredientData={ingredientDetails.ingredient}
+                closeModal={closeAllModals}
+              />
+            </Modal>
+          )}
+        
       </Router>
     </>
   );

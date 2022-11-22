@@ -21,3 +21,6 @@
 .header__link:hover {
   opacity: 0.6;
 }
+.header__link_active {
+  color: white;
+}
