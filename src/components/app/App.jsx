@@ -47,8 +47,8 @@ function App() {
     <>
       <Router>
           <AppHeader />
-          <Switch>
-          <Route exact path="/">
+          <Switch path="/">
+          <Route exact path="/main">
           <main className={styles.main}>
             <DndProvider backend={HTML5Backend}>
               <BurgerIngredients getData={getIngredientsData} />
