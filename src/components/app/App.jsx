@@ -14,6 +14,7 @@ import IngredientDetails from "../IngredientDetails/IngredientDetails";
 import { getIngredients } from "../../services/actions/ingredients";
 import { deleteOrder } from "../../services/actions/order";
 import Login from "../Login/Login"
+import { getData } from "../../services/reducers/ingredients"
 
 function App() {
   const [orderDetails, setOrderDetails] = useState({ isOpened: false });
@@ -24,7 +25,7 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getIngredients());
+    dispatch(getData());
   }, [dispatch]);
 
   const handleOrderClick = () => {

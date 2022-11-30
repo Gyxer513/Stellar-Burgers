@@ -21,11 +21,9 @@ import ConstructorItem from "./ConstructorItem";
 
 const BurgerConstructor = ({ openOrder }) => {
   const dispatch = useDispatch();
-  const chosenIngredients = useSelector(
-    (state) => state.ingredients.chosenIngredients
+  const {ingredients, chosenBun, chosenIngredients } = useSelector(
+    (state) => state.ingredientsReducer
   );
-  const ingredients = useSelector((state) => state.ingredients.ingredients);
-  const chosenBun = useSelector((state) => state.ingredients.chosenBun);
 
   const handleDrop = (ingredientId) => {
     const targetIngredient = ingredients.find(

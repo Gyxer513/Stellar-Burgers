@@ -10,7 +10,8 @@ import { useSelector } from "react-redux";
 
 const BurgerIngredients = ({ getData }) => {
   const [current, setCurrent] = React.useState("one");
-  const ingredients = useSelector((state) => state.ingredients.ingredients);
+  const {ingredients} = useSelector((state) => state.ingredientsReducer);
+  console.log(ingredients);
   
   
   const handleTabClick = (type) => {

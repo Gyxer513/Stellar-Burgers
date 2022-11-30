@@ -1,12 +1,6 @@
-import {
-  GET_INGREDIENTS_DATA,
-  GET_INGREDIENTS_SUCCESS,
-  GET_INGREDIENTS_ERROR,
-  ADD_INGREDIENT,
-  ADD_BUN,
-  DELETE_INGREDIENT,
-  SORT_INGREDIENTS
-} from "../actions/ingredients";
+import {api} from "../../utils/Api";
+import { randomId } from "../../utils/data";
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 const initialState = {
   ingredients: [],
@@ -15,52 +9,43 @@ const initialState = {
   ingredientsRequest: false,
   ingredientsFailed: false,
 };
-export const ingredientsReducer = (state = initialState, action) => {
-  switch (action.type) {
-    case GET_INGREDIENTS_DATA: {
-      return {
-        ...state,
-        ingredientsRequest: true,
-        ingredientsFailed: false,
-      };
+
+export const getData = createAsyncThunk(
+  'getData',
+  async () => {
+      const res = api.getData();
+      return res
+  })
+
+  export const ingredientsReducer = createSlice({
+    name: 'reducerIngredients',
+    initialState: initialState,
+    reducers: {
+      addItem: {
+        reducer: (state, action) => {
+            state.chosenIngredients.push(action.payload);
+            state.priceState = state.priceState + action.payload.price;
+        },
+        prepare: addedIngredients => {
+          const newArray = addedIngredients.map((ingredientObject) => {
+            return Object.assign(  {randomId: randomId()}, ingredientObject);
+          });
+            return { payload: newArray }
+        }
+    },
+    },
+    extraReducers: {
+        [getData.pending]: (state) => {
+            state.ingredientsRequest = true
+        },
+        [getData.fulfilled]: (state, action) => {
+            state.ingredients = action.payload.data;
+            state.ingredientsRequest = false
+        },
+        [getData.rejected]: (state) => {
+            state.ingredientsFailed= true
+        }
     }
-    case GET_INGREDIENTS_SUCCESS: {
-      return {
-        ...state,
-        ingredientsRequest: false,
-        ingredients: action.payload,
-      };
-    }
-    case GET_INGREDIENTS_ERROR: {
-      return {
-        ...state,
-        ingredientsRequest: false,
-        ingredientsFailed: true,
-      };
-    }
-    case ADD_INGREDIENT: {
-      return {
-        ...state,
-        chosenIngredients: action.payload,
-      };
-    }
-    case ADD_BUN: {
-      return {
-        ...state,
-        chosenBun: action.payload,
-      };
-    }
-    case DELETE_INGREDIENT: {
-      return { ...state, chosenIngredients: action.payload };
-    }
-    case SORT_INGREDIENTS: {
-      return {
-        ...state,
-        chosenIngredients: action.payload
-      };
-    }
-    default: {
-      return state;
-    }
-  }
-};
+})
+export const {addItem} = ingredientsReducer.actions
+export default ingredientsReducer.reducer;

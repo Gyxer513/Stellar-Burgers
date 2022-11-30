@@ -1,12 +1,13 @@
 import { rootReducer } from "./reducers/index";
+import { configureStore } from '@reduxjs/toolkit';
 import { compose, createStore, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
+import ingredientsReducer from "./reducers/ingredients"
 
-export const composeEnhancers =
-  typeof window === "object" && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
-    ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
-    : compose;
+const store = new configureStore({
+  reducer: {
+    ingredientsReducer,
+  },
+});
 
-const enhancer = composeEnhancers(applyMiddleware(thunk));
-
-export const store = createStore(rootReducer, enhancer);
+export default store;
