@@ -24,7 +24,6 @@ export const getData = createAsyncThunk(
       addItem: {
         reducer: (state, action) => {
             state.chosenIngredients.push(action.payload);
-            state.priceState = state.priceState + action.payload.price;
         },
         prepare: addedIngredients => {
           const newArray = addedIngredients.map((ingredientObject) => {
