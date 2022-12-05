@@ -12,8 +12,8 @@ import Modal from "../Modal/Modal";
 import OrderDetails from "../OrderDetails/OrderDetails";
 import IngredientDetails from "../IngredientDetails/IngredientDetails";
 import { deleteOrderData } from "../../services/reducers/order";
-import Login from "../Login/Login"
-import { getData } from "../../services/reducers/ingredients"
+import { getData } from "../../services/reducers/ingredients";
+import {Login} from "../../pages/login/Login.jsx";
 
 function App() {
   const [orderDetails, setOrderDetails] = useState({ isOpened: false });
@@ -48,7 +48,7 @@ function App() {
       <Router>
           <AppHeader />
           <Switch path="/">
-          <Route exact path="/main">
+          <Route exact path="/">
           <main className={styles.main}>
             <DndProvider backend={HTML5Backend}>
               <BurgerIngredients getData={getIngredientsData} />

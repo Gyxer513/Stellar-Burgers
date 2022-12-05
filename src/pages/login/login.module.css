@@ -1,0 +1,28 @@
+.login {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+}
+
+.login__input {
+  padding: 0 0 24px 0;
+}
+
+.login__register {
+  margin: 80px 0 16px 0;
+  display: flex;
+}
+
+.login__link {
+  text-decoration: none;
+  color: #4c4cff;
+}
+
+.login__link:hover {
+  opacity: 0.8;
+}
+
+.login__reset {
+  display: flex;
+}
