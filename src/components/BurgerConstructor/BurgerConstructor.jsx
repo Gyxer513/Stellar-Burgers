@@ -11,12 +11,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import styles from "./burgerConstructor.module.css";
 import update from "immutability-helper";
-import {addItem} from "../../services/reducers/ingredients";
-import {
-  addIngredient,
-  addBun,
-  sortIngredients,
-} from "../../services/actions/ingredients";
+import {addIngredient, addBun, sortIngredients  } from "../../services/reducers/ingredients";
 import { useDrop } from "react-dnd";
 import ConstructorItem from "./ConstructorItem";
 
@@ -34,7 +29,7 @@ const BurgerConstructor = ({ openOrder }) => {
       dispatch(addBun(targetIngredient));
     } else {
       if (chosenBun != null) {
-        dispatch(addItem([...chosenIngredients, targetIngredient]));
+        dispatch(addIngredient(targetIngredient));
       }
     }
   };

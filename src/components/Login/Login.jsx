@@ -19,7 +19,7 @@ import {
             type={"text"}
             onChange={(e) => setEmailValue(e.target.value)}
             placeholder={"E-mail"}
-            value={"emailValue"}
+            value={""}
             name={"e-mail"}
             error={false}
             errorText={"Ошибка"}
@@ -31,7 +31,7 @@ import {
           type={"text"}
           onChange={(e) => setEmailValue(e.target.value)}
           placeholder={"E-mail"}
-          value={"emailValue"}
+          value={""}
           name={"e-mail"}
           error={false}
           errorText={"Ошибка"}

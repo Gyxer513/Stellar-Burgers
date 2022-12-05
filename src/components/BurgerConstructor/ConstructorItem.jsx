@@ -7,14 +7,14 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDrag, useDrop } from "react-dnd";
 import { useRef } from "react";
-import { deleteIngredient } from "../../services/actions/ingredients";
+import { deleteIngredient } from "../../services/reducers/ingredients";
 import { ingredientPropType } from "../../utils/prop-types";
 import PropTypes from "prop-types";
 
 const ConstructorItem = ({ data, id, moveIngredient, index }) => {
   const { image, name, price } = data;
-  const chosenIngredients = useSelector(
-    (state) => state.ingredients.chosenIngredients
+  const {chosenIngredients } = useSelector(
+    (state) => state.ingredientsReducer
   );
   const ref = useRef(null);
   const dispatch = useDispatch();

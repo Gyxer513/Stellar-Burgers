@@ -13,7 +13,6 @@ import { useDrag } from "react-dnd";
 const BurgerIngredient = ({ data, getData }) => {
   const { image, price, name, _id } = data;
   const {chosenBun, chosenIngredients} = useSelector((state) => state.ingredientsReducer);
-
   const [, dragRef] = useDrag({
     type: "ingredient",
     item: { _id },

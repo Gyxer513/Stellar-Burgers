@@ -1,50 +1,65 @@
-import {api} from "../../utils/Api";
+/* cSpell:disable; */
+import { api } from "../../utils/Api";
 import { randomId } from "../../utils/data";
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-const initialState = {
-  ingredients: [],
-  chosenIngredients: [],
-  chosenBun: null,
-  ingredientsRequest: false,
-  ingredientsFailed: false,
-};
+export const getData = createAsyncThunk("getData", async () => {
+  const res = api.getData();
+  return res;
+});
 
-export const getData = createAsyncThunk(
-  'getData',
-  async () => {
-      const res = api.getData();
-      return res
-  })
-
-  export const ingredientsReducer = createSlice({
-    name: 'reducerIngredients',
-    initialState: initialState,
-    reducers: {
-      addItem: {
-        reducer: (state, action) => {
-            state.chosenIngredients.push(action.payload);
-        },
-        prepare: addedIngredients => {
-          const newArray = addedIngredients.map((ingredientObject) => {
-            return Object.assign(  {randomId: randomId()}, ingredientObject);
-          });
-            return { payload: newArray }
-        }
+export const ingredientsReducer = createSlice({
+  name: "reducerIngredients",
+  initialState: {
+    ingredients: [],
+    chosenIngredients: [],
+    chosenBun: null,
+    ingredientsRequest: false,
+    ingredientsFailed: false,
+  },
+  reducers: {
+    addIngredient: {
+      reducer: (state, action) => {
+        state.chosenIngredients.push(action.payload);
+      },
+      prepare: (targetIngredient) => {
+        const newArray = Object.assign(
+          { randomId: randomId() },
+          targetIngredient
+        );
+        return { payload: newArray };
+      },
     },
+    addBun: {
+      reducer: (state, action) => {
+        state.chosenBun = action.payload;
+      },
+      prepare: (addedBun) => {
+        const newBan = Object.assign({ randomId: randomId() }, addedBun);
+        return { payload: newBan };
+      },
     },
-    extraReducers: {
-        [getData.pending]: (state) => {
-            state.ingredientsRequest = true
-        },
-        [getData.fulfilled]: (state, action) => {
-            state.ingredients = action.payload.data;
-            state.ingredientsRequest = false
-        },
-        [getData.rejected]: (state) => {
-            state.ingredientsFailed= true
-        }
-    }
-})
-export const {addItem} = ingredientsReducer.actions
+
+    deleteIngredient: (state, action) => {
+      state.chosenIngredients = action.payload;
+    },
+    sortIngredients: (state, action) => {
+      state.chosenIngredients = action.payload;
+    },
+  },
+  extraReducers: {
+    [getData.pending]: (state) => {
+      state.ingredientsRequest = true;
+    },
+    [getData.fulfilled]: (state, action) => {
+      state.ingredients = action.payload.data;
+      state.ingredientsRequest = false;
+    },
+    [getData.rejected]: (state) => {
+      state.ingredientsFailed = true;
+    },
+  },
+});
+export const { addIngredient, addBun, deleteIngredient, sortIngredients } =
+  ingredientsReducer.actions;
 export default ingredientsReducer.reducer;
