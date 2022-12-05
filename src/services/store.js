@@ -1,12 +1,12 @@
-import { rootReducer } from "./reducers/index";
 import { configureStore } from '@reduxjs/toolkit';
-import { compose, createStore, applyMiddleware } from "redux";
-import thunk from "redux-thunk";
 import ingredientsReducer from "./reducers/ingredients"
+import orderReducer from './reducers/order';
 
 const store = new configureStore({
   reducer: {
+    orderReducer,
     ingredientsReducer,
+    
   },
 });
 
