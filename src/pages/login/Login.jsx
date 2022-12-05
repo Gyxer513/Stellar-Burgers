@@ -52,7 +52,7 @@ export const Login = () => {
           Забыли пароль?
         </p>
         <NavLink
-          to="/reset-password"
+          to="/forgot-password"
           className={`${styles.login__link} text text_type_main-default text_color_inactive `}
         >
           Восстановить пароль

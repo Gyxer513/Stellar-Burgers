@@ -15,6 +15,7 @@ import { deleteOrderData } from "../../services/reducers/order";
 import { getData } from "../../services/reducers/ingredients";
 import {Login} from "../../pages/login/Login.jsx";
 import {Register} from "../../pages/register/Register"
+import { FogotPassword } from "../../pages/fogot-password/FogotPassword"
 
 function App() {
   const [orderDetails, setOrderDetails] = useState({ isOpened: false });
@@ -62,6 +63,9 @@ function App() {
           </Route>
           <Route exact path="/register">
             <Register/>
+          </Route>
+          <Route exact path="/forgot-password">
+            <FogotPassword />
           </Route>
           </Switch>
           
