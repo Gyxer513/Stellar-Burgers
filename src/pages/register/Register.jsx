@@ -10,7 +10,7 @@ import {
 export const Register = () => {
   return (
     <section className={styles.register}>
-      <h2 className="m-10 text text_type_main-medium">Вход</h2>
+      <h2 className="m-10 text text_type_main-medium">Регистрация</h2>
       <div className={styles.register__input}>
         <Input
           type={"text"}
@@ -44,7 +44,7 @@ export const Register = () => {
           size={"default"}
         />
       </div>
-      <Button>Войти</Button>
+      <Button>Зарегистрироваться</Button>
       <div className={styles.register__register}>
         <p className={`text text_type_main-default text_color_active mr-2`}>
         Уже зарегистрированы?
