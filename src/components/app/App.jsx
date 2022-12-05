@@ -14,6 +14,7 @@ import IngredientDetails from "../IngredientDetails/IngredientDetails";
 import { deleteOrderData } from "../../services/reducers/order";
 import { getData } from "../../services/reducers/ingredients";
 import {Login} from "../../pages/login/Login.jsx";
+import {Register} from "../../pages/register/Register"
 
 function App() {
   const [orderDetails, setOrderDetails] = useState({ isOpened: false });
@@ -58,6 +59,9 @@ function App() {
           </Route>
           <Route exact path="/login">
             <Login/>
+          </Route>
+          <Route exact path="/register">
+            <Register/>
           </Route>
           </Switch>
           
