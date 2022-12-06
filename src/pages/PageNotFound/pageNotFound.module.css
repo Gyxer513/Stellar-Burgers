@@ -1,0 +1,20 @@
+.pageNotFound {
+  display: flex;
+  text-align: center;
+  flex-direction: column;
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+}
+.pageNotFound__title {
+    font-size: 5em;
+    color: #4c4cff;
+    margin: 0 0 20px 0;
+}
+.pageNotFound__text {
+    font-size: 3em;
+    color: #4c4cff;
+}

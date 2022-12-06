@@ -1,7 +1,7 @@
 /* cSpell:disable */
-import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { Switch, Route, BrowserRouter } from "react-router-dom";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import styles from "./app.module.css";
@@ -13,9 +13,10 @@ import OrderDetails from "../OrderDetails/OrderDetails";
 import IngredientDetails from "../IngredientDetails/IngredientDetails";
 import { deleteOrderData } from "../../services/reducers/order";
 import { getData } from "../../services/reducers/ingredients";
-import {Login} from "../../pages/login/Login.jsx";
-import {Register} from "../../pages/register/Register"
-import { FogotPassword } from "../../pages/fogot-password/FogotPassword"
+import { Login } from "../../pages/login/Login.jsx";
+import { Register } from "../../pages/register/Register";
+import { ForgotPassword } from "../../pages/fogot-password/ForgotPassword";
+import { PageNotFound } from "../../pages/PageNotFound/PageNotFound";
 
 function App() {
   const [orderDetails, setOrderDetails] = useState({ isOpened: false });
@@ -47,44 +48,46 @@ function App() {
   };
   return (
     <>
-      <Router>
-          <AppHeader />
-          <Switch path="/">
+      <BrowserRouter>
+        <AppHeader />
+        <Switch path="/">
           <Route exact path="/">
-          <main className={styles.main}>
-            <DndProvider backend={HTML5Backend}>
-              <BurgerIngredients getData={getIngredientsData} />
-              <BurgerConstructor openOrder={handleOrderClick} />
-            </DndProvider>
-          </main>
+            <main className={styles.main}>
+              <DndProvider backend={HTML5Backend}>
+                <BurgerIngredients getData={getIngredientsData} />
+                <BurgerConstructor openOrder={handleOrderClick} />
+              </DndProvider>
+            </main>
           </Route>
           <Route exact path="/login">
-            <Login/>
+            <Login />
           </Route>
           <Route exact path="/register">
-            <Register/>
+            <Register />
           </Route>
           <Route exact path="/forgot-password">
-            <FogotPassword />
+            <ForgotPassword />
           </Route>
-          </Switch>
-          
-          {orderDetails.isOpened && (
-            <Modal onClose={closeAllModals}>
-              <OrderDetails />
-            </Modal>
-          )}
-          {ingredientDetails.isOpened && (
-            <Modal onClose={closeAllModals}>
-              <IngredientDetails
-                title={`Детали ингредиента`}
-                ingredientData={ingredientDetails.ingredient}
-                closeModal={closeAllModals}
-              />
-            </Modal>
-          )}
-        
-      </Router>
+          <Route exact path="*">
+            <PageNotFound  />
+          </Route>
+        </Switch>
+
+        {orderDetails.isOpened && (
+          <Modal onClose={closeAllModals}>
+            <OrderDetails />
+          </Modal>
+        )}
+        {ingredientDetails.isOpened && (
+          <Modal onClose={closeAllModals}>
+            <IngredientDetails
+              title={`Детали ингредиента`}
+              ingredientData={ingredientDetails.ingredient}
+              closeModal={closeAllModals}
+            />
+          </Modal>
+        )}
+      </BrowserRouter>
     </>
   );
 }
