@@ -55,7 +55,7 @@ const BurgerIngredients = ({ getData }) => {
                   <BurgerIngredient
                     key={item._id}
                     data={item}
-                    getData={getData}
+                       getData={getData}   
                   />
                 );
               }
