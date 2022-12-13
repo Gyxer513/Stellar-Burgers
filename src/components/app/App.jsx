@@ -18,6 +18,7 @@ import { Register } from "../../pages/register/Register";
 import { ForgotPassword } from "../../pages/fogot-password/ForgotPassword";
 import { PageNotFound } from "../../pages/PageNotFound/PageNotFound";
 
+
 function App() {
   const [orderDetails, setOrderDetails] = useState({ isOpened: false });
   const [ingredientDetails, setIngredientDetails] = useState({
@@ -37,9 +38,11 @@ function App() {
   const openOrderDetails = () => {
     setOrderDetails({ ...orderDetails, isOpened: true });
   };
-  const closeAllModals = () => {
-    setOrderDetails({ ...orderDetails, isOpened: false });
+  const closeIngredientModal = () => {
     setIngredientDetails({ ...ingredientDetails, isOpened: false });
+  };
+  const closeDetailsModal = () => {
+    setOrderDetails({ ...orderDetails, isOpened: false });
     dispatch(deleteOrderData());
   };
 
@@ -65,28 +68,35 @@ function App() {
           <Route exact path="/register">
             <Register />
           </Route>
+          <Route exact path="/ingredients/:id">
+          <IngredientDetails title="Детали ингредиента" />
+        </Route>
           <Route exact path="/forgot-password">
             <ForgotPassword />
           </Route>
           <Route exact path="*">
             <PageNotFound  />
           </Route>
+          
         </Switch>
 
         {orderDetails.isOpened && (
-          <Modal onClose={closeAllModals}>
+          <Modal onClose={closeDetailsModal}>
             <OrderDetails />
           </Modal>
         )}
-        {ingredientDetails.isOpened && (
-          <Modal onClose={closeAllModals}>
-            <IngredientDetails
-              title={`Детали ингредиента`}
-              ingredientData={ingredientDetails.ingredient}
-              closeModal={closeAllModals}
-            />
-          </Modal>
-        )}
+        {ingredientDetails.isOpened && 
+        (<Route
+          exact path="/ingredients/:id"
+          children={
+            <Modal
+              onClose={closeIngredientModal}
+              title="Детали ингредиента"
+            >
+              <IngredientDetails />
+            </Modal>
+          }
+        />)}
       </BrowserRouter>
     </>
   );

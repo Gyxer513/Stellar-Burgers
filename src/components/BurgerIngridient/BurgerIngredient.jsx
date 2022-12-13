@@ -7,12 +7,16 @@ import {
   CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./burgerIngredient.module.css";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useDrag } from "react-dnd";
+import { selectIngredientData } from "../../services/reducers/ingredients";
 
-const BurgerIngredient = ({ data, getData }) => {
+const BurgerIngredient = ({ data }) => {
+  const dispatch = useDispatch();
   const { image, price, name, _id } = data;
-  const {chosenBun, chosenIngredients} = useSelector((state) => state.ingredientsReducer);
+  const { chosenBun, chosenIngredients, selectIngredient } = useSelector(
+    (state) => state.ingredientsReducer
+  );
   const [, dragRef] = useDrag({
     type: "ingredient",
     item: { _id },
@@ -20,8 +24,10 @@ const BurgerIngredient = ({ data, getData }) => {
       isDrag: monitor.isDragging(),
     }),
   });
-
-  
+  const handleClick = () => {
+    console.log(selectIngredient);
+    dispatch(selectIngredientData(data));
+  };
 
   const count = () => {
     let ingredientCounter = 0;
@@ -34,7 +40,7 @@ const BurgerIngredient = ({ data, getData }) => {
         }
       });
     }
-    return ingredientCounter
+    return ingredientCounter;
   };
 
   return (
@@ -42,11 +48,9 @@ const BurgerIngredient = ({ data, getData }) => {
       disabled={true}
       ref={dragRef}
       className={styles.burgerIngredient}
-      onClick={() => getData(data)}
+      onClick={handleClick}
     >
-      {count() > 0 && (
-        <Counter count={count()} size="default" />
-      )}
+      {count() > 0 && <Counter count={count()} size="default" />}
       <img className="ingredient__image" src={image} alt={name} id={_id} />
       <div className={styles.burgerIngredient__costBox}>
         <p
@@ -66,6 +70,5 @@ const BurgerIngredient = ({ data, getData }) => {
 };
 BurgerIngredient.propType = {
   data: PropTypes.arrayOf(ingredientPropType).isRequired,
-  getData: PropTypes.func.isRequired,
 };
 export default BurgerIngredient;

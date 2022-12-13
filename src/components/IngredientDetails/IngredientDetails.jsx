@@ -1,16 +1,22 @@
 /* cSpell:disable */
 import styles from "./ingredientDetails.module.css";
 import PropTypes from "prop-types";
+import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 
 
-function IngredientDetails({ title, ingredientData }) {
+
+function IngredientDetails() {
+  const { id } = useParams();
+  const {ingredients} = useSelector((state) => state.ingredientsReducer);
+  const selectedIngredient = ingredients.find(ingredient => ingredient._id === id)
   const { image_large, name, calories, carbohydrates, fat, proteins } =
-    ingredientData;
+  selectedIngredient;
 
   return (
     <div className={`pl-10 pr-10 ${styles.ingredient}`}>
       <div className={`mt-10 ${styles.ingredient__top}`}>
-        <h2 className="text text_type_main-large">{title}</h2>
+        <h2 className="text text_type_main-large">{"Детали ингридиента"}</h2>
       </div>
       <img className="mt-15 mb-15" src={image_large} alt="Ингредиент" />
       <p
@@ -67,11 +73,5 @@ function IngredientDetails({ title, ingredientData }) {
     </div>
   );
 }
-
-IngredientDetails.propTypes = {
-  closeModal: PropTypes.func.isRequired,
-  title: PropTypes.string.isRequired,
-  ingredientData: PropTypes.any.isRequired,
-};
 
 export default IngredientDetails;
