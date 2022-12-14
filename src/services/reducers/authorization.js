@@ -23,22 +23,19 @@ const authorizationReducer = createSlice({
   reducers: {},
   extraReducers: {
     [registerNewUser.pending]: (state) => {
-        state.isLoading = true;
+      state.isLoading = true;
     },
     [registerNewUser.fulfilled]: (state, action) => {
-        state.isLoading = true;
-        state.isAuthorizationSucsess = true;
-        state.userData = action.payload.user
-        localStorage.setItem('refreshToken', action.refreshToken)
-        state.accessToken = action.payload.accessToken
+      state.isLoading = true;
+      state.isAuthorizationSucsess = true;
+      state.userData = action.payload.user;
+      localStorage.setItem("refreshToken", action.refreshToken);
+      state.accessToken = action.payload.accessToken;
     },
     [registerNewUser.rejected]: (state) => {
-        state.isAuthorizationSucsess = false;
+      state.isAuthorizationSucsess = false;
     },
   },
 });
-
-
-
 
 export default authorizationReducer.reducer;
