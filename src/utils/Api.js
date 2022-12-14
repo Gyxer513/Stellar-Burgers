@@ -22,6 +22,19 @@ class Api {
       body: JSON.stringify({ ingredients: orderList }),
     }).then((res) => this._checkResponse(res));
   }
+  newUser(email, name, password) {
+    return fetch(`${this._link}/auth/register`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email,
+        password,
+        name,
+      }),
+    }).then((res) => this._checkResponse(res));
+  }
 }
 
 export const api = new Api(BASE_URL);

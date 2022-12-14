@@ -11,13 +11,17 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import styles from "./burgerConstructor.module.css";
 import update from "immutability-helper";
-import {addIngredient, addBun, sortIngredients  } from "../../services/reducers/ingredients";
+import {
+  addIngredient,
+  addBun,
+  sortIngredients,
+} from "../../services/reducers/ingredients";
 import { useDrop } from "react-dnd";
 import ConstructorItem from "./ConstructorItem";
 
 const BurgerConstructor = ({ openOrder }) => {
   const dispatch = useDispatch();
-  const {ingredients, chosenBun, chosenIngredients } = useSelector(
+  const { ingredients, chosenBun, chosenIngredients } = useSelector(
     (state) => state.ingredientsReducer
   );
 
@@ -46,7 +50,7 @@ const BurgerConstructor = ({ openOrder }) => {
 
   const totalPrice = React.useMemo(
     () =>
-      chosenBun?.price * 2  +
+      chosenBun?.price * 2 +
       chosenIngredients.reduce(
         (res, currentElement) => res + currentElement.price,
         0
@@ -120,16 +124,12 @@ const BurgerConstructor = ({ openOrder }) => {
         </div>
       )}
       <div className={styles.burgerConstructor__box}>
-        <p className="text text_type_main-large">
-          {totalPrice || 0}
-        </p>
+        <p className="text text_type_main-large">{totalPrice || 0}</p>
         <div className="m-2"></div>
         <CurrencyIcon type="primary" />
         <div className="m-2"></div>
         <Button
-          disabled={
-            !totalPrice || 0
-          }
+          disabled={!totalPrice || 0}
           htmlType="button"
           type="primary"
           size="medium"
