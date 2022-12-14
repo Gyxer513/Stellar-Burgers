@@ -53,17 +53,13 @@ export const Register = () => {
       </div>
       <div className={styles.register__input}>
         <PasswordInput
-          type={"text"}
-          placeholder={"Пароль"}
           value={password}
           name={"password"}
-          errorText={"Ошибка в пароле"}
           onChange={onChange}
-          icon={'ShowIcon'}
         />
       </div>
       <Button
-        disabled={userName && email}
+        /* disabled={} */
         htmlType="submit"
         type="primary"
         size="medium"
