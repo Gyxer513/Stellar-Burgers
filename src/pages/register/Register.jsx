@@ -8,6 +8,8 @@ import {
   Button,
   PasswordInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import { registerNewUser } from '../../services/reducers/authorization';
+import { useDispatch } from 'react-redux';
 
 export const Register = () => {
   const [userData, setUserData] = React.useState({
@@ -16,6 +18,7 @@ export const Register = () => {
     password: "",
   });
   const { userName, email, password } = userData;
+  const dispatch = useDispatch();
   const onChange = (e) => {
     setUserData({
       ...userData,
@@ -24,8 +27,12 @@ export const Register = () => {
   };
   const submitRegistration = (e) => {
     e.preventDefault();
-    console.log(e.target);
     console.log(userData);
+    dispatch(registerNewUser({
+      "email": email, 
+      "password": password, 
+      "name": userName 
+  } )).then(res => console.log(res))
   };
   return (
     <form onSubmit={submitRegistration} className={styles.register}>
@@ -59,7 +66,7 @@ export const Register = () => {
         />
       </div>
       <Button
-        /* disabled={} */
+        disabled={!userName || !email || !password} 
         htmlType="submit"
         type="primary"
         size="medium"

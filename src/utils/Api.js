@@ -22,17 +22,16 @@ class Api {
       body: JSON.stringify({ ingredients: orderList }),
     }).then((res) => this._checkResponse(res));
   }
-  newUser(email, name, password) {
+
+/*   Запросы авторизации спринт 9 роутинг и авторизация */
+
+  newUser(data) {
     return fetch(`${this._link}/auth/register`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({
-        email,
-        password,
-        name,
-      }),
+      body: JSON.stringify(data),
     }).then((res) => this._checkResponse(res));
   }
 }

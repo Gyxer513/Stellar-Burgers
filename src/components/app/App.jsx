@@ -16,7 +16,7 @@ import { getData, deleteSelectedIngredientData, clearSelectedIngregientsStore } 
 import { Login } from "../../pages/login/Login.jsx";
 import { Register } from "../../pages/register/Register";
 import { ForgotPassword } from "../../pages/fogot-password/ForgotPassword";
-import { PageNotFound } from "../../pages/PageNotFound/PageNotFound";
+import { PageNotFound } from "../../pages/pageNotFound/PageNotFound";
 import { useSelector } from "react-redux";
 
 function App() {
