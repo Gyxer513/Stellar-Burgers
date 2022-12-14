@@ -1,7 +1,12 @@
 /* cSpell:disable */
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { Switch, Route, BrowserRouter } from "react-router-dom";
+import {
+  Switch,
+  Route,
+  useHistory,
+  useLocation,
+} from "react-router-dom";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import styles from "./app.module.css";
@@ -17,16 +22,21 @@ import { Login } from "../../pages/login/Login.jsx";
 import { Register } from "../../pages/register/Register";
 import { ForgotPassword } from "../../pages/fogot-password/ForgotPassword";
 import { PageNotFound } from "../../pages/PageNotFound/PageNotFound";
+import { useSelector } from "react-redux";
 
-
-function App() {
+function App() { 
+  const location = useLocation();
+  const history = useHistory(); 
+  const dispatch = useDispatch();
   const [orderDetails, setOrderDetails] = useState({ isOpened: false });
   const [ingredientDetails, setIngredientDetails] = useState({
     isOpened: false,
-    ingredient: null,
   });
-  const dispatch = useDispatch();
-
+ 
+  const { ingredients, selectIngredient } = useSelector(
+    (state) => state.ingredientsReducer
+  );
+console.log(location);
   useEffect(() => {
     dispatch(getData());
   }, [dispatch]);
@@ -34,11 +44,11 @@ function App() {
   const handleOrderClick = () => {
     openOrderDetails();
   };
-
   const openOrderDetails = () => {
     setOrderDetails({ ...orderDetails, isOpened: true });
   };
   const closeIngredientModal = () => {
+    history.goBack();
     setIngredientDetails({ ...ingredientDetails, isOpened: false });
   };
   const closeDetailsModal = () => {
@@ -46,18 +56,17 @@ function App() {
     dispatch(deleteOrderData());
   };
 
-  const getIngredientsData = (cardData) => {
-    setIngredientDetails({ isOpened: true, ingredient: cardData });
+  const openIngredientModal = () => {
+    setIngredientDetails({ ...ingredientDetails, isOpened: true });
   };
   return (
     <>
-      <BrowserRouter>
         <AppHeader />
-        <Switch path="/">
+        <Switch>
           <Route exact path="/">
             <main className={styles.main}>
               <DndProvider backend={HTML5Backend}>
-                <BurgerIngredients getData={getIngredientsData} />
+                <BurgerIngredients openModal={openIngredientModal} />
                 <BurgerConstructor openOrder={handleOrderClick} />
               </DndProvider>
             </main>
@@ -69,15 +78,14 @@ function App() {
             <Register />
           </Route>
           <Route exact path="/ingredients/:id">
-          <IngredientDetails title="Детали ингредиента" />
-        </Route>
+            {!selectIngredient && <IngredientDetails />}
+          </Route>
           <Route exact path="/forgot-password">
             <ForgotPassword />
           </Route>
           <Route exact path="*">
-            <PageNotFound  />
+            <PageNotFound />
           </Route>
-          
         </Switch>
 
         {orderDetails.isOpened && (
@@ -85,19 +93,13 @@ function App() {
             <OrderDetails />
           </Modal>
         )}
-        {ingredientDetails.isOpened && 
-        (<Route
-          exact path="/ingredients/:id"
-          children={
-            <Modal
-              onClose={closeIngredientModal}
-              title="Детали ингредиента"
-            >
-              <IngredientDetails />
+        {ingredients.length > 0 && (
+          <Route path="/ingredients/:id">
+            <Modal onClose={closeIngredientModal} title="Детали ингредиента">
+              {selectIngredient && <IngredientDetails />}
             </Modal>
-          }
-        />)}
-      </BrowserRouter>
+          </Route>
+        )}
     </>
   );
 }

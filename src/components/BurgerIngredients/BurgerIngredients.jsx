@@ -8,7 +8,7 @@ import { ingredientPropType } from "../../utils/prop-types";
 import { useSelector } from "react-redux";
 
 
-const BurgerIngredients = ({ getData }) => {
+const BurgerIngredients = ({ openModal }) => {
   const [current, setCurrent] = React.useState("one");
   const {ingredients} = useSelector((state) => state.ingredientsReducer);
 
@@ -55,7 +55,7 @@ const BurgerIngredients = ({ getData }) => {
                   <BurgerIngredient
                     key={item._id}
                     data={item}
-                       getData={getData}   
+                    openModal={openModal}   
                   />
                 );
               }
@@ -72,7 +72,7 @@ const BurgerIngredients = ({ getData }) => {
                   <BurgerIngredient
                     key={item._id}
                     data={item}
-                    getData={getData}
+                    openModal={openModal}
                   />
                 );
               }
@@ -89,7 +89,7 @@ const BurgerIngredients = ({ getData }) => {
                   <BurgerIngredient
                     key={item._id}
                     data={item}
-                    getData={getData}
+                    openModal={openModal}
                   />
                 );
               }

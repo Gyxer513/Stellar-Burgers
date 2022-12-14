@@ -1,3 +1,4 @@
+/* cSpell:disable */
 import React, { useEffect } from "react";
 import styles from "./modal.module.css";
 import ReactDOM from "react-dom";

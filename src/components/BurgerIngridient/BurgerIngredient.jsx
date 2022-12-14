@@ -2,6 +2,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { ingredientPropType } from "../../utils/prop-types";
+import { Link, useLocation} from 'react-router-dom';
 import {
   Counter,
   CurrencyIcon,
@@ -11,8 +12,9 @@ import { useSelector, useDispatch } from "react-redux";
 import { useDrag } from "react-dnd";
 import { selectIngredientData } from "../../services/reducers/ingredients";
 
-const BurgerIngredient = ({ data }) => {
+const BurgerIngredient = ({ data, openModal }) => {
   const dispatch = useDispatch();
+  const location = useLocation();
   const { image, price, name, _id } = data;
   const { chosenBun, chosenIngredients, selectIngredient } = useSelector(
     (state) => state.ingredientsReducer
@@ -25,7 +27,7 @@ const BurgerIngredient = ({ data }) => {
     }),
   });
   const handleClick = () => {
-    console.log(selectIngredient);
+    openModal();
     dispatch(selectIngredientData(data));
   };
 
@@ -44,6 +46,10 @@ const BurgerIngredient = ({ data }) => {
   };
 
   return (
+    <Link className={styles.burgerIngredient__link}  to={{
+      pathname: `/ingredients/${data._id}`,
+      state: { background: location },
+      }}>
     <div
       disabled={true}
       ref={dragRef}
@@ -66,6 +72,7 @@ const BurgerIngredient = ({ data }) => {
         {name}
       </p>
     </div>
+    </Link >
   );
 };
 BurgerIngredient.propType = {

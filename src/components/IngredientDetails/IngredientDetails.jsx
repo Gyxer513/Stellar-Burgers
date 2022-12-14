@@ -1,17 +1,18 @@
 /* cSpell:disable */
 import styles from "./ingredientDetails.module.css";
-import PropTypes from "prop-types";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 
-
-
 function IngredientDetails() {
   const { id } = useParams();
-  const {ingredients} = useSelector((state) => state.ingredientsReducer);
-  const selectedIngredient = ingredients.find(ingredient => ingredient._id === id)
+  const { ingredients } = useSelector((state) => state?.ingredientsReducer);
+
+    const selectedIngredient = ingredients.find(
+      (ingredient) => ingredient._id === id
+    );
+ 
   const { image_large, name, calories, carbohydrates, fat, proteins } =
-  selectedIngredient;
+    selectedIngredient;
 
   return (
     <div className={`pl-10 pr-10 ${styles.ingredient}`}>

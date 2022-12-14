@@ -17,7 +17,6 @@ export const ingredientsReducer = createSlice({
     ingredientsRequest: false,
     ingredientsFailed: false,
     selectIngredient: {},
-    ingredientModal: false,
   },
   reducers: {
     addIngredient: {
@@ -50,12 +49,6 @@ export const ingredientsReducer = createSlice({
     deleteSelectedIngredientData: {
       reducer: (state) => {
         state.selectIngredient = {};
-      },
-    },
-
-    handleIngredientModal: {
-      reducer: (state) => {
-        state.ingredientModal = !state.ingredientModal;
       },
     },
 
