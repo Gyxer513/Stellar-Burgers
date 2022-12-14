@@ -1,53 +1,78 @@
+/* cSpell:disable; */
 import React from "react";
 import styles from "./register.module.css";
 import { NavLink } from "react-router-dom";
 import {
   Input,
+  EmailInput,
   Button,
   PasswordInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
 export const Register = () => {
+  const [userData, setUserData] = React.useState({
+    userName: "",
+    email: "",
+    password: "",
+  });
+  const { userName, email, password } = userData;
+  const onChange = (e) => {
+    setUserData({
+      ...userData,
+      [e.target.name]: e.target.value
+    });
+  };
+  const submitRegistration = (e) => {
+    e.preventDefault();
+    console.log(e.target);
+    console.log(userData);
+  };
   return (
-    <section className={styles.register}>
+    <form onSubmit={submitRegistration} className={styles.register}>
       <h2 className="m-10 text text_type_main-medium">Регистрация</h2>
       <div className={styles.register__input}>
-        <Input
+      <Input
           type={"text"}
-          placeholder={"E-mail"}
-          value={""}
-          name={"e-mail"}
-          error={false}
-          errorText={"Ошибка"}
-          size={"default"}
-        />
+          name={"userName"}
+          placeholder={"Имя"}
+          value={userName}
+          onChange={onChange}
+        /> 
       </div>
       <div className={styles.register__input}>
-        <Input
+        <EmailInput
           type={"text"}
           placeholder={"E-mail"}
-          value={""}
-          name={"e-mail"}
+          value={email}
+          name={"email"}
+          errorText={"Ошибка в email"}
           error={false}
-          errorText={"Ошибка"}
           size={"default"}
+          onChange={onChange}
         />
       </div>
       <div className={styles.register__input}>
         <PasswordInput
           type={"text"}
-          placeholder={"E-mail"}
-          value={""}
-          name={"e-mail"}
-          error={false}
-          errorText={"Ошибка"}
-          size={"default"}
+          placeholder={"Пароль"}
+          value={password}
+          name={"password"}
+          errorText={"Ошибка в пароле"}
+          onChange={onChange}
+          icon={'ShowIcon'}
         />
       </div>
-      <Button>Зарегистрироваться</Button>
+      <Button
+        disabled={userName && email}
+        htmlType="submit"
+        type="primary"
+        size="medium"
+      >
+        Зарегистрироваться
+      </Button>
       <div className={styles.register__register}>
         <p className={`text text_type_main-default text_color_active mr-2`}>
-        Уже зарегистрированы?
+          Уже зарегистрированы?
         </p>
         <NavLink
           to="/login"
@@ -57,6 +82,6 @@ export const Register = () => {
           Войти
         </NavLink>
       </div>
-    </section>
+    </form>
   );
 };
