@@ -36,7 +36,7 @@ function App() {
   const { ingredients, selectIngredient } = useSelector(
     (state) => state.ingredientsReducer
   );
-console.log(location);
+  const background = location.state?.background;
   useEffect(() => {
     dispatch(getData());
   }, [dispatch]);
@@ -62,7 +62,7 @@ console.log(location);
   return (
     <>
         <AppHeader />
-        <Switch>
+        <Switch location={background || location}>
           <Route exact path="/">
             <main className={styles.main}>
               <DndProvider backend={HTML5Backend}>
