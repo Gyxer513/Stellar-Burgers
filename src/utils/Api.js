@@ -23,8 +23,9 @@ class Api {
     }).then((res) => this._checkResponse(res));
   }
 
-/*   Запросы авторизации спринт 9 роутинг и авторизация */
+  /*   Запросы авторизации спринт 9 роутинг и авторизация */
 
+  /* Регистрация пользователя */
   newUser(data) {
     return fetch(`${this._link}/auth/register`, {
       method: "POST",
@@ -34,6 +35,17 @@ class Api {
       body: JSON.stringify(data),
     }).then((res) => this._checkResponse(res));
   }
-}
 
+  /* Вход по логину паролю */
+
+  loginUser(data) {
+    return fetch(`${this._link}/auth/login`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    }).then((res) => this._checkResponse(res));
+  }
+}
 export const api = new Api(BASE_URL);

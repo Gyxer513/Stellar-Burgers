@@ -2,40 +2,62 @@
 import React from "react";
 import styles from "./login.module.css";
 import { NavLink } from "react-router-dom";
+import { loginUser } from '../../services/reducers/authorization';
+import { useDispatch } from 'react-redux';
 
 import {
-  Input,
+  EmailInput,
   Button,
   PasswordInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
 export const Login = () => {
+  const [userData, setUserData] = React.useState({
+    email: "",
+    password: "",
+  });
+  const { email, password } = userData;
+  const dispatch = useDispatch();
+  const onChange = (e) => {
+    setUserData({
+      ...userData,
+      [e.target.name]: e.target.value
+    });
+  };
+  const submitAutorization = (e) => {
+    e.preventDefault();
+    console.log(userData);
+    dispatch(loginUser({
+      "email": email, 
+      "password": password, 
+  } )).then(res => console.log(res))
+  };
   return (
-    <section className={styles.login}>
+    <form onSubmit={submitAutorization} className={styles.login}>
       <h2 className="m-10 text text_type_main-medium">Вход</h2>
       <div className={styles.login__input}>
-        <Input
+      <EmailInput
           type={"text"}
           placeholder={"E-mail"}
-          value={""}
-          name={"e-mail"}
+          value={email}
+          name={"email"}
+          errorText={"Ошибка в email"}
           error={false}
-          errorText={"Ошибка"}
           size={"default"}
+          onChange={onChange}
         />
       </div>
       <div className={styles.login__input}>
         <PasswordInput
-          type={"text"}
-          placeholder={"E-mail"}
-          value={""}
-          name={"e-mail"}
-          error={false}
-          errorText={"Ошибка"}
-          size={"default"}
+          value={password}
+          name={"password"}
+          onChange={onChange}
         />
       </div>
-      <Button>Войти</Button>
+      <Button disabled={ !email || !password} 
+        htmlType="submit"
+        type="primary"
+        size="medium">Войти</Button>
       <div className={styles.login__register}>
         <p className={`text text_type_main-default text_color_active mr-2`}>
           Вы — новый пользователь?
@@ -58,6 +80,6 @@ export const Login = () => {
           Восстановить пароль
         </NavLink>
       </div>
-    </section>
+    </form>
   );
 };

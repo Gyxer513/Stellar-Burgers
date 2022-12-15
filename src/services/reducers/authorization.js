@@ -12,6 +12,19 @@ export const registerNewUser = createAsyncThunk(
   }
 );
 
+/* ***** Авторизация существующего пользователя ***** */
+
+export const loginUser = createAsyncThunk(
+  "loginUser",
+  async (data) => {
+    const res = api.loginUser(data);
+    return res;
+  }
+);
+
+
+
+
 const authorizationReducer = createSlice({
   name: "authorizationReducer",
   initialState: {
@@ -32,7 +45,21 @@ const authorizationReducer = createSlice({
       localStorage.setItem("refreshToken", action.refreshToken);
       state.accessToken = action.payload.accessToken;
     },
+    
     [registerNewUser.rejected]: (state) => {
+      state.isAuthorizationSucsess = false;
+    },
+    [loginUser.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [loginUser.fulfilled]: (state, action) => {
+      state.isLoading = true;
+      state.isAuthorizationSucsess = true;
+      state.userData = action.payload.user;
+      localStorage.setItem("refreshToken", action.refreshToken);
+      state.accessToken = action.payload.accessToken;
+    },
+    [loginUser.rejected]: (state) => {
       state.isAuthorizationSucsess = false;
     },
   },
