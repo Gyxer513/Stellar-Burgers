@@ -22,8 +22,15 @@ export const loginUser = createAsyncThunk(
   }
 );
 
+/* ***** Восстановление пароля ***** */
 
-
+export const fogotPass = createAsyncThunk(
+  "loginUser",
+  async (data) => {
+    const res = api.fogotPassword(data);
+    return res;
+  }
+);
 
 const authorizationReducer = createSlice({
   name: "authorizationReducer",
@@ -39,7 +46,7 @@ const authorizationReducer = createSlice({
       state.isLoading = true;
     },
     [registerNewUser.fulfilled]: (state, action) => {
-      state.isLoading = true;
+      state.isLoading = false;
       state.isAuthorizationSucsess = true;
       state.userData = action.payload.user;
       localStorage.setItem("refreshToken", action.refreshToken);
@@ -53,13 +60,27 @@ const authorizationReducer = createSlice({
       state.isLoading = true;
     },
     [loginUser.fulfilled]: (state, action) => {
-      state.isLoading = true;
+      state.isLoading = false;
       state.isAuthorizationSucsess = true;
       state.userData = action.payload.user;
       localStorage.setItem("refreshToken", action.refreshToken);
       state.accessToken = action.payload.accessToken;
     },
     [loginUser.rejected]: (state) => {
+      state.isAuthorizationSucsess = false;
+    },
+
+    [fogotPass.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [fogotPass.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.isAuthorizationSucsess = true;
+      state.userData = action.payload.user;
+      localStorage.setItem("refreshToken", action.refreshToken);
+      state.accessToken = action.payload.accessToken;
+    },
+    [fogotPass.rejected]: (state) => {
       state.isAuthorizationSucsess = false;
     },
   },

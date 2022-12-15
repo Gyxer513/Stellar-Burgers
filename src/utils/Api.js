@@ -47,5 +47,16 @@ class Api {
       body: JSON.stringify(data),
     }).then((res) => this._checkResponse(res));
   }
+
+  /* Восстановление пароля  */
+  fogotPassword(data) {
+    return fetch(`${this._link}/password-reset`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    }).then((res) => this._checkResponse(res));
+  }
 }
 export const api = new Api(BASE_URL);

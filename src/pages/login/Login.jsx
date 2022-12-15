@@ -1,7 +1,7 @@
 /* cSpell:disable */
 import React from "react";
 import styles from "./login.module.css";
-import { NavLink } from "react-router-dom";
+import { NavLink, useHistory } from "react-router-dom";
 import { loginUser } from '../../services/reducers/authorization';
 import { useDispatch } from 'react-redux';
 
@@ -18,19 +18,23 @@ export const Login = () => {
   });
   const { email, password } = userData;
   const dispatch = useDispatch();
+  const history = useHistory();
   const onChange = (e) => {
     setUserData({
       ...userData,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
   const submitAutorization = (e) => {
     e.preventDefault();
     console.log(userData);
-    dispatch(loginUser({
-      "email": email, 
-      "password": password, 
-  } )).then(res => console.log(res))
+    dispatch(
+      loginUser({
+        email: email,
+        password: password,
+      })
+    ).then((res) => console.log(res));
+    history.push('/');
   };
   return (
     <form onSubmit={submitAutorization} className={styles.login}>
