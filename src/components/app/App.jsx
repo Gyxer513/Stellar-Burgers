@@ -18,6 +18,8 @@ import { Register } from "../../pages/register/Register";
 import { ForgotPassword } from "../../pages/fogot-password/ForgotPassword";
 import { PageNotFound } from "../../pages/pageNotFound/PageNotFound";
 import { useSelector } from "react-redux";
+import { ProtectedRoute }  from "../Protected-route/ProtectedRoute";
+import { Profile } from "../../pages/profile/profile"
 
 function App() {
   const location = useLocation();
@@ -76,6 +78,9 @@ function App() {
         <Route exact path="/ingredients/:id">
           {!selectIngredient && <IngredientDetails />}
         </Route>
+        <ProtectedRoute path="/profile">
+          <Profile />
+        </ProtectedRoute>
         <Route exact path="/forgot-password">
           <ForgotPassword />
         </Route>

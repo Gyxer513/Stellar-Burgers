@@ -1,0 +1,24 @@
+.profile {
+    display: flex;
+    margin: 120px 0 0 380px;
+}
+
+.profile__navigation {
+    list-style: none;
+}
+
+.profile__list {
+    list-style: none;
+    margin: 30px 60px 0 0;
+}
+.profile__link {
+    text-decoration: none;
+}
+.profile__link:hover {
+    cursor: pointer;
+    opacity: .6;
+}
+.profile__link_active {
+    text-decoration: none;
+    color: white;
+}
