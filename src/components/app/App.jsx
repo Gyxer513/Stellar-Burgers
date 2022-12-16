@@ -29,7 +29,9 @@ function App() {
   const [ingredientDetails, setIngredientDetails] = useState({
     isOpened: false,
   });
-
+  const { isAuthorizationSucsess } = useSelector(
+    (state) => state.authorizationReducer
+  );
   const { ingredients, selectIngredient } =
     useSelector((state) => state.ingredientsReducer);
   const background = location.state?.background;
@@ -55,7 +57,7 @@ function App() {
   };
 
   const openIngredientModal = () => {
-    console.log(localStorage);
+    console.log(isAuthorizationSucsess);
     setIngredientDetails({ ...ingredientDetails, isOpened: true });
   };
   return (

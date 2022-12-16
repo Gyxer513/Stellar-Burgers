@@ -48,7 +48,7 @@ const AppHeader = () => {
         <div className="p-3">
           <NavLink
             exact
-            to="/login"
+            to="/profile"
             className={`${styles.header__link} text text_type_main-default text_color_inactive`}
             activeClassName={styles.header__link_active}
           >

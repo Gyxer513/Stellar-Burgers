@@ -20,7 +20,7 @@ export const loginUser = createAsyncThunk("loginUser", async (data) => {
 });
 
 /* ***** Восстановление пароля ***** */
-export const fogotPass = createAsyncThunk("loginUser", async (data) => {
+export const fogotPass = createAsyncThunk("fogotPass", async (data) => {
   const res = api.fogotPassword(data);
   return res;
 });
@@ -52,7 +52,7 @@ const authorizationReducer = createSlice({
       state.isLoading = false;
       state.isAuthorizationSucsess = true;
       state.userData = action.payload.user;
-      localStorage.setItem("refreshToken", action.refreshToken);
+      localStorage.setItem("refreshToken", action.payload.refreshToken);
       state.accessToken = action.payload.accessToken;
     },
 
