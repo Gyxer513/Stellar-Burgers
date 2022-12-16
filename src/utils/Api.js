@@ -58,5 +58,26 @@ class Api {
       body: JSON.stringify(data),
     }).then((res) => this._checkResponse(res));
   }
+  logout(data) {
+    return fetch(`${this._link}/auth/logout`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    }).then((res) => this._checkResponse(res));
+  }
+
+ /*  refreshToken(data) {
+    return fetch(`${this._link}/auth/token`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        token: data,
+      }),
+    }).then((res) => this._checkResponse(res));
+  } */
 }
 export const api = new Api(BASE_URL);

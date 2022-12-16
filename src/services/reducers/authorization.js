@@ -14,23 +14,24 @@ export const registerNewUser = createAsyncThunk(
 
 /* ***** Авторизация существующего пользователя ***** */
 
-export const loginUser = createAsyncThunk(
-  "loginUser",
-  async (data) => {
-    const res = api.loginUser(data);
-    return res;
-  }
-);
+export const loginUser = createAsyncThunk("loginUser", async (data) => {
+  const res = api.loginUser(data);
+  return res;
+});
 
 /* ***** Восстановление пароля ***** */
+export const fogotPass = createAsyncThunk("loginUser", async (data) => {
+  const res = api.fogotPassword(data);
+  return res;
+});
 
-export const fogotPass = createAsyncThunk(
-  "loginUser",
-  async (data) => {
-    const res = api.fogotPassword(data);
-    return res;
-  }
-);
+
+/* ***** Выход из системы ***** */
+
+export const logout = createAsyncThunk("logout", async (data) => {
+  const res = api.logout(data);
+  return res;
+});
 
 const authorizationReducer = createSlice({
   name: "authorizationReducer",
@@ -39,7 +40,9 @@ const authorizationReducer = createSlice({
     isAuthorizationSucsess: false,
     userData: null,
     accessToken: null,
+    error: null,
   },
+
   reducers: {},
   extraReducers: {
     [registerNewUser.pending]: (state) => {
@@ -52,7 +55,7 @@ const authorizationReducer = createSlice({
       localStorage.setItem("refreshToken", action.refreshToken);
       state.accessToken = action.payload.accessToken;
     },
-    
+
     [registerNewUser.rejected]: (state) => {
       state.isAuthorizationSucsess = false;
     },
@@ -63,7 +66,7 @@ const authorizationReducer = createSlice({
       state.isLoading = false;
       state.isAuthorizationSucsess = true;
       state.userData = action.payload.user;
-      localStorage.setItem("refreshToken", action.refreshToken);
+      localStorage.setItem("refreshToken", action.payload.refreshToken);
       state.accessToken = action.payload.accessToken;
     },
     [loginUser.rejected]: (state) => {
@@ -73,14 +76,26 @@ const authorizationReducer = createSlice({
     [fogotPass.pending]: (state) => {
       state.isLoading = true;
     },
-    [fogotPass.fulfilled]: (state, action) => {
+    [fogotPass.fulfilled]: (state) => {
       state.isLoading = false;
-      state.isAuthorizationSucsess = true;
-      state.userData = action.payload.user;
-      localStorage.setItem("refreshToken", action.refreshToken);
-      state.accessToken = action.payload.accessToken;
     },
+
     [fogotPass.rejected]: (state) => {
+      state.isLoading = false;
+      state.isAuthorizationSucsess = false;
+    },
+
+    [logout.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [logout.fulfilled]: (state) => {
+      state.isLoading = false;
+      localStorage.setItem("refreshToken", null);
+      state.isAuthorizationSucsess = false;
+      state.userData = null;
+    },
+    [logout.rejected]: (state) => {
+      state.isLoading = false;
       state.isAuthorizationSucsess = false;
     },
   },

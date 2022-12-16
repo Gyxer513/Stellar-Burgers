@@ -55,6 +55,7 @@ function App() {
   };
 
   const openIngredientModal = () => {
+    console.log(localStorage);
     setIngredientDetails({ ...ingredientDetails, isOpened: true });
   };
   return (

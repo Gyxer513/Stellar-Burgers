@@ -1,13 +1,27 @@
 /* cSpell:disable */
 import styles from "./profile.module.css";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import {
   Input,
   EmailInput,
   PasswordInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import { logout, fogotPass } from "../../services/reducers/authorization";
+import { useDispatch } from "react-redux";
 
 export const Profile = () => {
+  const dispatch = useDispatch();
+  const history = useHistory();
+
+  const logoutUser = () => {
+    const refreshToken = localStorage.getItem("refreshToken");
+    dispatch(
+      logout({
+        token: refreshToken,
+      })
+    ).then((res) => console.log(res));
+    history.push('/');
+  };
   return (
     <section className={styles.profile}>
       <nav className={styles.profile__navigation}>
@@ -31,6 +45,7 @@ export const Profile = () => {
           </li>
           <div className="p-3"></div>
           <li
+            onClick={logoutUser}
             className={`${styles.profile__link} text text_type_main-medium text_color_inactive`}
           >
             Выход
@@ -38,11 +53,12 @@ export const Profile = () => {
         </ul>
       </nav>
       <form className={styles.profile__form}>
-        <Input type={"text"}
+        <Input
+          type={"text"}
           name={"userName"}
           placeholder={"Имя"}
           value={"/"}
-          />
+        />
         <div className="p-3"></div>
         <EmailInput />
         <div className="p-3"></div>

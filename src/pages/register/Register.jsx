@@ -1,7 +1,7 @@
 /* cSpell:disable; */
 import React from "react";
 import styles from "./register.module.css";
-import { NavLink } from "react-router-dom";
+import { NavLink, useHistory } from "react-router-dom";
 import {
   Input,
   EmailInput,
@@ -12,6 +12,7 @@ import { registerNewUser } from '../../services/reducers/authorization';
 import { useDispatch } from 'react-redux';
 
 export const Register = () => {
+  const history = useHistory();
   const [userData, setUserData] = React.useState({
     userName: "",
     email: "",
@@ -32,7 +33,8 @@ export const Register = () => {
       "email": email, 
       "password": password, 
       "name": userName 
-  } )).then(res => console.log(res))
+  } )).then(res => console.log(res));
+  history.push('/');
   };
   return (
     <form onSubmit={submitRegistration} className={styles.register}>
