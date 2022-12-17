@@ -12,14 +12,18 @@ import Modal from "../Modal/Modal";
 import OrderDetails from "../OrderDetails/OrderDetails";
 import IngredientDetails from "../IngredientDetails/IngredientDetails";
 import { deleteOrderData } from "../../services/reducers/order";
-import { getData, deleteSelectedIngredientData, clearSelectedIngregientsStore } from "../../services/reducers/ingredients";
+import {
+  getData,
+  deleteSelectedIngredientData,
+  clearSelectedIngregientsStore,
+} from "../../services/reducers/ingredients";
 import { Login } from "../../pages/login/Login.jsx";
 import { Register } from "../../pages/register/Register";
 import { ForgotPassword } from "../../pages/fogot-password/ForgotPassword";
 import { PageNotFound } from "../../pages/pageNotFound/PageNotFound";
 import { useSelector } from "react-redux";
-import { ProtectedRoute }  from "../Protected-route/ProtectedRoute";
-import { Profile } from "../../pages/profile/profile"
+import { ProtectedRoute } from "../Protected-route/ProtectedRoute";
+import { Profile } from "../../pages/profile/profile";
 
 function App() {
   const location = useLocation();
@@ -32,8 +36,9 @@ function App() {
   const { isAuthorizationSucsess } = useSelector(
     (state) => state.authorizationReducer
   );
-  const { ingredients, selectIngredient } =
-    useSelector((state) => state.ingredientsReducer);
+  const { ingredients, selectIngredient } = useSelector(
+    (state) => state.ingredientsReducer
+  );
   const background = location.state?.background;
   useEffect(() => {
     dispatch(getData());
@@ -93,9 +98,11 @@ function App() {
       </Switch>
 
       {orderDetails.isOpened && (
-        <Modal onClose={closeDetailsModal}>
-          <OrderDetails />
-        </Modal>
+        <ProtectedRoute>
+          <Modal onClose={closeDetailsModal}>
+            <OrderDetails />
+          </Modal>
+        </ProtectedRoute>
       )}
       {ingredients.length > 0 && (
         <Route path="/ingredients/:id">

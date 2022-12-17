@@ -22,3 +22,6 @@
     text-decoration: none;
     color: white;
 }
+.profile__text {
+    max-width: 320px;
+}

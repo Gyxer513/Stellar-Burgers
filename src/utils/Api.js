@@ -68,16 +68,15 @@ class Api {
     }).then((res) => this._checkResponse(res));
   }
 
- /*  refreshToken(data) {
-    return fetch(`${this._link}/auth/token`, {
+ updateUserData(token, data) {
+    return fetch(`${this._link}/auth/user`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        "authorization": token
       },
-      body: JSON.stringify({
-        token: data,
-      }),
+      body: JSON.stringify(data),
     }).then((res) => this._checkResponse(res));
-  } */
+  }
 }
 export const api = new Api(BASE_URL);

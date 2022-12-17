@@ -25,13 +25,18 @@ export const fogotPass = createAsyncThunk("fogotPass", async (data) => {
   return res;
 });
 
-
 /* ***** Выход из системы ***** */
 
 export const logout = createAsyncThunk("logout", async (data) => {
   const res = api.logout(data);
   return res;
 });
+
+export const updateUserData = createAsyncThunk("logout", async (token, data) => {
+  const res = api.updateUserData(token, data);
+  return res;
+});
+
 
 const authorizationReducer = createSlice({
   name: "authorizationReducer",
@@ -96,6 +101,18 @@ const authorizationReducer = createSlice({
     },
     [logout.rejected]: (state) => {
       state.isLoading = false;
+      state.isAuthorizationSucsess = false;
+    },
+
+    [updateUserData.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [updateUserData.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.isAuthorizationSucsess = true;
+      state.userData = action.payload.user;
+    },
+    [updateUserData.rejected]: (state) => {
       state.isAuthorizationSucsess = false;
     },
   },
