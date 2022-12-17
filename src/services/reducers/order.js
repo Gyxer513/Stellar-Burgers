@@ -14,10 +14,10 @@ export const orderReducer = createSlice({
     orderRequest: false,
     orderFailed: false,
   },
-  reducers: { 
+  reducers: {
     deleteOrderData: (state) => {
       state.orderDetails = null;
-    }
+    },
   },
   extraReducers: {
     [sendOrder.pending]: (state) => {
@@ -31,7 +31,7 @@ export const orderReducer = createSlice({
       state.orderFailed = true;
     },
   },
-})
+});
 
 export const { deleteOrderData } = orderReducer.actions;
 export default orderReducer.reducer;

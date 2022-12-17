@@ -70,7 +70,7 @@ class Api {
 
  updateUserData(token, data) {
     return fetch(`${this._link}/auth/user`, {
-      method: "POST",
+      method: "PATCH",
       headers: {
         "Content-Type": "application/json",
         "authorization": token

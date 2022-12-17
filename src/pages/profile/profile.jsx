@@ -6,6 +6,7 @@ import {
   Input,
   EmailInput,
   PasswordInput,
+  Button
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { logout, updateUserData } from "../../services/reducers/authorization";
 import { useDispatch, useSelector } from "react-redux";
@@ -103,6 +104,13 @@ export const Profile = () => {
             icon={"EditIcon"}
             type="text"
           />
+          { loginData.password && <Button 
+        htmlType="submit"
+        type="primary"
+        size="medium"
+      >
+        Изменить
+      </Button>}
         </form>
       </div>
     </section>

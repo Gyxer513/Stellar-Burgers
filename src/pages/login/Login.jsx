@@ -2,8 +2,8 @@
 import React from "react";
 import styles from "./login.module.css";
 import { NavLink, useHistory } from "react-router-dom";
-import { loginUser } from '../../services/reducers/authorization';
-import { useDispatch } from 'react-redux';
+import { loginUser } from "../../services/reducers/authorization";
+import { useDispatch } from "react-redux";
 
 import {
   EmailInput,
@@ -34,13 +34,13 @@ export const Login = () => {
         password: password,
       })
     ).then((res) => console.log(res));
-    history.push('/');
+    history.push("/");
   };
   return (
     <form onSubmit={submitAutorization} className={styles.login}>
       <h2 className="m-10 text text_type_main-medium">Вход</h2>
       <div className={styles.login__input}>
-      <EmailInput
+        <EmailInput
           type={"text"}
           placeholder={"E-mail"}
           value={email}
@@ -52,16 +52,16 @@ export const Login = () => {
         />
       </div>
       <div className={styles.login__input}>
-        <PasswordInput
-          value={password}
-          name={"password"}
-          onChange={onChange}
-        />
+        <PasswordInput value={password} name={"password"} onChange={onChange} />
       </div>
-      <Button disabled={ !email || !password} 
+      <Button
+        disabled={!email || !password}
         htmlType="submit"
         type="primary"
-        size="medium">Войти</Button>
+        size="medium"
+      >
+        Войти
+      </Button>
       <div className={styles.login__register}>
         <p className={`text text_type_main-default text_color_active mr-2`}>
           Вы — новый пользователь?

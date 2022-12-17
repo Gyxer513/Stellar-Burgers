@@ -32,11 +32,13 @@ export const logout = createAsyncThunk("logout", async (data) => {
   return res;
 });
 
-export const updateUserData = createAsyncThunk("logout", async (token, data) => {
-  const res = api.updateUserData(token, data);
-  return res;
-});
-
+export const updateUserData = createAsyncThunk(
+  "logout",
+  async (token, data) => {
+    const res = api.updateUserData(token, data);
+    return res;
+  }
+);
 
 const authorizationReducer = createSlice({
   name: "authorizationReducer",
