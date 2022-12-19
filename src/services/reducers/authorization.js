@@ -7,36 +7,41 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 export const registerNewUser = createAsyncThunk(
   "registerUser",
   async (data) => {
-    const res = api.newUser(data);
-    return res;
+    return api.newUser(data).catch((error) => {
+      console.warn(error);
+    });
   }
 );
 
 /* ***** Авторизация существующего пользователя ***** */
 
 export const loginUser = createAsyncThunk("loginUser", async (data) => {
-  const res = api.loginUser(data);
-  return res;
+  return api.loginUser(data).catch((error) => {
+    console.warn(error);
+  });
 });
 
 /* ***** Восстановление пароля ***** */
 export const fogotPass = createAsyncThunk("fogotPass", async (data) => {
-  const res = api.fogotPassword(data);
-  return res;
+  return api.fogotPassword(data).catch((error) => {
+    console.warn(error);
+  });
 });
 
 /* ***** Выход из системы ***** */
 
 export const logout = createAsyncThunk("logout", async (data) => {
-  const res = api.logout(data);
-  return res;
+  return api.logout(data).catch((error) => {
+    console.warn(error);
+  });
 });
 
 export const updateUserData = createAsyncThunk(
   "logout",
   async (token, data) => {
-    const res = api.updateUserData(token, data);
-    return res;
+    return api.updateUserData(token, data).catch((error) => {
+      console.warn(error);
+    });
   }
 );
 

@@ -4,8 +4,9 @@ import { randomId } from "../../utils/data";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 export const getData = createAsyncThunk("getData", async () => {
-  const res = api.getData();
-  return res;
+  return api.getData().catch((error) => {
+    console.warn(error);
+});
 });
 
 export const ingredientsReducer = createSlice({

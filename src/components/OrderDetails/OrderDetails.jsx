@@ -7,14 +7,18 @@ import { sendOrder } from "../../services/reducers/order";
 
 function OrderDetails() {
   const dispatch = useDispatch();
+ 
+
+
   React.useEffect(() => {
-    dispatch(sendOrder(orderList));
+    if (chosenBun && chosenIngredients)
+    dispatch(sendOrder(orderList))  
   }, [dispatch]);
   const { orderDetails } = useSelector((state) => state.orderReducer);
   const { chosenBun, chosenIngredients } = useSelector(
     (state) => state.ingredientsReducer
   );
-  /*   console.log(orderDetails); */
+
 
   const orderList = React.useMemo(() => {
     const ingredientsList = chosenIngredients?.map(

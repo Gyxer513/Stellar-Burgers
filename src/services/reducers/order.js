@@ -3,8 +3,9 @@ import { api } from "../../utils/Api";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 export const sendOrder = createAsyncThunk("sendOrder", async (list) => {
-  const res = api.sendData(list);
-  return res;
+  return api.sendData(list).catch((error) => {
+    console.warn(error);
+});
 });
 
 export const orderReducer = createSlice({
