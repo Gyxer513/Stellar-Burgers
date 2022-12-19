@@ -17,12 +17,11 @@ export const ForgotPassword = () => {
   };
   const submitResetPassword = (e) => {
     e.preventDefault();
-    console.log(emailValue);
     dispatch(
       fogotPass({
         email: emailValue,
       })
-    ).then((res) => console.log(res));
+    )
   };
   return (
     <form onSubmit={submitResetPassword} className={styles.forgotPassword}>

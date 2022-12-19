@@ -17,7 +17,7 @@ export const ingredientsReducer = createSlice({
     chosenBun: null,
     ingredientsRequest: false,
     ingredientsFailed: false,
-    selectIngredient: {},
+    selectIngredient: null,
   },
   reducers: {
     addIngredient: {
@@ -52,7 +52,7 @@ export const ingredientsReducer = createSlice({
 
     deleteSelectedIngredientData: {
       reducer: (state) => {
-        state.selectIngredient = {};
+        state.selectIngredient = null;
       },
     },
 
