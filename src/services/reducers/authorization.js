@@ -37,7 +37,7 @@ export const logout = createAsyncThunk("logout", async (data) => {
 });
 
 export const updateUserData = createAsyncThunk(
-  "logout",
+  "updateUser",
   async (token, data) => {
     return api.updateUserData(token, data).catch((error) => {
       console.warn(error);

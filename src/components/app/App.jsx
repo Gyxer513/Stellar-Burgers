@@ -62,7 +62,6 @@ function App() {
   };
 
   const openIngredientModal = () => {
-    console.log(isAuthorizationSucsess);
     setIngredientDetails({ ...ingredientDetails, isOpened: true });
   };
   return (

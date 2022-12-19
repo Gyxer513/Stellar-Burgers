@@ -6,13 +6,7 @@ export const ProtectedRoute = ({ children, ...props }) => {
   const { isAuthorizationSucsess } = useSelector(
     (state) => state.authorizationReducer
   );
+  if (!isAuthorizationSucsess) return <Redirect to="/login" />;
 
-  return (
-    <Route
-      {...props}
-      render={() =>
-        isAuthorizationSucsess ? children : <Redirect to="/login" />
-      }
-    />
-  );
+  return <Route {...props}>{children}</Route>
 };

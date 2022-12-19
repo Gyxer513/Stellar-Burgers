@@ -27,13 +27,12 @@ export const Login = () => {
   };
   const submitAutorization = (e) => {
     e.preventDefault();
-    console.log(userData);
     dispatch(
       loginUser({
         email: email,
         password: password,
       })
-    ).then((res) => console.log(res));
+    )
     history.push("/");
   };
   return (

@@ -27,7 +27,7 @@ export const Profile = () => {
       logout({
         token: refreshToken,
       })
-    ).then((res) => console.log(res));
+    )
     history.push("/login");
   };
   const onChange = (e) => {
