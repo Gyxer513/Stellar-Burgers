@@ -24,6 +24,7 @@ import { PageNotFound } from "../../pages/pageNotFound/PageNotFound";
 import { useSelector } from "react-redux";
 import { ProtectedRoute } from "../Protected-route/ProtectedRoute";
 import { Profile } from "../../pages/profile/profile";
+import { ResertPassword } from "../../pages/resetPassword/resetPassrod"
 
 function App() {
   const location = useLocation();
@@ -33,9 +34,6 @@ function App() {
   const [ingredientDetails, setIngredientDetails] = useState({
     isOpened: false,
   });
-  const { isAuthorizationSucsess } = useSelector(
-    (state) => state.authorizationReducer
-  );
   const { ingredients, selectIngredient } = useSelector(
     (state) => state.ingredientsReducer
   );
@@ -51,7 +49,7 @@ function App() {
     setOrderDetails({ ...orderDetails, isOpened: true });
   };
   const closeIngredientModal = () => {
-    history.goBack();
+    history.push("/");
     dispatch(deleteSelectedIngredientData());
     setIngredientDetails({ ...ingredientDetails, isOpened: false });
   };
@@ -78,6 +76,9 @@ function App() {
         </Route>
         <Route exact path="/login">
           <Login />
+        </Route>
+        <Route exact path="/reset-password">
+          <ResertPassword />
         </Route>
         <Route exact path="/register">
           <Register />

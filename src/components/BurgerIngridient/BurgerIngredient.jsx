@@ -16,7 +16,7 @@ const BurgerIngredient = ({ data, openModal }) => {
   const dispatch = useDispatch();
   const location = useLocation();
   const { image, price, name, _id } = data;
-  const { chosenBun, chosenIngredients, selectIngredient } = useSelector(
+  const { chosenBun, chosenIngredients } = useSelector(
     (state) => state.ingredientsReducer
   );
   const [, dragRef] = useDrag({
@@ -26,6 +26,7 @@ const BurgerIngredient = ({ data, openModal }) => {
       isDrag: monitor.isDragging(),
     }),
   });
+
   const handleClick = () => {
     openModal();
     dispatch(selectIngredientData(data));

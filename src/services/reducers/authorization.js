@@ -1,6 +1,7 @@
 /* cSpell:disable; */
 import { api } from "../../utils/Api";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { getCookie, setCookie } from "../../utils/cookie";
 
 /* ***** Регистрация нового пользователя ***** */
 
@@ -36,6 +37,8 @@ export const logout = createAsyncThunk("logout", async (data) => {
   });
 });
 
+/* ***** Обновление данных пользователя ***** */
+
 export const updateUserData = createAsyncThunk(
   "updateUser",
   async (token, data) => {
@@ -45,6 +48,17 @@ export const updateUserData = createAsyncThunk(
   }
 );
 
+/* ***** Обновление пароля ***** */
+export const updatePass = createAsyncThunk(
+  "updatePass",
+  async (data) => {
+    return api.updatePass(data).catch((error) => {
+      console.warn(error);
+    });
+  }
+);
+
+
 const authorizationReducer = createSlice({
   name: "authorizationReducer",
   initialState: {
@@ -53,6 +67,7 @@ const authorizationReducer = createSlice({
     userData: null,
     accessToken: null,
     error: null,
+    resetStatus: null,
   },
 
   reducers: {},
@@ -90,11 +105,13 @@ const authorizationReducer = createSlice({
     },
     [fogotPass.fulfilled]: (state) => {
       state.isLoading = false;
+      state.resetStatus = true;
     },
 
     [fogotPass.rejected]: (state) => {
       state.isLoading = false;
       state.isAuthorizationSucsess = false;
+      state.resetStatus = false;
     },
 
     [logout.pending]: (state) => {
@@ -120,6 +137,17 @@ const authorizationReducer = createSlice({
       state.userData = action.payload.user;
     },
     [updateUserData.rejected]: (state) => {
+      state.isAuthorizationSucsess = false;
+    },
+
+    [updatePass.pending]: (state) => {
+      state.isLoading = true;
+      state.isAuthorizationSucsess = false;
+    },
+    [updatePass.fulfilled]: (state) => {
+      state.isLoading = false;
+    },
+    [updatePass.rejected]: (state) => {
       state.isAuthorizationSucsess = false;
     },
   },

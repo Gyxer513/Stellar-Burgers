@@ -1,9 +1,9 @@
 /* cSpell:disable; */
 import React from "react";
 import styles from "./forgotPassword.module.css";
-import { NavLink } from "react-router-dom";
+import { NavLink, Redirect } from "react-router-dom";
 import { fogotPass } from "../../services/reducers/authorization";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   EmailInput,
   Button,
@@ -12,6 +12,7 @@ import {
 export const ForgotPassword = () => {
   const [emailValue, setEmailValue] = React.useState("");
   const dispatch = useDispatch();
+  const { resetStatus } = useSelector((state) => state.authorizationReducer);
   const onChange = (e) => {
     setEmailValue(e.target.value);
   };
@@ -21,8 +22,14 @@ export const ForgotPassword = () => {
       fogotPass({
         email: emailValue,
       })
-    )
+    );
+    setEmailValue("");
   };
+
+  if (resetStatus) {
+    return <Redirect to="/reset-password"></Redirect>;
+  }
+
   return (
     <form onSubmit={submitResetPassword} className={styles.forgotPassword}>
       <h2 className="m-10 text text_type_main-medium">Восстановить пароль</h2>
