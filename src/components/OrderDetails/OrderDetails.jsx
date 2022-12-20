@@ -11,7 +11,6 @@ function OrderDetails() {
 
 
   React.useEffect(() => {
-    if (chosenBun && chosenIngredients)
     dispatch(sendOrder(orderList))  
   }, [dispatch]);
   const { orderDetails } = useSelector((state) => state.orderReducer);

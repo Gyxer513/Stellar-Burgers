@@ -1,7 +1,7 @@
 /* cSpell:disable; */
 import { api } from "../../utils/Api";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { setCookie } from "../../utils/cookie";
+import { setCookie, deleteCookie } from "../../utils/cookie";
 
 /* ***** Регистрация нового пользователя ***** */
 
@@ -42,8 +42,8 @@ export const logout = createAsyncThunk("logout", async (data) => {
 
 export const updateUserData = createAsyncThunk(
   "updateUser",
-  async (token, data) => {
-    return api.updateUserData(token, data).catch((error) => {
+  async (data) => {
+    return api.updateUserData(data).catch((error) => {
       console.warn(error);
     });
   }
@@ -148,6 +148,7 @@ const authorizationReducer = createSlice({
       localStorage.setItem("refreshToken", null);
       state.isAuthorizationSucsess = false;
       state.userData = null;
+      deleteCookie('accessToken');
     },
     [logout.rejected]: (state) => {
       state.isLoading = false;

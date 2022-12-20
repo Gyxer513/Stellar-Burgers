@@ -1,7 +1,8 @@
 /* cSpell:disable */
 import React from "react";
 import styles from "./profile.module.css";
-import { Link, useHistory, Route, Switch } from "react-router-dom";
+import { NavLink, useHistory, Route, Switch } from "react-router-dom";
+import { deleteCookie } from "../../utils/cookie";
 import {
   Input,
   EmailInput,
@@ -10,7 +11,7 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { logout, updateUserData } from "../../services/reducers/authorization";
 import { useDispatch, useSelector } from "react-redux";
-import { getCookie } from "../../utils/cookie";
+
 
 export const Profile = () => {
   const dispatch = useDispatch();
@@ -36,13 +37,11 @@ export const Profile = () => {
   };
   const submitData = (e) => {
     e.preventDefault();
-    const refreshToken = getCookie('accessToken');
-    console.log(refreshToken);
     dispatch(
-      updateUserData(refreshToken, {
+      updateUserData({
         email: loginData.email,
-        password: loginData.password,
-        name: loginData.name,
+        name: loginData.userName,
+        password: loginData.password
       })
     );
   };
@@ -60,21 +59,23 @@ export const Profile = () => {
         <nav className={styles.profile__navigation}>
           <ul className={styles.profile__list}>
             <li>
-              <Link
-                className={`${styles.profile__link_active} text text_type_main-medium text_color_active`}
-                to="/profile"
+              <NavLink
+                className={`${styles.profile__link} text text_type_main-medium text_color_inactive`}
+                activeClassName={styles.profile__link_active}
+                to="/profile/"
               >
                 Профиль
-              </Link>
+              </NavLink>
             </li>
             <div className="p-3"></div>
             <li>
-              <Link
+              <NavLink
                 className={`${styles.profile__link} text text_type_main-medium text_color_inactive`}
+                activeClassName={styles.profile__link_active}
                 to="/profile/orders"
               >
                 История заказов
-              </Link>
+              </NavLink>
             </li>
             <div className="p-3"></div>
             <li
@@ -135,7 +136,7 @@ export const Profile = () => {
               )}
             </form>
           </Route>
-          <Route path="/profile/orders">
+          <Route path="/profile/orders" exact>
             <div></div>
           </Route>
         </Switch>

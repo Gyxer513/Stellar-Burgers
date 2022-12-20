@@ -128,7 +128,7 @@ const BurgerConstructor = ({ openOrder }) => {
         <CurrencyIcon type="primary" />
         <div className="m-2"></div>
         <Button
-          disabled={!totalPrice || 0}
+          disabled={!totalPrice || 0 || chosenIngredients.length === 0}
           htmlType="button"
           type="primary"
           size="medium"

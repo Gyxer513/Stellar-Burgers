@@ -72,12 +72,13 @@ class Api {
     }).then((res) => this._checkResponse(res));
   }
   /* Обновление данных пользователя */
-  updateUserData(token, data) {
+  
+  updateUserData(data) {
     return fetch(`${this._link}/auth/user`, {
       method: "PATCH",
       headers: {
-        "Content-Type": "application/json",
-        "authorization": token,
+        "Content-Type": "application/json;charset=utf-8",
+        "authorization": 'Bearer ' + getCookie('accessToken'),
       },
       body: JSON.stringify(data),
     }).then((res) => this._checkResponse(res));
