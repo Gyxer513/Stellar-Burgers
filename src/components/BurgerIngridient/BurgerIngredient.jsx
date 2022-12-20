@@ -32,7 +32,7 @@ const BurgerIngredient = ({ data, openModal }) => {
     dispatch(selectIngredientData(data));
   };
 
-  const count = () => {
+  const count = React.useMemo(() => {
     let ingredientCounter = 0;
     if (chosenBun?._id == _id) {
       ingredientCounter = 2;
@@ -44,7 +44,7 @@ const BurgerIngredient = ({ data, openModal }) => {
       });
     }
     return ingredientCounter;
-  };
+  }, [chosenBun, chosenIngredients]);
 
   return (
     <Link className={styles.burgerIngredient__link}  to={{
@@ -57,7 +57,7 @@ const BurgerIngredient = ({ data, openModal }) => {
       className={styles.burgerIngredient}
       onClick={handleClick}
     >
-      {count() > 0 && <Counter count={count()} size="default" />}
+      {count > 0 && <Counter count={count} size="default" />}
       <img className="ingredient__image" src={image} alt={name} id={_id} />
       <div className={styles.burgerIngredient__costBox}>
         <p
