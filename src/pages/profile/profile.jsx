@@ -2,7 +2,6 @@
 import React from "react";
 import styles from "./profile.module.css";
 import { NavLink, useHistory, Route, Switch } from "react-router-dom";
-import { deleteCookie } from "../../utils/cookie";
 import {
   Input,
   EmailInput,
@@ -11,6 +10,7 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { logout, updateUserData } from "../../services/reducers/authorization";
 import { useDispatch, useSelector } from "react-redux";
+import Loader from "../../components/Loader/Loader";
 
 
 export const Profile = () => {
@@ -137,7 +137,7 @@ export const Profile = () => {
             </form>
           </Route>
           <Route path="/profile/orders" exact>
-            <div></div>
+            <Loader/>
           </Route>
         </Switch>
       </div>
