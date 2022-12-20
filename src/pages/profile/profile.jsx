@@ -37,6 +37,7 @@ export const Profile = () => {
   const submitData = (e) => {
     e.preventDefault();
     const refreshToken = getCookie('accessToken');
+    console.log(refreshToken);
     dispatch(
       updateUserData(refreshToken, {
         email: loginData.email,

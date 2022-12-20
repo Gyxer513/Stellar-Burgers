@@ -77,7 +77,7 @@ class Api {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
-        authorization: token,
+        "authorization": token,
       },
       body: JSON.stringify(data),
     }).then((res) => this._checkResponse(res));

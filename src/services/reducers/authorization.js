@@ -64,6 +64,9 @@ export const checkAuth = createAsyncThunk(
   "checkAuth",
   async (data) => {
     return api.checkAuth(data).catch((error) => {
+      if (error.message === "jwt expired") {
+      refreshToken(localStorage.getItem('refreshToken'))
+      }
       console.warn(error);
   });
   }
@@ -180,6 +183,7 @@ const authorizationReducer = createSlice({
     [checkAuth.fulfilled]: (state, action) => {
       state.isLoading = false;
       state.isAuthorizationSucsess = true;
+      state.userData = action.payload.user;
     },
     [checkAuth.rejected]: (state) => {
       state.isAuthorizationSucsess = false;
