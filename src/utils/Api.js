@@ -71,13 +71,13 @@ class Api {
       body: JSON.stringify(data),
     }).then((res) => this._checkResponse(res));
   }
-/* Обновление данных пользователя */
- updateUserData(token, data) {
+  /* Обновление данных пользователя */
+  updateUserData(token, data) {
     return fetch(`${this._link}/auth/user`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
-        "authorization": token
+        authorization: token,
       },
       body: JSON.stringify(data),
     }).then((res) => this._checkResponse(res));
@@ -94,19 +94,30 @@ class Api {
     }).then((res) => this._checkResponse(res));
   }
 
- /* Проверка авторизации */
- checkAuth(data){
-  return fetch(`${this._link}/auth/user`, {
-    method: 'GET',
-    headers: {
-      "Content-Type": "application/json",
-      "Authorization": 'Bearer ' + getCookie('accessToken')
-    },
-    body: JSON.stringify(data),
-  }).then((res) => this._checkResponse(res));
- }
+  /* Проверка авторизации */
+  checkAuth(data) {
+    return fetch(`${this._link}/auth/user`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + getCookie("accessToken"),
+      },
+      body: JSON.stringify(data),
+    }).then((res) => this._checkResponse(res));
+  }
+
+  /* Обновление токена */
+  refreshToken() {
+    return fetch(`${this._baseUrl}/auth/token`, {
+      method: "POST",
+      headers: {
+        "Content-Type": 'application/json;charset=utf-8',
+      },
+      body: JSON.stringify({
+        token: JSON.stringify({ token: localStorage.getItem('refreshToken') })
+      }),
+    }).then((res) => this._checkResponse(res));
+  }
 }
-
-
 
 export const api = new Api(BASE_URL);

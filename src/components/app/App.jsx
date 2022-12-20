@@ -26,7 +26,7 @@ import { ProtectedRoute } from "../Protected-route/ProtectedRoute";
 import { Profile } from "../../pages/profile/profile";
 import { ResertPassword } from "../../pages/resetPassword/resetPassrod"
 import { checkAuth } from "../../services/reducers/authorization";
-import { getCookie, setCookie } from "../../utils/cookie";
+import { getCookie } from "../../utils/cookie";
 
 function App() {
   const location = useLocation();
@@ -43,10 +43,8 @@ function App() {
   useEffect(() => {
     dispatch(getData());
     if (getCookie('accessToken')){
-      dispatch(checkAuth());
+      dispatch(checkAuth())
     }
-    
-    console.log(getCookie('accessToken'));
   }, [dispatch]);
 
   const handleOrderClick = () => {

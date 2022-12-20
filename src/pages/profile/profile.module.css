@@ -25,3 +25,18 @@
 .profile__text {
     max-width: 320px;
 }
+.profile__submitBox {
+    margin: 30px 0 0 50px;
+    align-items: center;
+    display: flex;
+}
+.profile__submitBoxText {
+    margin: 0 100px 0 50px;
+    display: flex;
+    color: #4C4CFF;
+}
+
+.profile__submitBoxText:hover {
+    opacity: .6;
+    cursor: pointer;
+}

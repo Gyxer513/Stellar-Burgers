@@ -65,9 +65,20 @@ export const checkAuth = createAsyncThunk(
   async (data) => {
     return api.checkAuth(data).catch((error) => {
       console.warn(error);
+  });
+  }
+);
+
+/* ***** Обновление токена ***** */
+export const refreshToken = createAsyncThunk(
+  "refreshToken",
+  async () => {
+    return api.refreshToken().catch((error) => {
+      console.warn(error);
     });
   }
 );
+
 
 const authorizationReducer = createSlice({
   name: "authorizationReducer",
@@ -78,6 +89,7 @@ const authorizationReducer = createSlice({
     accessToken: null,
     error: null,
     resetStatus: null,
+    error: null,
   },
 
   reducers: {},
@@ -145,7 +157,6 @@ const authorizationReducer = createSlice({
     [updateUserData.fulfilled]: (state, action) => {
       state.isLoading = false;
       state.isAuthorizationSucsess = true;
-      state.userData = action.payload.user;
     },
     [updateUserData.rejected]: (state) => {
       state.isAuthorizationSucsess = false;
@@ -169,9 +180,22 @@ const authorizationReducer = createSlice({
     [checkAuth.fulfilled]: (state, action) => {
       state.isLoading = false;
       state.isAuthorizationSucsess = true;
-      state.userData = action.payload.user;
     },
     [checkAuth.rejected]: (state) => {
+      state.isAuthorizationSucsess = false;
+
+    },
+
+    [refreshToken.pending]: (state) => {
+      state.isLoading = true;
+      state.isAuthorizationSucsess = false;
+    },
+    [refreshToken.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.isAuthorizationSucsess = true;
+      setCookie('accessToken', action.payload.accessToken.split('Bearer ')[1]);
+    },
+    [refreshToken.rejected]: (state) => {
       state.isAuthorizationSucsess = false;
     },
   },
