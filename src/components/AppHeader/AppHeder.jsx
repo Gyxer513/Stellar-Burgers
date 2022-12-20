@@ -8,6 +8,7 @@ import {
   ProfileIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./appHeader.module.css";
+import { ProtectedRoute } from "../Protected-route/ProtectedRoute";
 
 const AppHeader = () => {
   return (
@@ -31,7 +32,7 @@ const AppHeader = () => {
         <div className="p-3">
           <NavLink
             exact 
-            to="/profile/orders"
+            to="/feed"
             className={`${styles.header__link} text text_type_main-default text_color_inactive `}
             activeClassName={styles.header__link_active}
           >

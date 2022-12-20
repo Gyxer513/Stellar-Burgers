@@ -1,12 +1,12 @@
 /* cSpell:disable */
 import React from "react";
 import styles from "./profile.module.css";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useHistory, Route, Switch } from "react-router-dom";
 import {
   Input,
   EmailInput,
   PasswordInput,
-  Button
+  Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { logout, updateUserData } from "../../services/reducers/authorization";
 import { useDispatch, useSelector } from "react-redux";
@@ -27,7 +27,7 @@ export const Profile = () => {
       logout({
         token: refreshToken,
       })
-    )
+    );
     history.push("/login");
   };
   const onChange = (e) => {
@@ -45,74 +45,82 @@ export const Profile = () => {
     );
   };
   return (
-    <section>
-      <div className={styles.profile}>
-        <nav className={styles.profile__navigation}>
-          <ul className={styles.profile__list}>
-            <li>
-              <Link
-                className={`${styles.profile__link_active} text text_type_main-medium text_color_active`}
-                to="/profile"
-              >
-                Профиль
-              </Link>
-            </li>
-            <div className="p-3"></div>
-            <li>
-              <Link
+    
+      <section>
+        <div className={styles.profile}>
+          <nav className={styles.profile__navigation}>
+            <ul className={styles.profile__list}>
+              <li>
+                <Link
+                  className={`${styles.profile__link_active} text text_type_main-medium text_color_active`}
+                  to="/profile"
+                >
+                  Профиль
+                </Link>
+              </li>
+              <div className="p-3"></div>
+              <li>
+                <Link
+                  className={`${styles.profile__link} text text_type_main-medium text_color_inactive`}
+                  to="/profile/orders"
+                >
+                  История заказов
+                </Link>
+              </li>
+              <div className="p-3"></div>
+              <li
+                onClick={logoutUser}
                 className={`${styles.profile__link} text text_type_main-medium text_color_inactive`}
-                to="/"
               >
-                История заказов
-              </Link>
-            </li>
-            <div className="p-3"></div>
-            <li
-              onClick={logoutUser}
-              className={`${styles.profile__link} text text_type_main-medium text_color_inactive`}
+                Выход
+              </li>
+            </ul>
+            <p
+              className={`${styles.profile__text} ml-10 mt-30 text text_type_main-default text_color_inactive`}
             >
-              Выход
-            </li>
-          </ul>
-          <p
-            className={`${styles.profile__text} ml-10 mt-30 text text_type_main-default text_color_inactive`}
-          >
-            В этом разделе вы можете изменить свои персональные данные
-          </p>
-        </nav>
-        <form onSubmit={submitData} className={styles.profile__form}>
-          <Input
-            onChange={onChange}
-            type={"text"}
-            name={"userName"}
-            placeholder={"Имя"}
-            value={loginData.userName}
-            icon={"EditIcon"}
-          />
-          <div className="p-3"></div>
-          <EmailInput
-            onChange={onChange}
-            name={"email"}
-            value={loginData.email}
-            icon={"EditIcon"}
-          />
-          <div className="p-3"></div>
-          <PasswordInput
-            onChange={onChange}
-            name={"password"}
-            value={loginData.password}
-            icon={"EditIcon"}
-            type="text"
-          />
-          { loginData.password && <Button 
-        htmlType="submit"
-        type="primary"
-        size="medium"
-      >
-        Изменить
-      </Button>}
-        </form>
-      </div>
-    </section>
+              В этом разделе вы можете изменить свои персональные данные
+            </p>
+          </nav>
+          <Switch>
+          <Route path="/profile" exact>
+            <form onSubmit={submitData} className={styles.profile__form}>
+              <Input
+                onChange={onChange}
+                type={"text"}
+                name={"userName"}
+                placeholder={"Имя"}
+                value={loginData.userName}
+                icon={"EditIcon"}
+              />
+              <div className="p-3"></div>
+              <EmailInput
+                onChange={onChange}
+                name={"email"}
+                value={loginData.email}
+                icon={"EditIcon"}
+              />
+              <div className="p-3"></div>
+              <PasswordInput
+                onChange={onChange}
+                name={"password"}
+                value={loginData.password}
+                icon={"EditIcon"}
+                type="text"
+              />
+              {loginData.password && (
+                <Button htmlType="submit" type="primary" size="medium">
+                  Изменить
+                </Button>
+              )}
+            </form>
+          </Route>
+          <Route path="/profile/orders">
+            <div>
+            </div>
+          </Route>
+          </Switch>
+        </div>
+      </section>
+   
   );
 };

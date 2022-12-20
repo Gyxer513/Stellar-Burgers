@@ -25,6 +25,8 @@ import { useSelector } from "react-redux";
 import { ProtectedRoute } from "../Protected-route/ProtectedRoute";
 import { Profile } from "../../pages/profile/profile";
 import { ResertPassword } from "../../pages/resetPassword/resetPassrod"
+import { checkAuth } from "../../services/reducers/authorization";
+import { getCookie, setCookie } from "../../utils/cookie";
 
 function App() {
   const location = useLocation();
@@ -40,6 +42,11 @@ function App() {
   const background = location.state?.background;
   useEffect(() => {
     dispatch(getData());
+    if (getCookie('accessToken')){
+      dispatch(checkAuth());
+    }
+    
+    console.log(getCookie('accessToken'));
   }, [dispatch]);
 
   const handleOrderClick = () => {
@@ -86,15 +93,18 @@ function App() {
         <Route exact path="/ingredients/:id">
           {!selectIngredient && <IngredientDetails />}
         </Route>
-        <ProtectedRoute path="/profile">
-          <Profile />
-        </ProtectedRoute>
         <Route exact path="/forgot-password">
           <ForgotPassword />
         </Route>
+        <ProtectedRoute
+          path="/profile"
+        >
+          <Profile/>
+        </ProtectedRoute>
         <Route exact path="*">
           <PageNotFound />
         </Route>
+        
       </Switch>
 
       {orderDetails.isOpened && (

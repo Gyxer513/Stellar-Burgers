@@ -1,5 +1,6 @@
 /* cSpell:disable */
 import { BASE_URL } from "./data";
+import { getCookie, setCookie } from "./cookie";
 
 class Api {
   constructor(link) {
@@ -49,6 +50,7 @@ class Api {
   }
 
   /* Восстановление пароля  */
+
   fogotPassword(data) {
     return fetch(`${this._link}/password-reset`, {
       method: "POST",
@@ -58,6 +60,8 @@ class Api {
       body: JSON.stringify(data),
     }).then((res) => this._checkResponse(res));
   }
+
+  /* Выход */
   logout(data) {
     return fetch(`${this._link}/auth/logout`, {
       method: "POST",
@@ -67,7 +71,7 @@ class Api {
       body: JSON.stringify(data),
     }).then((res) => this._checkResponse(res));
   }
-
+/* Обновление данных пользователя */
  updateUserData(token, data) {
     return fetch(`${this._link}/auth/user`, {
       method: "PATCH",
@@ -79,6 +83,7 @@ class Api {
     }).then((res) => this._checkResponse(res));
   }
 
+  /* Обновление пароля */
   updatePass(data) {
     return fetch(`${this._link}/password-reset/reset`, {
       method: "POST",
@@ -89,6 +94,17 @@ class Api {
     }).then((res) => this._checkResponse(res));
   }
 
+ /* Проверка авторизации */
+ checkAuth(data){
+  return fetch(`${this._link}/auth/user`, {
+    method: 'GET',
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": 'Bearer ' + getCookie('accessToken')
+    },
+    body: JSON.stringify(data),
+  }).then((res) => this._checkResponse(res));
+ }
 }
 
 
