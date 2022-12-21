@@ -188,7 +188,6 @@ const authorizationReducer = createSlice({
     },
     [checkAuth.rejected]: (state) => {
       state.isAuthorizationSucsess = false;
-
     },
 
     [refreshToken.pending]: (state) => {
