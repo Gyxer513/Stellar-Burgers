@@ -1,48 +1,38 @@
-import {
-  SEND_ORDER_DATA,
-  SEND_ORDER_SUCCESS,
-  SEND_ORDER_ERROR,
-  DELETE_ORDER_DATA,
-} from "../actions/order";
+/* cSpell:disable; */
+import { api } from "../../utils/Api";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-const initialState = {
-  orderDetails: null,
-  orderRequest: false,
-  orderFailed: false,
-};
+export const sendOrder = createAsyncThunk("sendOrder", async (list) => {
+  return api.sendData(list).catch((error) => {
+    console.warn(error);
+});
+});
 
-export const orderReducer = (state = initialState, action) => {
-  switch (action.type) {
-    case SEND_ORDER_DATA: {
-      return {
-        ...state,
-        orderRequest: true,
-        orderFailed: false,
-      }
-    }
-    case SEND_ORDER_SUCCESS: {
-      return {
-        ...state,
-        orderDetails: action.payload.order.number,
-        orderRequest: false,
-        orderFailed: false,
-      }
-    }
-    case SEND_ORDER_ERROR: {
-      return {
-        ...state,
-        orderRequest: false,
-        orderFailed: true,
-      }
-    }
-    case DELETE_ORDER_DATA: {
-      return {
-        ...state,
-        orderDetails: null,
-      };
-    }
-    default: {
-      return state;
-    }
-  }
-};
+export const orderReducer = createSlice({
+  name: "reducerOrder",
+  initialState: {
+    orderDetails: null,
+    orderRequest: false,
+    orderFailed: false,
+  },
+  reducers: {
+    deleteOrderData: (state) => {
+      state.orderDetails = null;
+    },
+  },
+  extraReducers: {
+    [sendOrder.pending]: (state) => {
+      state.orderRequest = true;
+    },
+    [sendOrder.fulfilled]: (state, action) => {
+      state.orderDetails = action.payload.order?.number;
+      state.orderRequest = false;
+    },
+    [sendOrder.rejected]: (state) => {
+      state.orderFailed = true;
+    },
+  },
+});
+
+export const { deleteOrderData } = orderReducer.actions;
+export default orderReducer.reducer;

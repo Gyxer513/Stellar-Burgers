@@ -1,0 +1,27 @@
+.register {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+}
+
+.register__input {
+  padding: 0 0 24px 0;
+}
+
+.register__register {
+  margin: 80px 0 16px 0;
+  display: flex;
+}
+
+.register__link {
+  text-decoration: none;
+  color: #4c4cff;
+}
+.register__link:hover {
+  opacity: 0.8;
+}
+
+.register__reset {
+  display: flex;
+}

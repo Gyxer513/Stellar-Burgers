@@ -1,6 +1,5 @@
 /* cSpell:disable; */
 import React from "react";
-
 import PropTypes from "prop-types";
 import { ingredientPropType } from "../../utils/prop-types";
 import {
@@ -15,17 +14,15 @@ import {
   addIngredient,
   addBun,
   sortIngredients,
-} from "../../services/actions/ingredients";
+} from "../../services/reducers/ingredients";
 import { useDrop } from "react-dnd";
 import ConstructorItem from "./ConstructorItem";
 
 const BurgerConstructor = ({ openOrder }) => {
   const dispatch = useDispatch();
-  const chosenIngredients = useSelector(
-    (state) => state.ingredients.chosenIngredients
+  const { ingredients, chosenBun, chosenIngredients } = useSelector(
+    (state) => state.ingredientsReducer
   );
-  const ingredients = useSelector((state) => state.ingredients.ingredients);
-  const chosenBun = useSelector((state) => state.ingredients.chosenBun);
 
   const handleDrop = (ingredientId) => {
     const targetIngredient = ingredients.find(
@@ -35,7 +32,7 @@ const BurgerConstructor = ({ openOrder }) => {
       dispatch(addBun(targetIngredient));
     } else {
       if (chosenBun != null) {
-        dispatch(addIngredient([...chosenIngredients, targetIngredient]));
+        dispatch(addIngredient(targetIngredient));
       }
     }
   };
@@ -52,7 +49,7 @@ const BurgerConstructor = ({ openOrder }) => {
 
   const totalPrice = React.useMemo(
     () =>
-      chosenBun?.price * 2  +
+      chosenBun?.price * 2 +
       chosenIngredients.reduce(
         (res, currentElement) => res + currentElement.price,
         0
@@ -126,16 +123,12 @@ const BurgerConstructor = ({ openOrder }) => {
         </div>
       )}
       <div className={styles.burgerConstructor__box}>
-        <p className="text text_type_main-large">
-          {totalPrice || 0}
-        </p>
+        <p className="text text_type_main-large">{totalPrice || 0}</p>
         <div className="m-2"></div>
         <CurrencyIcon type="primary" />
         <div className="m-2"></div>
         <Button
-          disabled={
-            !totalPrice || 0
-          }
+          disabled={!totalPrice || 0 || chosenIngredients.length === 0}
           htmlType="button"
           type="primary"
           size="medium"

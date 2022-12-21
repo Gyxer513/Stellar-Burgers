@@ -1,6 +1,7 @@
 /* cSpell:disable */
-import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { Switch, Route, useHistory, useLocation } from "react-router-dom";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import styles from "./app.module.css";
@@ -10,62 +11,113 @@ import BurgerConstructor from "../BurgerConstructor/BurgerConstructor";
 import Modal from "../Modal/Modal";
 import OrderDetails from "../OrderDetails/OrderDetails";
 import IngredientDetails from "../IngredientDetails/IngredientDetails";
-import { getIngredients } from "../../services/actions/ingredients";
-import { deleteOrder } from "../../services/actions/order"
-
+import { deleteOrderData } from "../../services/reducers/order";
+import {
+  getData,
+  deleteSelectedIngredientData,
+  clearSelectedIngregientsStore,
+} from "../../services/reducers/ingredients";
+import { Login } from "../../pages/login/Login.jsx";
+import { Register } from "../../pages/register/Register";
+import { ForgotPassword } from "../../pages/fogot-password/ForgotPassword";
+import { PageNotFound } from "../../pages/pageNotFound/PageNotFound";
+import { useSelector } from "react-redux";
+import { ProtectedRoute } from "../Protected-route/ProtectedRoute";
+import { Profile } from "../../pages/profile/profile";
+import { ResertPassword } from "../../pages/resetPassword/resetPassrod"
+import { checkAuth } from "../../services/reducers/authorization";
+import { getCookie } from "../../utils/cookie";
 
 function App() {
+  const location = useLocation();
+  const history = useHistory();
+  const dispatch = useDispatch();
   const [orderDetails, setOrderDetails] = useState({ isOpened: false });
   const [ingredientDetails, setIngredientDetails] = useState({
     isOpened: false,
-    ingredient: null,
   });
-  const dispatch = useDispatch();
-
+  const { ingredients, selectIngredient } = useSelector(
+    (state) => state.ingredientsReducer
+  );
+  const background = location.state?.background;
   useEffect(() => {
-    dispatch(getIngredients());
+    dispatch(getData());
+    if (getCookie('accessToken')){
+      dispatch(checkAuth())
+    }
   }, [dispatch]);
 
-  
-  
   const handleOrderClick = () => {
     openOrderDetails();
   };
-
   const openOrderDetails = () => {
     setOrderDetails({ ...orderDetails, isOpened: true });
   };
-  const closeAllModals = () => {
-    setOrderDetails({ ...orderDetails, isOpened: false });
+  const closeIngredientModal = () => {
+    history.push("/");
+    dispatch(deleteSelectedIngredientData());
     setIngredientDetails({ ...ingredientDetails, isOpened: false });
-    dispatch(deleteOrder());
+  };
+  const closeDetailsModal = () => {
+    setOrderDetails({ ...orderDetails, isOpened: false });
+    dispatch(deleteOrderData());
+    dispatch(clearSelectedIngregientsStore());
   };
 
-  const getIngredientsData = (cardData) => {
-    setIngredientDetails({ isOpened: true, ingredient: cardData });
+  const openIngredientModal = () => {
+    setIngredientDetails({ ...ingredientDetails, isOpened: true });
   };
   return (
     <>
       <AppHeader />
-      <main className={styles.main}>
-        <DndProvider backend={HTML5Backend}>
-          <BurgerIngredients getData={getIngredientsData} />
-          <BurgerConstructor openOrder={handleOrderClick} />
-        </DndProvider>
-      </main>
+      <Switch location={background || location}>
+        <Route exact path="/">
+          <main className={styles.main}>
+            <DndProvider backend={HTML5Backend}>
+              <BurgerIngredients openModal={openIngredientModal} />
+              <BurgerConstructor openOrder={handleOrderClick} />
+            </DndProvider>
+          </main>
+        </Route>
+        <Route exact path="/login">
+          <Login />
+        </Route>
+        <Route exact path="/reset-password">
+          <ResertPassword />
+        </Route>
+        <Route exact path="/register">
+          <Register />
+        </Route>
+        <Route exact path="/ingredients/:id">
+          {!selectIngredient && <IngredientDetails />}
+        </Route>
+        <Route exact path="/forgot-password">
+          <ForgotPassword />
+        </Route>
+        <ProtectedRoute
+          path="/profile"
+        >
+          <Profile/>
+        </ProtectedRoute>
+        <Route exact path="*">
+          <PageNotFound />
+        </Route>
+        
+      </Switch>
+
       {orderDetails.isOpened && (
-        <Modal onClose={closeAllModals}>
-          <OrderDetails />
-        </Modal>
+        <ProtectedRoute>
+          <Modal onClose={closeDetailsModal}>
+            <OrderDetails />
+          </Modal>
+        </ProtectedRoute>
       )}
-      {ingredientDetails.isOpened && (
-        <Modal onClose={closeAllModals}>
-          <IngredientDetails
-            title={`Детали ингредиента`}
-            ingredientData={ingredientDetails.ingredient}
-            closeModal={closeAllModals}
-          />
-        </Modal>
+      {ingredients.length > 0 && (
+        <Route path="/ingredients/:id">
+          <Modal onClose={closeIngredientModal} title="Детали ингредиента">
+            {selectIngredient && <IngredientDetails />}
+          </Modal>
+        </Route>
       )}
     </>
   );

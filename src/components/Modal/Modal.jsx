@@ -1,3 +1,4 @@
+/* cSpell:disable */
 import React, { useEffect } from "react";
 import styles from "./modal.module.css";
 import ReactDOM from "react-dom";
@@ -41,5 +42,4 @@ const Modal = ({ onClose, children }) => {
 export default Modal;
 Modal.propTypes = {
   onClose: PropTypes.func.isRequired,
-  children: PropTypes.node.isRequired,
 };
