@@ -99,7 +99,7 @@ const BurgerConstructor = ({ openOrder }) => {
             if (item.type != "bun") {
               return (
                 <ConstructorItem
-                  key={item.randomId}
+                  key={index}
                   index={index}
                   moveIngredient={moveIngredient}
                   data={item}

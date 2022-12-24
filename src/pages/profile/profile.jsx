@@ -11,6 +11,7 @@ import {
 import { logout, updateUserData } from "../../services/reducers/authorization";
 import { useDispatch, useSelector } from "react-redux";
 import Loader from "../../components/Loader/Loader";
+import { Feed } from "../feed/feed"
 
 
 export const Profile = () => {
@@ -137,7 +138,7 @@ export const Profile = () => {
             </form>
           </Route>
           <Route path="/profile/orders" exact>
-            <Loader/>
+            <Feed/>
           </Route>
         </Switch>
       </div>

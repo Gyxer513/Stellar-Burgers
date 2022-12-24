@@ -27,6 +27,7 @@ import { Profile } from "../../pages/profile/profile";
 import { ResertPassword } from "../../pages/resetPassword/resetPassrod"
 import { checkAuth } from "../../services/reducers/authorization";
 import { getCookie } from "../../utils/cookie";
+import { Feed }  from "../../pages/feed/feed"
 
 function App() {
   const location = useLocation();
@@ -81,6 +82,9 @@ function App() {
         </Route>
         <Route exact path="/login">
           <Login />
+        </Route>
+        <Route exact path="/feed">
+          <Feed />
         </Route>
         <Route exact path="/reset-password">
           <ResertPassword />

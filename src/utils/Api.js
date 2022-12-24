@@ -1,6 +1,6 @@
 /* cSpell:disable */
 import { BASE_URL } from "./data";
-import { getCookie, setCookie } from "./cookie";
+import { getCookie } from "./cookie";
 
 class Api {
   constructor(link) {
@@ -118,6 +118,14 @@ class Api {
         token: JSON.stringify({ token: localStorage.getItem('refreshToken') })
       }),
     }).then((res) => this._checkResponse(res));
+  }
+
+  getOrderInfo(orderNumber) {
+    return fetch(`${this._baseUrl}/auth/${orderNumber}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      }}).then((res) => this._checkResponse(res));
   }
 }
 

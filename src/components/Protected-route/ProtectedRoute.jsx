@@ -1,5 +1,6 @@
 import { Route, Redirect } from "react-router-dom";
 import { useSelector } from "react-redux";
+import React from "react";
 import Loader from "../../components/Loader/Loader";
 
 export const ProtectedRoute = ({ children, ...props }) => {
@@ -7,9 +8,9 @@ export const ProtectedRoute = ({ children, ...props }) => {
     (state) => state.authorizationReducer
   );
 
-  if(!userData && isAuthorizationSucsess) return <Loader />
-  
-  if (!isAuthorizationSucsess && !userData ) return <Redirect to="/login" />;
+  /* if (!userData && !isAuthorizationSucsess) return <Loader />; */
 
-  return <Route {...props}>{children}</Route>
+  if (!isAuthorizationSucsess && !userData) return <Redirect to="/login" />;
+
+  return <Route {...props}>{children}</Route>;
 };
