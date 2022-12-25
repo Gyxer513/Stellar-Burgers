@@ -121,12 +121,8 @@ class Api {
     }).then((res) => this._checkResponse(res));
   }
 
-  getOrderInfo(orderNumber) {
-    return fetch(`${this._baseUrl}/auth/${orderNumber}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      }}).then((res) => this._checkResponse(res));
+  getFullOrderInfo(order_number) {
+    return fetch(`${this._baseUrl}/orders/${order_number}`).then((res) => this._checkResponse(res));
   }
 }
 

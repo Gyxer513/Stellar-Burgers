@@ -14,6 +14,7 @@ export const OrderCard = ({
   number,
   date,
 }) => {
+  const location = useLocation();
   const { ingredients } = useSelector((state) => state.ingredientsReducer);
 
   if (status === "cancelled") {
@@ -32,6 +33,7 @@ export const OrderCard = ({
         )[0].image_mobile
     );
   };
+  
   const getPrice = () => {
     return orderIngredients
       .map(
@@ -45,7 +47,10 @@ export const OrderCard = ({
       }, 0);
   };
   return (
-    <Link className={styles.orderCard}>
+    <Link  className={styles.orderCard} to={{
+      pathname: `${location.pathname}/${number}`,
+      state: {background: location},
+    }}>
       <div className={styles.orderCard__header}>
         <h3 className={`text text_type_digits-default`}>#{number}</h3>
         <FormattedDate
@@ -70,7 +75,7 @@ export const OrderCard = ({
       <div className={styles.orderCard__box}>
         <ul className={styles.orderCard__imageBox}>
           {getImage()?.map((image, index) => {
-            return (
+            if (index < 5) return (
               <li
                 key={index}
                 className={styles.orderCard__listImage}

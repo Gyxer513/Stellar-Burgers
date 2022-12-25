@@ -8,18 +8,32 @@ export const sendOrder = createAsyncThunk("sendOrder", async (list) => {
 });
 });
 
+/* export const getFullOrderInfo = createAsyncThunk(
+  "getFullOrderInfo",
+  async (orderNumber) => {
+    return api.getFullOrderInfo(orderNumber).catch((error) => {
+      console.warn(error);
+    });
+  }
+); */
+
 export const orderReducer = createSlice({
   name: "reducerOrder",
   initialState: {
     orderDetails: null,
     orderRequest: false,
     orderFailed: false,
+    orderData: null,
   },
   reducers: {
     deleteOrderData: (state) => {
       state.orderDetails = null;
     },
+    deleteFullOrderData: (state) => {
+      state.orderDetails = null;
+    },
   },
+
   extraReducers: {
     [sendOrder.pending]: (state) => {
       state.orderRequest = true;
@@ -31,8 +45,10 @@ export const orderReducer = createSlice({
     [sendOrder.rejected]: (state) => {
       state.orderFailed = true;
     },
+
+    
   },
 });
 
-export const { deleteOrderData } = orderReducer.actions;
+export const { deleteOrderData, deleteFullOrderData } = orderReducer.actions;
 export default orderReducer.reducer;

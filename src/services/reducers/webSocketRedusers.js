@@ -1,10 +1,10 @@
 import { api } from "../../utils/Api";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-export const getOrderInfo = createAsyncThunk(
-  "getOrderInfo",
+export const getFullOrderInfo = createAsyncThunk(
+  "getFullOrderInfo",
   async (orderNumber) => {
-    return api.getOrderInfo(orderNumber).catch((error) => {
+    return api.getFullOrderInfo(orderNumber).catch((error) => {
       console.warn(error);
     });
   }
@@ -21,6 +21,7 @@ export const webSocketReducers = createSlice({
     fetchRequest: false,
     orders: null,
     wsData: null,
+    orderDataStatus: false,
   },
   reducers: {
     wsOpen: (state, action) => {
@@ -47,15 +48,15 @@ export const webSocketReducers = createSlice({
     },
   },
   extraReducers: {
-    [getOrderInfo.pending]: (state) => {
+    [getFullOrderInfo.pending]: (state) => {
       state.orderDataStatus = false;
     },
-    [getOrderInfo.fulfilled]: (state, action) => {
+    [getFullOrderInfo.fulfilled]: (state, action) => {
       state.orderDataStatus = true;
       state.orderData = action.payload;
     },
-    [getOrderInfo.rejected]: (state, action) => {
-      state.orderDataError = action.payload;
+    [getFullOrderInfo.rejected]: (state, action) => {
+      state.orderDataStatus = false;
     },
   },
 });

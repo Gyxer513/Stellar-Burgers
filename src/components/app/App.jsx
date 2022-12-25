@@ -1,6 +1,6 @@
 /* cSpell:disable */
 import { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Switch, Route, useHistory, useLocation } from "react-router-dom";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
@@ -21,13 +21,13 @@ import { Login } from "../../pages/login/Login.jsx";
 import { Register } from "../../pages/register/Register";
 import { ForgotPassword } from "../../pages/fogot-password/ForgotPassword";
 import { PageNotFound } from "../../pages/PageNotFound/PageNotFound";
-import { useSelector } from "react-redux";
 import { ProtectedRoute } from "../Protected-route/ProtectedRoute";
 import { Profile } from "../../pages/profile/profile";
-import { ResertPassword } from "../../pages/resetPassword/resetPassrod"
+import { ResertPassword } from "../../pages/resetPassword/resetPassrod";
 import { checkAuth } from "../../services/reducers/authorization";
 import { getCookie } from "../../utils/cookie";
-import { Feed }  from "../../pages/feed/feed"
+import { Feed } from "../../pages/feed/feed";
+import { FullOrderInfo } from "../FullOrderInfo/FullOrderInfo"
 
 function App() {
   const location = useLocation();
@@ -37,14 +37,15 @@ function App() {
   const [ingredientDetails, setIngredientDetails] = useState({
     isOpened: false,
   });
+
   const { ingredients, selectIngredient } = useSelector(
     (state) => state.ingredientsReducer
   );
   const background = location.state?.background;
   useEffect(() => {
     dispatch(getData());
-    if (getCookie('accessToken')){
-      dispatch(checkAuth())
+    if (getCookie("accessToken")) {
+      dispatch(checkAuth());
     }
   }, [dispatch]);
 
@@ -57,17 +58,20 @@ function App() {
   const closeIngredientModal = () => {
     history.push("/");
     dispatch(deleteSelectedIngredientData());
-    setIngredientDetails({ ...ingredientDetails, isOpened: false });
+  
   };
   const closeDetailsModal = () => {
     setOrderDetails({ ...orderDetails, isOpened: false });
     dispatch(deleteOrderData());
     dispatch(clearSelectedIngregientsStore());
   };
-
+  const closeOrderModal = () => {
+    history.goBack();
+  }
   const openIngredientModal = () => {
     setIngredientDetails({ ...ingredientDetails, isOpened: true });
   };
+
   return (
     <>
       <AppHeader />
@@ -98,15 +102,12 @@ function App() {
         <Route exact path="/forgot-password">
           <ForgotPassword />
         </Route>
-        <ProtectedRoute
-          path="/profile"
-        >
-          <Profile/>
+        <ProtectedRoute path="/profile">
+          <Profile />
         </ProtectedRoute>
         <Route exact path="*">
           <PageNotFound />
         </Route>
-        
       </Switch>
 
       {orderDetails.isOpened && (
@@ -123,6 +124,16 @@ function App() {
           </Modal>
         </Route>
       )}
+      <Route path="/feed/:orderNumber">
+        <Modal onClose={closeOrderModal}>
+          <FullOrderInfo/>
+        </Modal>
+      </Route>
+      <Route path="/profile/orders/:orderNumber">
+        <Modal onClose={closeOrderModal}>
+          <FullOrderInfo/>
+        </Modal>
+      </Route>
     </>
   );
 }

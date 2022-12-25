@@ -25,7 +25,6 @@ export const OrdersInfo = () => {
       );
     }
   });
-  console.log(wsData.total);
   return (
     <div className={styles.ordersInfo}>
       <div className={styles.ordersInfo__odersBox}>
@@ -51,12 +50,12 @@ export const OrdersInfo = () => {
           </p>
         </div>
       </div>
-      <div className="mt-60">
+      <div className="mt-30">
         <h4 className="text text_type_main-medium">Выполнено за сегодня:</h4>
         <p
           className={`${styles.ordersInfo__price} text text_type_digits-large`}
         >
-          {wsData.totalToday}
+          {wsData.totalToday.toLocaleString("ru-RU")}
         </p>
       </div>
     </div>
