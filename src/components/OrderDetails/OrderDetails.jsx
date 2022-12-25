@@ -4,6 +4,7 @@ import doneImg from "../../images/done.png";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { sendOrder } from "../../services/reducers/order";
+import Loader from "../Loader/Loader"
 
 function OrderDetails() {
   const dispatch = useDispatch();
@@ -31,7 +32,7 @@ function OrderDetails() {
   return (
     <div className={styles.order}>
       <div className="m-10"></div>
-      <h2 className="text text_type_digits-large">{orderDetails}</h2>
+      {orderDetails ?  <h2 className="text text_type_digits-large">{orderDetails}</h2> : <Loader/>}
       <div className="m-5"></div>
       <p className="text text_type_main-medium">Идентификатор заказа</p>
       <img className="m-10" src={doneImg} alt="Ваш заказ принят" />

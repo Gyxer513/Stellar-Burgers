@@ -8,7 +8,6 @@ export const OrdersFeed = () => {
   return (
       <div className={styles.ordersFeed}>
         {orders?.map((order) => {
-            console.log(order);
           return (
             <OrderCard
               date={order.createdAt}

@@ -19,6 +19,7 @@ class Api {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        "Authorization": "Bearer " + getCookie('accessToken')
       },
       body: JSON.stringify({ ingredients: orderList }),
     }).then((res) => this._checkResponse(res));
@@ -78,7 +79,7 @@ class Api {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json;charset=utf-8",
-        "authorization": 'Bearer ' + getCookie('accessToken'),
+        "Authorization": 'Bearer ' + getCookie('accessToken'),
       },
       body: JSON.stringify(data),
     }).then((res) => this._checkResponse(res));
@@ -101,7 +102,7 @@ class Api {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: "Bearer " + getCookie("accessToken"),
+        "Authorization": "Bearer " + getCookie("accessToken"),
       },
       body: JSON.stringify(data),
     }).then((res) => this._checkResponse(res));
