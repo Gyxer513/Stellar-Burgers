@@ -27,7 +27,7 @@ import { ResertPassword } from "../../pages/resetPassword/resetPassrod";
 import { checkAuth } from "../../services/reducers/authorization";
 import { getCookie } from "../../utils/cookie";
 import { Feed } from "../../pages/feed/feed";
-import { FullOrderInfo } from "../FullOrderInfo/FullOrderInfo"
+import { FullOrderInfo } from "../FullOrderInfo/FullOrderInfo";
 
 function App() {
   const location = useLocation();
@@ -49,16 +49,13 @@ function App() {
     }
   }, [dispatch]);
 
-  const handleOrderClick = () => {
-    openOrderDetails();
-  };
   const openOrderDetails = () => {
     setOrderDetails({ ...orderDetails, isOpened: true });
   };
+
   const closeIngredientModal = () => {
     history.push("/");
     dispatch(deleteSelectedIngredientData());
-  
   };
   const closeDetailsModal = () => {
     setOrderDetails({ ...orderDetails, isOpened: false });
@@ -67,7 +64,7 @@ function App() {
   };
   const closeOrderModal = () => {
     history.goBack();
-  }
+  };
   const openIngredientModal = () => {
     setIngredientDetails({ ...ingredientDetails, isOpened: true });
   };
@@ -80,7 +77,7 @@ function App() {
           <main className={styles.main}>
             <DndProvider backend={HTML5Backend}>
               <BurgerIngredients openModal={openIngredientModal} />
-              <BurgerConstructor openOrder={handleOrderClick} />
+              <BurgerConstructor openOrder={openOrderDetails} />
             </DndProvider>
           </main>
         </Route>
@@ -126,12 +123,12 @@ function App() {
       )}
       <Route path="/feed/:orderNumber">
         <Modal onClose={closeOrderModal}>
-          <FullOrderInfo/>
+          <FullOrderInfo />
         </Modal>
       </Route>
       <Route path="/profile/orders/:orderNumber">
         <Modal onClose={closeOrderModal}>
-          <FullOrderInfo/>
+          <FullOrderInfo />
         </Modal>
       </Route>
     </>

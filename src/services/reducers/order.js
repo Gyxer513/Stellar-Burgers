@@ -8,14 +8,16 @@ export const sendOrder = createAsyncThunk("sendOrder", async (list) => {
 });
 });
 
-/* export const getFullOrderInfo = createAsyncThunk(
-  "getFullOrderInfo",
+export const fullOrderInfo = createAsyncThunk(
+  "fullOrderInfo",
   async (orderNumber) => {
     return api.getFullOrderInfo(orderNumber).catch((error) => {
       console.warn(error);
     });
   }
-); */
+);
+
+
 
 export const orderReducer = createSlice({
   name: "reducerOrder",
@@ -46,7 +48,16 @@ export const orderReducer = createSlice({
       state.orderFailed = true;
     },
 
-    
+    [fullOrderInfo.pending]: (state) => {
+      state.orderDataStatus = false;
+    },
+    [fullOrderInfo.fulfilled]: (state, action) => {
+      state.orderDataStatus = true;
+      state.orderData = action.payload;
+    },
+    [fullOrderInfo.rejected]: (state, action) => {
+      state.orderDataStatus = false;
+    },
   },
 });
 
