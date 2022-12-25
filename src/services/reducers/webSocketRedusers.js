@@ -20,6 +20,7 @@ export const webSocketReducers = createSlice({
     fetchError: null,
     fetchRequest: false,
     orders: null,
+    wsData: null,
   },
   reducers: {
     wsOpen: (state, action) => {
@@ -42,6 +43,7 @@ export const webSocketReducers = createSlice({
     },
     wsGetOrders: (state, action) => {
       state.orders = action.payload.orders;
+      state.wsData = action.payload;
     },
   },
   extraReducers: {

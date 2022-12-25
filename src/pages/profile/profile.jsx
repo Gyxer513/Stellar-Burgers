@@ -12,19 +12,31 @@ import { logout, updateUserData } from "../../services/reducers/authorization";
 import { useDispatch, useSelector } from "react-redux";
 import Loader from "../../components/Loader/Loader";
 import { OrdersFeed } from '../../components/OdersFeed/OdersFeed'
-
-
+import { BASE_WSS } from "../../utils/data"
+import { useEffect } from 'react';
+import {  
+  wsConnection,
+  wsOffline,
+} from "../../services/reducers/webSocketRedusers";
+import {getCookie} from "../../utils/cookie"
 
 export const Profile = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const { userData } = useSelector((state) => state.authorizationReducer);
+  const { orders } = useSelector((state) => state.webSocketReducers);
   const [loginData, setLoginData] = React.useState({
     userName: userData.name,
     email: userData.email,
     password: "",
   });
 
+  useEffect(() => {
+    dispatch(wsConnection(`${BASE_WSS}?token=${getCookie('accessToken')}`));
+    return () => {
+        dispatch(wsOffline());
+    };
+  }, []);
   const logoutUser = () => {
     const refreshToken = localStorage.getItem("refreshToken");
     dispatch(
@@ -139,7 +151,9 @@ export const Profile = () => {
             </form>
           </Route>
           <Route path="/profile/orders" exact>
+            {orders ? <div className="ml-10">
             <OrdersFeed/>
+            </div> : <Loader/>}
           </Route>
         </Switch>
       </div>
