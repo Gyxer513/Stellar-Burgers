@@ -6,6 +6,7 @@ import {
  } from "../../services/reducers/webSocketRedusers";
 import { BASE_WSS } from "../../utils/data"
 import { useEffect } from 'react';
+import { OrdersFeed } from "../../components/OdersFeed/OdersFeed"
 
 export const Feed = () => {
   const dispatch = useDispatch();
@@ -17,4 +18,11 @@ export const Feed = () => {
         dispatch(wsOffline());
     };
   }, []);
+
+return (
+  <section className={styles.feed}>
+  <h1 className="mt-10 mb-5 text text_type_main-large">Лента заказов</h1>
+  <OrdersFeed/>
+  </section>
+)
 };

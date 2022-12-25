@@ -1,0 +1,51 @@
+.orderCard {
+  background: #1c1c21;
+  border-radius: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 584px;
+  padding: 24px;
+  text-decoration: none;
+  color: white;
+}
+.orderCard__header {
+  display: flex;
+  justify-content: space-between;
+}
+.statusDone {
+  color: #00cccc;
+}
+.orderCard__box {
+  display: flex;
+  justify-content: space-between;
+}
+.orderCard__imageBox {
+  margin: 0 0 0 24px;
+  padding: 0;
+  display: flex;
+}
+.orderCard__listImage {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  border-radius: 50%;
+  width: 64px;
+  height: 64px;
+  box-sizing: border-box;
+  background-image: linear-gradient(63.18deg, #801ab3 0%, #4c4cff 100%);
+  margin-left: -20px;
+}
+.orderCard__image {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: center;
+    background-color: #1C1C21;
+}
+.orderCard__priceBox {
+    display: flex;
+    align-items: center;
+}

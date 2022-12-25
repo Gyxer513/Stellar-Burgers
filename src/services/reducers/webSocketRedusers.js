@@ -41,7 +41,7 @@ export const webSocketReducers = createSlice({
       state.wsError = action.payload;
     },
     wsGetOrders: (state, action) => {
-      state.orders = action.payload;
+      state.orders = action.payload.orders;
     },
   },
   extraReducers: {
