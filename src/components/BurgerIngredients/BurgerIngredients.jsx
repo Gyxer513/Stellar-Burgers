@@ -29,7 +29,7 @@ const BurgerIngredients = ({ openModal }) => {
     };
     menu.current.addEventListener("scroll", putScroll)
   }, []);
-console.log(menu.current.scrollTop);
+
   const handleTabClick = (type) => {
     setCurrent(type);
     document
