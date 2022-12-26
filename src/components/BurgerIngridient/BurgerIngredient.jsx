@@ -27,10 +27,7 @@ const BurgerIngredient = ({ data, openModal }) => {
     }),
   });
 
-  const handleClick = () => {
-    openModal();
-    dispatch(selectIngredientData(data));
-  };
+
 
   const count = React.useMemo(() => {
     let ingredientCounter = 0;
@@ -45,17 +42,16 @@ const BurgerIngredient = ({ data, openModal }) => {
     }
     return ingredientCounter;
   }, [chosenBun, chosenIngredients]);
-
+  
   return (
-    <Link className={styles.burgerIngredient__link}  to={{
-      pathname: `/ingredients/${data._id}`,
-      state: { background: location },
+    <Link className={styles.burgerIngredient__link} to={{
+      pathname: `/ingredients/${_id}`,
+      state: {background: location}
       }}>
     <div
       disabled={true}
       ref={dragRef}
       className={styles.burgerIngredient}
-      onClick={handleClick}
     >
       {count > 0 && <Counter count={count} size="default" />}
       <img className="ingredient__image" src={image} alt={name} id={_id} />

@@ -54,7 +54,8 @@
   },
   "devDependencies": {
     "@types/react-router-dom": "^5.3.3",
-    "gh-pages": "^4.0.0"
+    "gh-pages": "^4.0.0",
+    "terser-brunch": "^4.1.0"
   },
   "homepage": "./"
 }

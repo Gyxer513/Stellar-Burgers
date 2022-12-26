@@ -41,20 +41,14 @@ export const ingredientsReducer = createSlice({
         return { payload: newBan };
       },
     },
-    selectIngredientData: (state, action) => {
-      state.selectIngredient = action.payload;
-    },
+
 
     clearSelectedIngregientsStore: (state) => {
       state.chosenIngredients = [];
       state.chosenBun = null;
     },
 
-    deleteSelectedIngredientData: {
-      reducer: (state) => {
-        state.selectIngredient = null;
-      },
-    },
+   
 
     deleteIngredient: (state, action) => {
       state.chosenIngredients = action.payload;

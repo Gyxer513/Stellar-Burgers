@@ -1,5 +1,5 @@
 import styles from "./orderCard.module.css";
-import { Link, useHistory, useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import {
   CurrencyIcon,
   FormattedDate,

@@ -1,6 +1,5 @@
 import styles from "./ordersFeed.module.css";
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { OrderCard } from "../OrderCard/OrderCard";
 
 export const OrdersFeed = () => {

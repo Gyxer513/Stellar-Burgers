@@ -14,7 +14,6 @@ import IngredientDetails from "../IngredientDetails/IngredientDetails";
 import { deleteOrderData } from "../../services/reducers/order";
 import {
   getData,
-  deleteSelectedIngredientData,
   clearSelectedIngregientsStore,
 } from "../../services/reducers/ingredients";
 import { Login } from "../../pages/login/Login.jsx";
@@ -38,9 +37,7 @@ function App() {
     isOpened: false,
   });
 
-  const { ingredients, selectIngredient } = useSelector(
-    (state) => state.ingredientsReducer
-  );
+ 
   const background = location.state?.background;
   useEffect(() => {
     dispatch(getData());
@@ -55,7 +52,6 @@ function App() {
 
   const closeIngredientModal = () => {
     history.push("/");
-    dispatch(deleteSelectedIngredientData());
   };
   const closeDetailsModal = () => {
     setOrderDetails({ ...orderDetails, isOpened: false });
@@ -94,7 +90,7 @@ function App() {
           <Register />
         </Route>
         <Route exact path="/ingredients/:id">
-          {!selectIngredient && <IngredientDetails />}
+          <IngredientDetails />
         </Route>
         <Route exact path="/forgot-password">
           <ForgotPassword />
@@ -114,23 +110,28 @@ function App() {
           </Modal>
         </ProtectedRoute>
       )}
-      {ingredients.length > 0 && (
+      {background && (
         <Route path="/ingredients/:id">
-          <Modal onClose={closeIngredientModal} title="Детали ингредиента">
-            {selectIngredient && <IngredientDetails />}
+          <Modal onClose={closeIngredientModal}>
+            <IngredientDetails />
           </Modal>
         </Route>
       )}
-      <Route path="/feed/:orderNumber">
-        <Modal onClose={closeOrderModal}>
-          <FullOrderInfo />
-        </Modal>
-      </Route>
-      <Route path="/profile/orders/:orderNumber">
-        <Modal onClose={closeOrderModal}>
-          <FullOrderInfo />
-        </Modal>
-      </Route>
+
+      {background && (
+        <Route path="/feed/:orderNumber">
+          <Modal onClose={closeOrderModal}>
+            <FullOrderInfo />
+          </Modal>
+        </Route>
+      )}
+      {background && (
+        <Route path="/profile/orders/:orderNumber">
+          <Modal onClose={closeOrderModal}>
+            <FullOrderInfo />
+          </Modal>
+        </Route>
+      )}
     </>
   );
 }
