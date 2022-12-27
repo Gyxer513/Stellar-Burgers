@@ -1,13 +1,10 @@
-import { Route, Redirect } from "react-router-dom";
-import { useLocation} from 'react-router-dom';
-import { getCookie } from "../../utils/cookie"
-
+import { Route, Redirect, useLocation } from "react-router-dom";
+import { getCookie } from "../../utils/cookie";
 
 
 export const ProtectedRoute = ({ onlyForAuth, children, ...rest }) => {
   const isAuthorized = getCookie("accessToken");
   const location = useLocation();
-
 
   if (!onlyForAuth && isAuthorized) {
     const { from } = location.state || { from: { pathname: "/" } };

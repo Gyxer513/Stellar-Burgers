@@ -74,7 +74,7 @@ function App() {
         <Route exact path="/forgot-password">
           <ForgotPassword />
         </Route>
-        <ProtectedRoute path="/profile" onlyUnAuth>
+        <ProtectedRoute path="/profile" onlyForAuth>
            <Profile />
         </ProtectedRoute>
         <Route exact path="*">
@@ -82,7 +82,7 @@ function App() {
         </Route>
       </Switch>
 
-      <ProtectedRoute path="/order" onlyUnAuth>
+      <ProtectedRoute path="/order" onlyForAuth>
         <Modal onClose={closeDetailsModal}>
           <OrderDetails />
         </Modal>
