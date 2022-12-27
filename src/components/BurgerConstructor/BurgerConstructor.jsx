@@ -17,7 +17,6 @@ import {
 } from "../../services/reducers/ingredients";
 import { useDrop } from "react-dnd";
 import ConstructorItem from "./ConstructorItem";
-import { deleteOrderData } from "../../services/reducers/order";
 import { useHistory, useLocation } from "react-router-dom";
 
 const BurgerConstructor = () => {

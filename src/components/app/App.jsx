@@ -1,6 +1,6 @@
 /* cSpell:disable */
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Switch, Route, useHistory, useLocation } from "react-router-dom";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
@@ -11,9 +11,7 @@ import BurgerConstructor from "../BurgerConstructor/BurgerConstructor";
 import Modal from "../Modal/Modal";
 import OrderDetails from "../OrderDetails/OrderDetails";
 import IngredientDetails from "../IngredientDetails/IngredientDetails";
-import {
-  getData,
-} from "../../services/reducers/ingredients";
+import { getData } from "../../services/reducers/ingredients";
 import { Login } from "../../pages/login/Login.jsx";
 import { Register } from "../../pages/register/Register";
 import { ForgotPassword } from "../../pages/fogot-password/ForgotPassword";
@@ -22,7 +20,6 @@ import { ProtectedRoute } from "../Protected-route/ProtectedRoute";
 import { Profile } from "../../pages/profile/profile";
 import { ResertPassword } from "../../pages/resetPassword/resetPassrod";
 import { checkAuth } from "../../services/reducers/authorization";
-import { getCookie } from "../../utils/cookie";
 import { Feed } from "../../pages/feed/feed";
 import { FullOrderInfo } from "../FullOrderInfo/FullOrderInfo";
 
@@ -30,19 +27,12 @@ function App() {
   const location = useLocation();
   const history = useHistory();
   const dispatch = useDispatch();
-
-
-
- 
+  
   const background = location.state?.background;
   useEffect(() => {
     dispatch(getData());
-    if (getCookie("accessToken")) {
-      dispatch(checkAuth());
-    }
+    dispatch(checkAuth());
   }, [dispatch]);
-
-
 
   const closeIngredientModal = () => {
     history.push("/");
@@ -54,7 +44,6 @@ function App() {
     history.goBack();
   };
 
-
   return (
     <>
       <AppHeader />
@@ -62,8 +51,8 @@ function App() {
         <Route exact path="/">
           <main className={styles.main}>
             <DndProvider backend={HTML5Backend}>
-              <BurgerIngredients/>
-              <BurgerConstructor/>
+              <BurgerIngredients />
+              <BurgerConstructor />
             </DndProvider>
           </main>
         </Route>
@@ -85,20 +74,19 @@ function App() {
         <Route exact path="/forgot-password">
           <ForgotPassword />
         </Route>
-        <ProtectedRoute path="/profile">
-          <Profile />
+        <ProtectedRoute path="/profile" onlyUnAuth>
+           <Profile />
         </ProtectedRoute>
         <Route exact path="*">
           <PageNotFound />
         </Route>
       </Switch>
 
-     
-        <ProtectedRoute path='/order'>
-          <Modal onClose={closeDetailsModal}>
-            <OrderDetails />
-          </Modal>
-        </ProtectedRoute>
+      <ProtectedRoute path="/order" onlyUnAuth>
+        <Modal onClose={closeDetailsModal}>
+          <OrderDetails />
+        </Modal>
+      </ProtectedRoute>
 
       {background && (
         <Route path="/ingredients/:id">

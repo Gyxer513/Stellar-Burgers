@@ -87,7 +87,7 @@ const authorizationReducer = createSlice({
   name: "authorizationReducer",
   initialState: {
     isLoading: false,
-    isAuthorizationSucsess: false,
+    isAuthorizationSuccess: false,
     userData: null,
     accessToken: null,
     error: null,
@@ -102,28 +102,28 @@ const authorizationReducer = createSlice({
     },
     [registerNewUser.fulfilled]: (state, action) => {
       state.isLoading = false;
-      state.isAuthorizationSucsess = true;
+      state.isAuthorizationSuccess = true;
       state.userData = action.payload.user;
       localStorage.setItem("refreshToken", action.payload.refreshToken);
       state.accessToken = action.payload.accessToken;
     },
 
     [registerNewUser.rejected]: (state) => {
-      state.isAuthorizationSucsess = false;
+      state.isAuthorizationSuccess = false;
     },
     [loginUser.pending]: (state) => {
       state.isLoading = true;
     },
     [loginUser.fulfilled]: (state, action) => {
       state.isLoading = false;
-      state.isAuthorizationSucsess = true;
+      state.isAuthorizationSuccess = true;
       state.userData = action.payload.user;
       localStorage.setItem("refreshToken", action.payload.refreshToken);
       setCookie('accessToken', action.payload.accessToken.split('Bearer ')[1]);
       state.accessToken = action.payload.accessToken;
     },
     [loginUser.rejected]: (state) => {
-      state.isAuthorizationSucsess = false;
+      state.isAuthorizationSuccess = false;
     },
 
     [fogotPass.pending]: (state) => {
@@ -136,7 +136,7 @@ const authorizationReducer = createSlice({
 
     [fogotPass.rejected]: (state) => {
       state.isLoading = false;
-      state.isAuthorizationSucsess = false;
+      state.isAuthorizationSuccess = false;
       state.resetStatus = false;
     },
 
@@ -146,13 +146,13 @@ const authorizationReducer = createSlice({
     [logout.fulfilled]: (state) => {
       state.isLoading = false;
       localStorage.setItem("refreshToken", null);
-      state.isAuthorizationSucsess = false;
+      state.isAuthorizationSuccess = false;
       state.userData = null;
       deleteCookie('accessToken');
     },
     [logout.rejected]: (state) => {
       state.isLoading = false;
-      state.isAuthorizationSucsess = false;
+      state.isAuthorizationSuccess = false;
     },
 
     [updateUserData.pending]: (state) => {
@@ -160,47 +160,47 @@ const authorizationReducer = createSlice({
     },
     [updateUserData.fulfilled]: (state, action) => {
       state.isLoading = false;
-      state.isAuthorizationSucsess = true;
+      state.isAuthorizationSuccess = true;
     },
     [updateUserData.rejected]: (state) => {
-      state.isAuthorizationSucsess = false;
+      state.isAuthorizationSuccess = false;
     },
 
     [updatePass.pending]: (state) => {
       state.isLoading = true;
-      state.isAuthorizationSucsess = false;
+      state.isAuthorizationSuccess = false;
     },
     [updatePass.fulfilled]: (state) => {
       state.isLoading = false;
     },
     [updatePass.rejected]: (state) => {
-      state.isAuthorizationSucsess = false;
+      state.isAuthorizationSuccess = false;
     },
 
     [checkAuth.pending]: (state) => {
       state.isLoading = true;
-      state.isAuthorizationSucsess = false;
+      state.isAuthorizationSuccess = false;
     },
     [checkAuth.fulfilled]: (state, action) => {
       state.isLoading = false;
-      state.isAuthorizationSucsess = true;
+      state.isAuthorizationSuccess = true;
       state.userData = action.payload.user;
     },
     [checkAuth.rejected]: (state) => {
-      state.isAuthorizationSucsess = false;
+      state.isAuthorizationSuccess = false;
     },
 
     [refreshToken.pending]: (state) => {
       state.isLoading = true;
-      state.isAuthorizationSucsess = false;
+      state.isAuthorizationSuccess = false;
     },
     [refreshToken.fulfilled]: (state, action) => {
       state.isLoading = false;
-      state.isAuthorizationSucsess = true;
+      state.isAuthorizationSuccess = true;
       setCookie('accessToken', action.payload.accessToken.split('Bearer ')[1]);
     },
     [refreshToken.rejected]: (state) => {
-      state.isAuthorizationSucsess = false;
+      state.isAuthorizationSuccess = false;
     },
   },
 });

@@ -25,8 +25,6 @@ class Api {
     }).then((res) => this._checkResponse(res));
   }
 
-  getO
-
   /*   Запросы авторизации спринт 9 роутинг и авторизация */
 
   /* Регистрация пользователя */
@@ -104,7 +102,7 @@ class Api {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": "Bearer " + getCookie("accessToken"),
+        "Authorization": "Bearer " + getCookie('accessToken')
       },
       body: JSON.stringify(data),
     }).then((res) => this._checkResponse(res));
