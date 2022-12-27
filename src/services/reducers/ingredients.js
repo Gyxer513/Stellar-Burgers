@@ -17,7 +17,6 @@ export const ingredientsReducer = createSlice({
     chosenBun: null,
     ingredientsRequest: false,
     ingredientsFailed: false,
-    selectIngredient: null,
   },
   reducers: {
     addIngredient: {
@@ -41,15 +40,6 @@ export const ingredientsReducer = createSlice({
         return { payload: newBan };
       },
     },
-
-
-    clearSelectedIngregientsStore: (state) => {
-      state.chosenIngredients = [];
-      state.chosenBun = null;
-    },
-
-   
-
     deleteIngredient: (state, action) => {
       state.chosenIngredients = action.payload;
     },
@@ -78,6 +68,5 @@ export const {
   selectIngredientData,
   deleteSelectedIngredientData,
   deleteCousenBun,
-  clearSelectedIngregientsStore,
 } = ingredientsReducer.actions;
 export default ingredientsReducer.reducer;
