@@ -1,98 +1,64 @@
 /* cSpell:disable; */
 import { api } from "../../utils/Api";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { setCookie, deleteCookie } from "../../utils/cookie";
+import { setCookie, deleteCookie, getCookie } from "../../utils/cookie";
 
 /* ***** Регистрация нового пользователя ***** */
 
-export const registerNewUser = createAsyncThunk(
-  "registerUser",
-  async (data) => {
-    return api.newUser(data).catch((error) => {
-      console.warn(error);
-    });
-  }
+export const registerNewUser = createAsyncThunk("registerUser", async (data) =>
+  api.newUser(data)
 );
 
 /* ***** Авторизация существующего пользователя ***** */
 
 export const loginUser = createAsyncThunk("loginUser", async (data) => {
-  return api.loginUser(data).catch((error) => {
-    console.warn(error);
-  });
+  return api.loginUser(data);
 });
 
 /* ***** Восстановление пароля ***** */
 
 export const fogotPass = createAsyncThunk("fogotPass", async (data) => {
-  return api.fogotPassword(data).catch((error) => {
-    console.warn(error);
-  });
+  return api.fogotPassword(data);
 });
 
 /* ***** Выход из системы ***** */
 
-export const logout = createAsyncThunk("logout", async (data) => {
-  return api.logout(data).catch((error) => {
-    console.warn(error);
-  });
-});
+export const logout = createAsyncThunk("logout", async (data) =>
+  api.logout(data)
+);
 
 /* ***** Обновление данных пользователя ***** */
 
-export const updateUserData = createAsyncThunk(
-  "updateUser",
-  async (data) => {
-    return api.updateUserData(data).catch((error) => {
-      console.warn(error);
-    });
-  }
+export const updateUserData = createAsyncThunk("updateUser", async (data) =>
+  api.updateUserData(data)
 );
 
 /* ***** Обновление пароля ***** */
-export const updatePass = createAsyncThunk(
-  "updatePass",
-  async (data) => {
-    return api.updatePass(data).catch((error) => {
-      console.warn(error);
-    });
-  }
+export const updatePass = createAsyncThunk("updatePass", async (data) =>
+  api.updatePass(data)
 );
 
 /* ***** Проверка авторизации ***** */
-export const checkAuth = createAsyncThunk(
-  "checkAuth",
-  async (data) => {
-    return api.checkAuth(data).catch((error) => {
-      if (error.message === "jwt expired") {
-      refreshToken(localStorage.getItem('refreshToken'))
-      }
-      console.warn(error);
-  });
-  }
+export const checkAuth = createAsyncThunk("checkAuth", async () =>
+  api.checkAuth()
 );
 
 /* ***** Обновление токена ***** */
-export const refreshToken = createAsyncThunk(
-  "refreshToken",
-  async () => {
-    return api.refreshToken().catch((error) => {
-      console.warn(error);
-    });
-  }
+export const refreshToken = createAsyncThunk("refreshToken", async () =>
+  api.refreshToken()
 );
-
 
 const authorizationReducer = createSlice({
   name: "authorizationReducer",
   initialState: {
     isLoading: false,
-    isAuthorizationSucsess: false,
+    isAuthorizationSuccess: false,
     userData: null,
     accessToken: null,
     error: null,
     resetStatus: null,
     error: null,
+    tokenError: false,
   },
 
   reducers: {},
@@ -102,28 +68,30 @@ const authorizationReducer = createSlice({
     },
     [registerNewUser.fulfilled]: (state, action) => {
       state.isLoading = false;
-      state.isAuthorizationSucsess = true;
+      state.isAuthorizationSuccess = true;
       state.userData = action.payload.user;
       localStorage.setItem("refreshToken", action.payload.refreshToken);
       state.accessToken = action.payload.accessToken;
     },
 
-    [registerNewUser.rejected]: (state) => {
-      state.isAuthorizationSucsess = false;
+    [registerNewUser.rejected]: (state, action) => {
+      state.isAuthorizationSuccess = false;
+      console.warn(action.error);
     },
     [loginUser.pending]: (state) => {
       state.isLoading = true;
     },
     [loginUser.fulfilled]: (state, action) => {
       state.isLoading = false;
-      state.isAuthorizationSucsess = true;
+      state.isAuthorizationSuccess = true;
       state.userData = action.payload.user;
       localStorage.setItem("refreshToken", action.payload.refreshToken);
-      setCookie('accessToken', action.payload.accessToken.split('Bearer ')[1]);
+      setCookie("accessToken", action.payload.accessToken.split("Bearer ")[1]);
       state.accessToken = action.payload.accessToken;
     },
-    [loginUser.rejected]: (state) => {
-      state.isAuthorizationSucsess = false;
+    [loginUser.rejected]: (state, action) => {
+      state.isAuthorizationSuccess = false;
+      console.warn(action.error);
     },
 
     [fogotPass.pending]: (state) => {
@@ -134,10 +102,11 @@ const authorizationReducer = createSlice({
       state.resetStatus = true;
     },
 
-    [fogotPass.rejected]: (state) => {
+    [fogotPass.rejected]: (state, action) => {
       state.isLoading = false;
-      state.isAuthorizationSucsess = false;
+      state.isAuthorizationSuccess = false;
       state.resetStatus = false;
+      console.warn(action.error);
     },
 
     [logout.pending]: (state) => {
@@ -146,13 +115,14 @@ const authorizationReducer = createSlice({
     [logout.fulfilled]: (state) => {
       state.isLoading = false;
       localStorage.setItem("refreshToken", null);
-      state.isAuthorizationSucsess = false;
+      state.isAuthorizationSuccess = false;
       state.userData = null;
-      deleteCookie('accessToken');
+      deleteCookie("accessToken");
     },
-    [logout.rejected]: (state) => {
+    [logout.rejected]: (state, action) => {
       state.isLoading = false;
-      state.isAuthorizationSucsess = false;
+      state.isAuthorizationSuccess = false;
+      console.warn(action.error);
     },
 
     [updateUserData.pending]: (state) => {
@@ -160,47 +130,54 @@ const authorizationReducer = createSlice({
     },
     [updateUserData.fulfilled]: (state, action) => {
       state.isLoading = false;
-      state.isAuthorizationSucsess = true;
+      state.isAuthorizationSuccess = true;
     },
-    [updateUserData.rejected]: (state) => {
-      state.isAuthorizationSucsess = false;
+    [updateUserData.rejected]: (state, action) => {
+      state.isAuthorizationSuccess = false;
+      console.warn(action.error);
     },
 
     [updatePass.pending]: (state) => {
       state.isLoading = true;
-      state.isAuthorizationSucsess = false;
+      state.isAuthorizationSuccess = false;
     },
     [updatePass.fulfilled]: (state) => {
       state.isLoading = false;
     },
-    [updatePass.rejected]: (state) => {
-      state.isAuthorizationSucsess = false;
+    [updatePass.rejected]: (state, action) => {
+      state.isAuthorizationSuccess = false;
+      console.warn(action.error);
+      console.warn(action.error);
     },
 
     [checkAuth.pending]: (state) => {
       state.isLoading = true;
-      state.isAuthorizationSucsess = false;
+      state.isAuthorizationSuccess = false;
     },
     [checkAuth.fulfilled]: (state, action) => {
       state.isLoading = false;
-      state.isAuthorizationSucsess = true;
-      state.userData = action.payload.user;
+      state.isAuthorizationSuccess = action.payload?.success;
+      state.userData = action.payload?.user;
+      state.tokenError = false;
     },
-    [checkAuth.rejected]: (state) => {
-      state.isAuthorizationSucsess = false;
+    [checkAuth.rejected]: (state, action) => {
+      state.isAuthorizationSuccess = false;
+      state.tokenError = true;
+      console.warn(action.error);
     },
 
     [refreshToken.pending]: (state) => {
       state.isLoading = true;
-      state.isAuthorizationSucsess = false;
+      state.isAuthorizationSuccess = false;
     },
     [refreshToken.fulfilled]: (state, action) => {
       state.isLoading = false;
-      state.isAuthorizationSucsess = true;
-      setCookie('accessToken', action.payload.accessToken.split('Bearer ')[1]);
+      state.isAuthorizationSuccess = true;
+      setCookie("accessToken", action.payload.accessToken.split("Bearer ")[1]);
     },
-    [refreshToken.rejected]: (state) => {
-      state.isAuthorizationSucsess = false;
+    [refreshToken.rejected]: (state, action) => {
+      state.isAuthorizationSuccess = false;
+      console.warn(action.error);
     },
   },
 });

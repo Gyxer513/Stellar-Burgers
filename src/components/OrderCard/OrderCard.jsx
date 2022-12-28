@@ -1,3 +1,4 @@
+/* cSpell:disable; */
 import styles from "./orderCard.module.css";
 import { Link, useLocation } from "react-router-dom";
 import {
@@ -19,12 +20,15 @@ export const OrderCard = ({ orderIngredients, status, name, number, date }) => {
   }
 
   const getImage = () => {
-    return orderIngredients.map(
-      (ingredient) =>
-        ingredients.filter(
-          (storeIngredient) => storeIngredient._id === ingredient
-        )[0].image_mobile
-    );
+    if (orderIngredients) {
+      return orderIngredients.map(
+        (ingredient) =>
+          ingredients.filter(
+            (storeIngredient) => storeIngredient._id === ingredient
+          )[0]?.image_mobile
+      );
+    }
+    
   };
 
   const getPrice = () => {
@@ -33,7 +37,7 @@ export const OrderCard = ({ orderIngredients, status, name, number, date }) => {
         (ingredient) =>
           ingredients.filter(
             (storeIngredient) => storeIngredient._id === ingredient
-          )[0].price
+          )[0]?.price
       )
       .reduce((acc, current) => {
         return acc + current;
@@ -78,7 +82,7 @@ export const OrderCard = ({ orderIngredients, status, name, number, date }) => {
                   className={styles.orderCard__listImage}
                   style={{ zIndex: 6 - index }}
                 >
-                  <img className={styles.orderCard__image} src={image} />
+                  <img className={styles.orderCard__image} src={image} alt={name} />
                 </li>
               );
           })}

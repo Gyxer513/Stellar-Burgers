@@ -1,5 +1,5 @@
 /* cSpell:disable */
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Switch, Route, useHistory, useLocation } from "react-router-dom";
 import { DndProvider } from "react-dnd";
@@ -11,11 +11,7 @@ import BurgerConstructor from "../BurgerConstructor/BurgerConstructor";
 import Modal from "../Modal/Modal";
 import OrderDetails from "../OrderDetails/OrderDetails";
 import IngredientDetails from "../IngredientDetails/IngredientDetails";
-import { deleteOrderData } from "../../services/reducers/order";
-import {
-  getData,
-  clearSelectedIngregientsStore,
-} from "../../services/reducers/ingredients";
+import { getData } from "../../services/reducers/ingredients";
 import { Login } from "../../pages/login/Login.jsx";
 import { Register } from "../../pages/register/Register";
 import { ForgotPassword } from "../../pages/fogot-password/ForgotPassword";
@@ -23,46 +19,39 @@ import { PageNotFound } from "../../pages/pageNotFound/PageNotFound";
 import { ProtectedRoute } from "../Protected-route/ProtectedRoute";
 import { Profile } from "../../pages/profile/profile";
 import { ResertPassword } from "../../pages/resetPassword/resetPassrod";
-import { checkAuth } from "../../services/reducers/authorization";
-import { getCookie } from "../../utils/cookie";
+import { checkAuth, refreshToken } from "../../services/reducers/authorization";
 import { Feed } from "../../pages/feed/feed";
 import { FullOrderInfo } from "../FullOrderInfo/FullOrderInfo";
+import { getCookie } from "../../utils/cookie";
 
 function App() {
   const location = useLocation();
   const history = useHistory();
   const dispatch = useDispatch();
-  const [orderDetails, setOrderDetails] = useState({ isOpened: false });
-  const [ingredientDetails, setIngredientDetails] = useState({
-    isOpened: false,
-  });
+  const { userData, tokenError } = useSelector(
+    (state) => state.authorizationReducer
+  );
 
- 
   const background = location.state?.background;
   useEffect(() => {
     dispatch(getData());
-    if (getCookie("accessToken")) {
-      dispatch(checkAuth());
+if (getCookie("accessToken")) {
+  dispatch(checkAuth());
+}
+    if (tokenError) {
+      dispatch(refreshToken());
     }
-  }, [dispatch]);
 
-  const openOrderDetails = () => {
-    setOrderDetails({ ...orderDetails, isOpened: true });
-  };
+  }, [dispatch, tokenError]);
 
   const closeIngredientModal = () => {
     history.push("/");
   };
   const closeDetailsModal = () => {
-    setOrderDetails({ ...orderDetails, isOpened: false });
-    dispatch(deleteOrderData());
-    dispatch(clearSelectedIngregientsStore());
+    history.push("/");
   };
   const closeOrderModal = () => {
     history.goBack();
-  };
-  const openIngredientModal = () => {
-    setIngredientDetails({ ...ingredientDetails, isOpened: true });
   };
 
   return (
@@ -72,8 +61,8 @@ function App() {
         <Route exact path="/">
           <main className={styles.main}>
             <DndProvider backend={HTML5Backend}>
-              <BurgerIngredients openModal={openIngredientModal} />
-              <BurgerConstructor openOrder={openOrderDetails} />
+              <BurgerIngredients />
+              <BurgerConstructor />
             </DndProvider>
           </main>
         </Route>
@@ -95,21 +84,20 @@ function App() {
         <Route exact path="/forgot-password">
           <ForgotPassword />
         </Route>
-        <ProtectedRoute path="/profile">
-          <Profile />
+        <ProtectedRoute path="/profile" onlyForAuth>
+           {userData && <Profile />}
         </ProtectedRoute>
         <Route exact path="*">
           <PageNotFound />
         </Route>
       </Switch>
 
-      {orderDetails.isOpened && (
-        <ProtectedRoute>
-          <Modal onClose={closeDetailsModal}>
-            <OrderDetails />
-          </Modal>
-        </ProtectedRoute>
-      )}
+      <ProtectedRoute path="/order" onlyForAuth>
+        <Modal onClose={closeDetailsModal}>
+          <OrderDetails />
+        </Modal>
+      </ProtectedRoute>
+
       {background && (
         <Route path="/ingredients/:id">
           <Modal onClose={closeIngredientModal}>

@@ -1,16 +1,28 @@
-import { Route, Redirect } from "react-router-dom";
-import { useSelector } from "react-redux";
-import React from "react";
-import Loader from "../../components/Loader/Loader";
+import { Route, Redirect, useLocation } from "react-router-dom";
+import { getCookie } from "../../utils/cookie";
 
-export const ProtectedRoute = ({ children, ...props }) => {
-  const { isAuthorizationSucsess, userData } = useSelector(
-    (state) => state.authorizationReducer
-  );
 
-  /* if (!userData && !isAuthorizationSucsess) return <Loader />; */
+export const ProtectedRoute = ({ onlyForAuth, children, ...rest }) => {
 
-  if (!isAuthorizationSucsess && !userData) return <Redirect to="/login" />;
+  const isAuthorized = getCookie("accessToken");
+  const location = useLocation();
 
-  return <Route {...props}>{children}</Route>;
+  if (!onlyForAuth && isAuthorized) {
+    const { from } = location.state || { from: { pathname: "/" } };
+    return (
+      <Route {...rest}>
+        <Redirect to={from} />
+      </Route>
+    );
+  }
+
+  if (onlyForAuth && !isAuthorized) {
+    return (
+      <Route {...rest}>
+        <Redirect to={{ pathname: "/login", state: { from: location } }} />
+      </Route>
+    );
+  }
+
+  return <Route {...rest}>{children}</Route>;
 };
