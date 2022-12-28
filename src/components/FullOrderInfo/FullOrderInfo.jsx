@@ -1,3 +1,4 @@
+/* cSpell:disable */
 import styles from "./fullOrderInfo.module.css";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -30,7 +31,7 @@ export const FullOrderInfo = () => {
   } else {
     status = "Готовится";
   }
-  const orderIngredients = orderInfo?.ingredients;
+  let orderIngredients = [...new Set(orderInfo?.ingredients)];
 
   const getIngredientsInfo = () => {
     if (orderData) {
@@ -42,7 +43,18 @@ export const FullOrderInfo = () => {
       );
     }
   };
-  const getPrice = () => {
+  const count = (id) => {
+    let counter = 0;
+    orderInfo?.ingredients.forEach((ingredient) => {
+      if (ingredient === id) {
+        counter++;
+      }
+    });
+
+    return counter;
+  };
+
+  const getFullPrice = () => {
     return orderIngredients
       .map(
         (ingredient) =>
@@ -96,7 +108,8 @@ export const FullOrderInfo = () => {
                     <div
                       className={`text text_type_digits-default ${styles.fullOrderInfo__priceBox}`}
                     >
-                      <span className="mr-2">{ingredient?.price}</span>
+                      <span className="ml-1 mr-1">{count(ingredient._id)}</span>
+                      x<span className="mr-2">{ingredient?.price}</span>
                       <CurrencyIcon type="primary" />
                     </div>
                   </li>
@@ -112,7 +125,9 @@ export const FullOrderInfo = () => {
               date={new Date(orderData?.orders[0].createdAt)}
             />
             <div className={styles.fullOrderInfo__priceBox}>
-              <p className="mr-3 text text_type_digits-medium">{getPrice()}</p>
+              <p className="mr-3 text text_type_digits-medium">
+                {getFullPrice()}
+              </p>
               <CurrencyIcon />
             </div>
           </div>

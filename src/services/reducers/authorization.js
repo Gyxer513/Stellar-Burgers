@@ -3,6 +3,7 @@ import { api } from "../../utils/Api";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { setCookie, deleteCookie, getCookie } from "../../utils/cookie";
 
+
 /* ***** Регистрация нового пользователя ***** */
 
 export const registerNewUser = createAsyncThunk(
@@ -61,11 +62,7 @@ export const updatePass = createAsyncThunk(
 export const checkAuth = createAsyncThunk(
   "checkAuth",
   async () => 
-     api.checkAuth().catch((error) =>{
-      if (error.message == 'Ошибка: 401' || error.message == 'Ошибка: 403') {
-        refreshToken()
-      }
-     })
+     api.checkAuth()
 );
 
 /* ***** Обновление токена ***** */
@@ -89,6 +86,7 @@ const authorizationReducer = createSlice({
     error: null,
     resetStatus: null,
     error: null,
+    tokenError: false,
   },
 
   reducers: {},
@@ -181,10 +179,11 @@ const authorizationReducer = createSlice({
       state.isLoading = false;
       state.isAuthorizationSuccess = action.payload?.success; 
       state.userData = action.payload?.user;
+      state.tokenError = false;
     },
     [checkAuth.rejected]: (state, action) => {
       state.isAuthorizationSuccess = false;
-      console.log(action.error.message);
+      state.tokenError = true;
     },
 
     [refreshToken.pending]: (state) => {

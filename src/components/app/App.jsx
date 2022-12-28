@@ -28,7 +28,7 @@ function App() {
   const location = useLocation();
   const history = useHistory();
   const dispatch = useDispatch();
-  const { userData } = useSelector(
+  const { userData, tokenError } = useSelector(
     (state) => state.authorizationReducer
   );
 
@@ -38,9 +38,11 @@ function App() {
 if (getCookie("accessToken")) {
   dispatch(checkAuth());
 }
-    
-    /* dispatch(refreshToken()); */
-  }, [dispatch]);
+    if (tokenError) {
+      dispatch(refreshToken());
+    }
+
+  }, [dispatch, tokenError]);
 
   const closeIngredientModal = () => {
     history.push("/");

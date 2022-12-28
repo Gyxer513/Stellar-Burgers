@@ -18,7 +18,6 @@ export const Login = () => {
   });
   const { email, password } = userData;
   const dispatch = useDispatch();
-  const history = useHistory();
   const onChange = (e) => {
     setUserData({
       ...userData,
@@ -32,8 +31,8 @@ export const Login = () => {
         email: email,
         password: password,
       })
+      
     )
-    history.push("/");
   };
   return (
     <form onSubmit={submitAutorization} className={styles.login}>

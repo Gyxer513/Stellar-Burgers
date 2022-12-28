@@ -11,7 +11,7 @@ const modalsContainer = document.querySelector("#modals");
 const Modal = ({ onClose, children }) => {
   useEffect(() => {
     document.addEventListener("keydown", handleEscKeydown);
-console.log(getCookie("accessToken"));
+
     return () => {
       document.removeEventListener("keydown", handleEscKeydown);
     };
