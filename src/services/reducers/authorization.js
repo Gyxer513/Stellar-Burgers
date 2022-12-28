@@ -174,6 +174,7 @@ const authorizationReducer = createSlice({
       state.isLoading = false;
       state.isAuthorizationSuccess = true;
       setCookie("accessToken", action.payload.accessToken.split("Bearer ")[1]);
+      localStorage.setItem("refreshToken", action.payload.refreshToken);
     },
     [refreshToken.rejected]: (state, action) => {
       state.isAuthorizationSuccess = false;

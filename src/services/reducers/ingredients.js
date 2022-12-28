@@ -4,7 +4,7 @@ import { randomId } from "../../utils/data";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 export const getData = createAsyncThunk("getData", async () => {
-  return api.getData()
+  return api.getData();
 });
 
 export const ingredientsReducer = createSlice({
@@ -65,7 +65,5 @@ export const {
   deleteIngredient,
   sortIngredients,
   selectIngredientData,
-  deleteSelectedIngredientData,
-  deleteCousenBun,
 } = ingredientsReducer.actions;
 export default ingredientsReducer.reducer;

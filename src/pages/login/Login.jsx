@@ -12,6 +12,7 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
 export const Login = () => {
+  const history = useHistory();
   const [userData, setUserData] = React.useState({
     email: "",
     password: "",
@@ -30,9 +31,9 @@ export const Login = () => {
       loginUser({
         email: email,
         password: password,
-      })
-      
-    )
+      }),
+      history.push("/")
+    );
   };
   return (
     <form onSubmit={submitAutorization} className={styles.login}>
