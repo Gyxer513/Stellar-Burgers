@@ -18,7 +18,7 @@ import {
 import { useDrop } from "react-dnd";
 import ConstructorItem from "./ConstructorItem";
 import { useHistory, useLocation } from "react-router-dom";
-
+import { randomId } from "../../utils/data";
 const BurgerConstructor = () => {
   const location = useLocation();
   const history = useHistory();
@@ -99,6 +99,7 @@ const BurgerConstructor = () => {
       {chosenBun != null ? (
         <div className={styles.burgerConstructor__element}>
           <ConstructorElement
+            key={randomId()}
             type="top"
             isLocked={true}
             text={`${chosenBun?.name} (верх)`}
@@ -116,7 +117,7 @@ const BurgerConstructor = () => {
             if (item.type != "bun") {
               return (
                 <ConstructorItem
-                  key={index}
+                  key={item.randomId}
                   index={index}
                   moveIngredient={moveIngredient}
                   data={item}
@@ -131,6 +132,7 @@ const BurgerConstructor = () => {
       {chosenBun != null && (
         <div className={styles.burgerConstructor__element}>
           <ConstructorElement
+            key={randomId()}
             type="bottom"
             isLocked={true}
             text={`${chosenBun?.name} (Низ)`}

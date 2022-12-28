@@ -59,7 +59,7 @@ export const FullOrderInfo = () => {
         (ingredient) =>
           ingredients.filter(
             (storeIngredient) => storeIngredient._id === ingredient
-          )[0].price
+          )[0]?.price
       )
       .reduce((acc, current) => {
         return acc + current;
@@ -98,7 +98,7 @@ export const FullOrderInfo = () => {
                       <img
                         className={styles.fullOrderInfo__image}
                         src={ingredient?.image_mobile}
-                        alt={ingredient.name}
+                        alt={ingredient?.name}
                       />
                       <h4 className="ml-10 text text_type_main-default">
                         {ingredient?.name}
@@ -107,7 +107,7 @@ export const FullOrderInfo = () => {
                     <div
                       className={`text text_type_digits-default ${styles.fullOrderInfo__priceBox}`}
                     >
-                      <span className="ml-1 mr-1">{count(ingredient._id)}</span>
+                      <span className="ml-1 mr-1">{count(ingredient?._id)}</span>
                       x<span className="mr-2">{ingredient?.price}</span>
                       <CurrencyIcon type="primary" />
                     </div>

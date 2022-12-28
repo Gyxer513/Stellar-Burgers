@@ -20,12 +20,15 @@ export const OrderCard = ({ orderIngredients, status, name, number, date }) => {
   }
 
   const getImage = () => {
-    return orderIngredients.map(
-      (ingredient) =>
-        ingredients.filter(
-          (storeIngredient) => storeIngredient._id === ingredient
-        )[0].image_mobile
-    );
+    if (orderIngredients) {
+      return orderIngredients.map(
+        (ingredient) =>
+          ingredients.filter(
+            (storeIngredient) => storeIngredient._id === ingredient
+          )[0]?.image_mobile
+      );
+    }
+    
   };
 
   const getPrice = () => {
@@ -34,7 +37,7 @@ export const OrderCard = ({ orderIngredients, status, name, number, date }) => {
         (ingredient) =>
           ingredients.filter(
             (storeIngredient) => storeIngredient._id === ingredient
-          )[0].price
+          )[0]?.price
       )
       .reduce((acc, current) => {
         return acc + current;
