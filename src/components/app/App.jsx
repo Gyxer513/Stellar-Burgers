@@ -19,19 +19,27 @@ import { PageNotFound } from "../../pages/pageNotFound/PageNotFound";
 import { ProtectedRoute } from "../Protected-route/ProtectedRoute";
 import { Profile } from "../../pages/profile/profile";
 import { ResertPassword } from "../../pages/resetPassword/resetPassrod";
-import { checkAuth } from "../../services/reducers/authorization";
+import { checkAuth, refreshToken } from "../../services/reducers/authorization";
 import { Feed } from "../../pages/feed/feed";
 import { FullOrderInfo } from "../FullOrderInfo/FullOrderInfo";
+import { getCookie } from "../../utils/cookie";
 
 function App() {
   const location = useLocation();
   const history = useHistory();
   const dispatch = useDispatch();
-  
+  const { userData } = useSelector(
+    (state) => state.authorizationReducer
+  );
+
   const background = location.state?.background;
   useEffect(() => {
     dispatch(getData());
-    dispatch(checkAuth());
+if (getCookie("accessToken")) {
+  dispatch(checkAuth());
+}
+    
+    /* dispatch(refreshToken()); */
   }, [dispatch]);
 
   const closeIngredientModal = () => {
@@ -75,7 +83,7 @@ function App() {
           <ForgotPassword />
         </Route>
         <ProtectedRoute path="/profile" onlyForAuth>
-           <Profile />
+           {userData && <Profile />}
         </ProtectedRoute>
         <Route exact path="*">
           <PageNotFound />

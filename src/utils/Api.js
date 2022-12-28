@@ -19,7 +19,7 @@ class Api {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": "Bearer " + getCookie('accessToken')
+        Authorization: "Bearer " + getCookie("accessToken"),
       },
       body: JSON.stringify({ ingredients: orderList }),
     }).then((res) => this._checkResponse(res));
@@ -73,13 +73,13 @@ class Api {
     }).then((res) => this._checkResponse(res));
   }
   /* Обновление данных пользователя */
-  
+
   updateUserData(data) {
     return fetch(`${this._link}/auth/user`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json;charset=utf-8",
-        "Authorization": 'Bearer ' + getCookie('accessToken'),
+        Authorization: "Bearer " + getCookie("accessToken"),
       },
       body: JSON.stringify(data),
     }).then((res) => this._checkResponse(res));
@@ -102,7 +102,7 @@ class Api {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": "Bearer " + getCookie('accessToken')
+        Authorization: "Bearer " + getCookie("accessToken"),
       },
       body: JSON.stringify(data),
     }).then((res) => this._checkResponse(res));
@@ -110,19 +110,19 @@ class Api {
 
   /* Обновление токена */
   refreshToken() {
-    return fetch(`${this._baseUrl}/auth/token`, {
+    return fetch(`${this._link}/auth/token`, {
       method: "POST",
       headers: {
-        "Content-Type": 'application/json;charset=utf-8',
+        "Content-Type": "application/json;charset=utf-8",
       },
-      body: JSON.stringify({
-        token: JSON.stringify({ token: localStorage.getItem('refreshToken') })
-      }),
+      body: JSON.stringify({ token: localStorage.getItem("refreshToken") }),
     }).then((res) => this._checkResponse(res));
   }
- /* Запрос на двнные заказа */
+  /* Запрос на двнные заказа */
   getFullOrderInfo(order_number) {
-    return fetch(`${this._link}/orders/${order_number}`).then((res) => this._checkResponse(res));
+    return fetch(`${this._link}/orders/${order_number}`).then((res) =>
+      this._checkResponse(res)
+    );
   }
 }
 

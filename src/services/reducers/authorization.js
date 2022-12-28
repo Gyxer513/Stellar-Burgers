@@ -1,7 +1,7 @@
 /* cSpell:disable; */
 import { api } from "../../utils/Api";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { setCookie, deleteCookie } from "../../utils/cookie";
+import { setCookie, deleteCookie, getCookie } from "../../utils/cookie";
 
 /* ***** Регистрация нового пользователя ***** */
 
@@ -53,23 +53,19 @@ export const updateUserData = createAsyncThunk(
 export const updatePass = createAsyncThunk(
   "updatePass",
   async (data) => {
-    return api.updatePass(data).catch((error) => {
-      console.warn(error);
-    });
+    return api.updatePass(data)
   }
 );
 
 /* ***** Проверка авторизации ***** */
 export const checkAuth = createAsyncThunk(
   "checkAuth",
-  async (data) => {
-    return api.checkAuth(data).catch((error) => {
-      if (error.message === "jwt expired") {
-      refreshToken(localStorage.getItem('refreshToken'))
+  async () => 
+     api.checkAuth().catch((error) =>{
+      if (error.message == 'Ошибка: 401' || error.message == 'Ошибка: 403') {
+        refreshToken()
       }
-      console.warn(error);
-  });
-  }
+     })
 );
 
 /* ***** Обновление токена ***** */
@@ -183,11 +179,12 @@ const authorizationReducer = createSlice({
     },
     [checkAuth.fulfilled]: (state, action) => {
       state.isLoading = false;
-      state.isAuthorizationSuccess = true;
-      state.userData = action.payload.user;
+      state.isAuthorizationSuccess = action.payload?.success; 
+      state.userData = action.payload?.user;
     },
-    [checkAuth.rejected]: (state) => {
+    [checkAuth.rejected]: (state, action) => {
       state.isAuthorizationSuccess = false;
+      console.log(action.error.message);
     },
 
     [refreshToken.pending]: (state) => {
