@@ -50,7 +50,6 @@ export const FullOrderInfo = () => {
         counter++;
       }
     });
-
     return counter;
   };
 
@@ -99,7 +98,7 @@ export const FullOrderInfo = () => {
                       <img
                         className={styles.fullOrderInfo__image}
                         src={ingredient?.image_mobile}
-                        alt=""
+                        alt={ingredient.name}
                       />
                       <h4 className="ml-10 text text_type_main-default">
                         {ingredient?.name}

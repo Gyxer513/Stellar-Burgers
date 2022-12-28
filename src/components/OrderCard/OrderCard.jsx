@@ -79,7 +79,7 @@ export const OrderCard = ({ orderIngredients, status, name, number, date }) => {
                   className={styles.orderCard__listImage}
                   style={{ zIndex: 6 - index }}
                 >
-                  <img className={styles.orderCard__image} src={image} />
+                  <img className={styles.orderCard__image} src={image} alt={name} />
                 </li>
               );
           })}
