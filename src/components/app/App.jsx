@@ -15,7 +15,7 @@ import { getData } from "../../services/reducers/ingredients";
 import { Login } from "../../pages/login/Login.jsx";
 import { Register } from "../../pages/register/Register";
 import { ForgotPassword } from "../../pages/fogot-password/ForgotPassword";
-import { PageNotFound } from "../../pages/pageNotFound1111/PageNotFound";
+import { PageNotFound } from "../../pages/pageNotFound/PageNotFound";
 import { ProtectedRoute } from "../Protected-route/ProtectedRoute";
 import { Profile } from "../../pages/profile/profile";
 import { ResertPassword } from "../../pages/resetPassword/resetPassrod";
