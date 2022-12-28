@@ -2,19 +2,15 @@
 import { api } from "../../utils/Api";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-export const sendOrder = createAsyncThunk("sendOrder", async (list) => {
-  return api.sendData(list).catch((error) => {
-    console.warn(error);
-});
-});
+export const sendOrder = createAsyncThunk("sendOrder", async (list) => 
+   api.sendData(list)
+);
 
 export const fullOrderInfo = createAsyncThunk(
   "fullOrderInfo",
-  async (orderNumber) => {
-    return api.getFullOrderInfo(orderNumber).catch((error) => {
-      console.warn(error);
-    });
-  }
+  async (orderNumber) => 
+   api.getFullOrderInfo(orderNumber)
+  
 );
 
 
@@ -44,8 +40,9 @@ export const orderReducer = createSlice({
       state.orderDetails = action.payload.order?.number;
       state.orderRequest = false;
     },
-    [sendOrder.rejected]: (state) => {
+    [sendOrder.rejected]: (state, action) => {
       state.orderFailed = true;
+      console.warn(action.error);
     },
 
     [fullOrderInfo.pending]: (state) => {
@@ -57,6 +54,7 @@ export const orderReducer = createSlice({
     },
     [fullOrderInfo.rejected]: (state, action) => {
       state.orderDataStatus = false;
+      console.warn(action.error);
     },
   },
 });
