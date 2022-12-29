@@ -2,6 +2,8 @@
   padding: 100px 60px;
   display: flex;
   flex-direction: column;
+  max-width: 600px;
+  margin: 0 auto 0 auto;
 }
 .fullOrderInfo__orderNumber {
   margin: 0 auto 0 auto;

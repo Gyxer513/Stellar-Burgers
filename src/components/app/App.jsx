@@ -83,18 +83,23 @@ function App() {
         <Route exact path="/forgot-password">
           <ForgotPassword />
         </Route>
-        <ProtectedRoute path="/profile" onlyForAuth>
+        <ProtectedRoute exact path="/profile" onlyForAuth>
+          {userData && <Profile />}
+        </ProtectedRoute>
+        <ProtectedRoute exact path="/profile/orders/" onlyForAuth>
           {userData && <Profile />}
         </ProtectedRoute>
         <Route exact path="/feed/:orderNumber">
-          <Modal onClose={closeOrderModal}>
-            <FullOrderInfo />
-          </Modal>
+          <FullOrderInfo />
         </Route>
+        <ProtectedRoute path="/profile/orders/:orderNumber" onlyForAuth>
+          <FullOrderInfo />
+        </ProtectedRoute>
         <Route exact path="*">
           <PageNotFound />
-        </Route>
+        </Route> 
       </Switch>
+
       <ProtectedRoute path="/order" onlyForAuth>
         <Modal onClose={closeDetailsModal}>
           <OrderDetails />
@@ -116,11 +121,13 @@ function App() {
           </Modal>
         </Route>
       )}
+      {background && (
         <Route path="/profile/orders/:orderNumber">
           <Modal onClose={closeOrderModal}>
             <FullOrderInfo />
           </Modal>
         </Route>
+      )}
     </>
   );
 }
