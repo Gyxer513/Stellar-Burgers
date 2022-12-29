@@ -99,7 +99,7 @@ const BurgerConstructor = () => {
       {chosenBun != null ? (
         <div className={styles.burgerConstructor__element}>
           <ConstructorElement
-            key={randomId()}
+            key={"bunTop"}
             type="top"
             isLocked={true}
             text={`${chosenBun?.name} (верх)`}
@@ -132,7 +132,7 @@ const BurgerConstructor = () => {
       {chosenBun != null && (
         <div className={styles.burgerConstructor__element}>
           <ConstructorElement
-            key={randomId()}
+            key={"bunBottom"}
             type="bottom"
             isLocked={true}
             text={`${chosenBun?.name} (Низ)`}

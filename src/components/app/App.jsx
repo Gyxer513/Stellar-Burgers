@@ -35,13 +35,12 @@ function App() {
   const background = location.state?.background;
   useEffect(() => {
     dispatch(getData());
-if (getCookie("accessToken")) {
-  dispatch(checkAuth());
-}
+    if (getCookie("accessToken")) {
+      dispatch(checkAuth());
+    }
     if (tokenError) {
       dispatch(refreshToken());
     }
-
   }, [dispatch, tokenError]);
 
   const closeIngredientModal = () => {
@@ -85,13 +84,17 @@ if (getCookie("accessToken")) {
           <ForgotPassword />
         </Route>
         <ProtectedRoute path="/profile" onlyForAuth>
-           {userData && <Profile />}
+          {userData && <Profile />}
         </ProtectedRoute>
+        <Route exact path="/feed/:orderNumber">
+          <Modal onClose={closeOrderModal}>
+            <FullOrderInfo />
+          </Modal>
+        </Route>
         <Route exact path="*">
           <PageNotFound />
         </Route>
       </Switch>
-
       <ProtectedRoute path="/order" onlyForAuth>
         <Modal onClose={closeDetailsModal}>
           <OrderDetails />
@@ -113,13 +116,11 @@ if (getCookie("accessToken")) {
           </Modal>
         </Route>
       )}
-      {background && (
         <Route path="/profile/orders/:orderNumber">
           <Modal onClose={closeOrderModal}>
             <FullOrderInfo />
           </Modal>
         </Route>
-      )}
     </>
   );
 }

@@ -151,7 +151,7 @@ export const Profile = () => {
                 )}
               </form>
             </Route>
-            <Route path="/profile/orders" exact>
+            <Route path="/profile/orders/" exact>
               {orders ? (
                 <div className="ml-10">
                   <OrdersFeed />
