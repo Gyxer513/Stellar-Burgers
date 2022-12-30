@@ -12,13 +12,13 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
 export const Login = () => {
+  const history = useHistory();
   const [userData, setUserData] = React.useState({
     email: "",
     password: "",
   });
   const { email, password } = userData;
   const dispatch = useDispatch();
-  const history = useHistory();
   const onChange = (e) => {
     setUserData({
       ...userData,
@@ -31,9 +31,9 @@ export const Login = () => {
       loginUser({
         email: email,
         password: password,
-      })
-    )
-    history.push("/");
+      }),
+      history.push("/")
+    );
   };
   return (
     <form onSubmit={submitAutorization} className={styles.login}>

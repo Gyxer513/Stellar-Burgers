@@ -1,0 +1,67 @@
+.fullOrderInfo {
+  padding: 100px 60px;
+  display: flex;
+  flex-direction: column;
+  max-width: 600px;
+  margin: 0 auto 0 auto;
+}
+.fullOrderInfo__orderNumber {
+  margin: 0 auto 0 auto;
+}
+.statusDone {
+  color: #00cccc;
+}
+.fullOrderInfo__ingredientBox {
+  margin: 20px 0 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 16px;
+  height: 240px;
+  overflow-y: scroll;
+}
+.fullOrderInfo__ingredientBox::-webkit-scrollbar {
+  width: 8px;
+  background-color: #2f2f37;
+}
+
+.fullOrderInfo__ingredientBox::-webkit-scrollbar-thumb {
+  height: 10px;
+  background-color: #8585ad;
+}
+
+.fullOrderInfo__image {
+  border-radius: 50%;
+  width: 64px;
+  height: 64px;
+  background: linear-gradient(#000, #000) padding-box,
+    linear-gradient(45deg, #801ab2, #4c4cff) border-box;
+  border: 2px solid transparent;
+  object-fit: cover;
+}
+.fullOrderInfo__box {
+  display: flex;
+  align-items: center;
+}
+.fullOrderInfo__listBox {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.fullOrderInfo__priceBox {
+  display: flex;
+  margin: 0 10px 0 150px;
+  align-items: center;
+}
+.fullOrderInfo__priceBox {
+    display: flex;
+}
+.fullOrderInfo__footerBox {
+    margin: 30px 0 0 0;
+    display: flex;
+    justify-content: space-between;
+}

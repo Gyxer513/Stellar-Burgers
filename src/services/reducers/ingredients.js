@@ -4,9 +4,7 @@ import { randomId } from "../../utils/data";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 export const getData = createAsyncThunk("getData", async () => {
-  return api.getData().catch((error) => {
-    console.warn(error);
-});
+  return api.getData();
 });
 
 export const ingredientsReducer = createSlice({
@@ -17,7 +15,6 @@ export const ingredientsReducer = createSlice({
     chosenBun: null,
     ingredientsRequest: false,
     ingredientsFailed: false,
-    selectIngredient: null,
   },
   reducers: {
     addIngredient: {
@@ -41,21 +38,6 @@ export const ingredientsReducer = createSlice({
         return { payload: newBan };
       },
     },
-    selectIngredientData: (state, action) => {
-      state.selectIngredient = action.payload;
-    },
-
-    clearSelectedIngregientsStore: (state) => {
-      state.chosenIngredients = [];
-      state.chosenBun = null;
-    },
-
-    deleteSelectedIngredientData: {
-      reducer: (state) => {
-        state.selectIngredient = null;
-      },
-    },
-
     deleteIngredient: (state, action) => {
       state.chosenIngredients = action.payload;
     },
@@ -71,8 +53,9 @@ export const ingredientsReducer = createSlice({
       state.ingredients = action.payload.data;
       state.ingredientsRequest = false;
     },
-    [getData.rejected]: (state) => {
+    [getData.rejected]: (state, action) => {
       state.ingredientsFailed = true;
+      console.warn(action.error);
     },
   },
 });
@@ -82,8 +65,5 @@ export const {
   deleteIngredient,
   sortIngredients,
   selectIngredientData,
-  deleteSelectedIngredientData,
-  deleteCousenBun,
-  clearSelectedIngregientsStore,
 } = ingredientsReducer.actions;
 export default ingredientsReducer.reducer;

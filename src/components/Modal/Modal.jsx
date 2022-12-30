@@ -5,7 +5,7 @@ import ReactDOM from "react-dom";
 import ModalOverlay from "../ModalOverlay/ModalOverlay";
 import PropTypes from "prop-types";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-
+import { getCookie } from "../../utils/cookie";
 const modalsContainer = document.querySelector("#modals");
 
 const Modal = ({ onClose, children }) => {

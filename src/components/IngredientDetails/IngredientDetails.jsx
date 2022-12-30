@@ -2,15 +2,24 @@
 import styles from "./ingredientDetails.module.css";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+import Loader from "../../components/Loader/Loader";
 
 function IngredientDetails() {
   const { id } = useParams();
   const { ingredients } = useSelector((state) => state?.ingredientsReducer);
 
-    const selectedIngredient = ingredients.find(
-      (ingredient) => ingredient._id === id
+  let selectedIngredient = null;
+
+  if (ingredients.length < 1) {
+    return <Loader />;
+  }
+
+  if (ingredients.length > 0) {
+    selectedIngredient = ingredients?.find(
+      (ingredient) => ingredient._id.toString() === id
     );
- 
+  }
+
   const { image_large, name, calories, carbohydrates, fat, proteins } =
     selectedIngredient;
 

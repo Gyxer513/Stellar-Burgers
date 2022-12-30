@@ -1,0 +1,18 @@
+.ordersFeed {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-height: 850px;
+  overflow-y: auto;
+  width: 650px;
+}
+
+.ordersFeed::-webkit-scrollbar {
+  width: 8px;
+  background-color: #2f2f37;
+}
+
+.ordersFeed::-webkit-scrollbar-thumb {
+  height: 500px;
+  background-color: #8585ad;
+}

@@ -8,7 +8,7 @@ import {
   ProfileIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./appHeader.module.css";
-import { ProtectedRoute } from "../Protected-route/ProtectedRoute";
+
 
 const AppHeader = () => {
   return (

@@ -17,9 +17,13 @@ import {
 } from "../../services/reducers/ingredients";
 import { useDrop } from "react-dnd";
 import ConstructorItem from "./ConstructorItem";
-
-const BurgerConstructor = ({ openOrder }) => {
+import { useHistory, useLocation } from "react-router-dom";
+import { randomId } from "../../utils/data";
+const BurgerConstructor = () => {
+  const location = useLocation();
+  const history = useHistory();
   const dispatch = useDispatch();
+  const { userData } = useSelector((state) => state.authorizationReducer);
   const { ingredients, chosenBun, chosenIngredients } = useSelector(
     (state) => state.ingredientsReducer
   );
@@ -34,6 +38,19 @@ const BurgerConstructor = ({ openOrder }) => {
       if (chosenBun != null) {
         dispatch(addIngredient(targetIngredient));
       }
+    }
+  };
+
+  const handlePlaceOrder = () => {
+    if (!userData) {
+      history.push("/login");
+    } else {
+      history.push({
+        pathname: "/order",
+        state: {
+          background: location,
+        },
+      });
     }
   };
 
@@ -82,6 +99,7 @@ const BurgerConstructor = ({ openOrder }) => {
       {chosenBun != null ? (
         <div className={styles.burgerConstructor__element}>
           <ConstructorElement
+            key={"bunTop"}
             type="top"
             isLocked={true}
             text={`${chosenBun?.name} (верх)`}
@@ -114,6 +132,7 @@ const BurgerConstructor = ({ openOrder }) => {
       {chosenBun != null && (
         <div className={styles.burgerConstructor__element}>
           <ConstructorElement
+            key={"bunBottom"}
             type="bottom"
             isLocked={true}
             text={`${chosenBun?.name} (Низ)`}
@@ -132,7 +151,7 @@ const BurgerConstructor = ({ openOrder }) => {
           htmlType="button"
           type="primary"
           size="medium"
-          onClick={openOrder}
+          onClick={handlePlaceOrder}
         >
           Оформить заказ
         </Button>
@@ -142,7 +161,6 @@ const BurgerConstructor = ({ openOrder }) => {
 };
 BurgerConstructor.propTypes = {
   data: PropTypes.arrayOf(ingredientPropType),
-  openOrder: PropTypes.func.isRequired,
 };
 
 export default BurgerConstructor;
