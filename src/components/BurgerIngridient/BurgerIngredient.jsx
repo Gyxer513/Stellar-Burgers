@@ -8,12 +8,11 @@ import {
   CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./burgerIngredient.module.css";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { useDrag } from "react-dnd";
-import { selectIngredientData } from "../../services/reducers/ingredients";
 
-const BurgerIngredient = ({ data, openModal }) => {
-  const dispatch = useDispatch();
+
+const BurgerIngredient = ({ data }) => {
   const location = useLocation();
   const { image, price, name, _id } = data;
   const { chosenBun, chosenIngredients } = useSelector(

@@ -1,5 +1,5 @@
 /* cSpell:disable; */
-import React from "react";
+import React, { FC } from "react";
 import { NavLink } from "react-router-dom";
 import {
   Logo,
@@ -10,7 +10,7 @@ import {
 import styles from "./appHeader.module.css";
 
 
-const AppHeader = () => {
+const AppHeader:FC = () => {
   return (
     <header className={styles.header}>
       <div className={`${styles.header__constructor}`}>

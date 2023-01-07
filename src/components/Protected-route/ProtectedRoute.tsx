@@ -1,7 +1,9 @@
 import { Route, Redirect, useLocation } from "react-router-dom";
 import { getCookie } from "../../utils/cookie";
 
-export const ProtectedRoute = ({ onlyForAuth, children, ...rest }) => {
+
+
+export const ProtectedRoute = ({ onlyForAuth, children, ...rest } : {onlyForAuth?: boolean;  children: JSX.Element} ) => {
   const isAuthorized = getCookie("accessToken");
   const location = useLocation();
 
