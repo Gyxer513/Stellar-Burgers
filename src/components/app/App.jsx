@@ -44,10 +44,10 @@ function App() {
   }, [dispatch, tokenError]);
 
   const closeIngredientModal = () => {
-    history.push("/");
+    history.push("/Stellar-Burgers");
   };
   const closeDetailsModal = () => {
-    history.push("/");
+    history.push("/Stellar-Burgers");
   };
   const closeOrderModal = () => {
     history.goBack();
@@ -57,7 +57,7 @@ function App() {
     <>
       <AppHeader />
       <Switch location={background || location}>
-        <Route exact path="/">
+        <Route exact path="/Stellar-Burgers">
           <main className={styles.main}>
             <DndProvider backend={HTML5Backend}>
               <BurgerIngredients />
@@ -65,34 +65,34 @@ function App() {
             </DndProvider>
           </main>
         </Route>
-        <Route exact path="/login">
+        <Route exact path="/Stellar-Burgers/login">
           <Login />
         </Route>
-        <Route exact path="/feed">
+        <Route exact path="/Stellar-Burgers/feed">
           <Feed />
         </Route>
-        <Route exact path="/reset-password">
+        <Route exact path="/Stellar-Burgers/reset-password">
           <ResertPassword />
         </Route>
-        <Route exact path="/register">
+        <Route exact path="/Stellar-Burgers/register">
           <Register />
         </Route>
-        <Route exact path="/ingredients/:id">
+        <Route exact path="/Stellar-Burgers/ingredients/:id">
           <IngredientDetails />
         </Route>
-        <Route exact path="/forgot-password">
+        <Route exact path="/Stellar-Burgers/forgot-password">
           <ForgotPassword />
         </Route>
-        <ProtectedRoute exact path="/profile" onlyForAuth>
+        <ProtectedRoute exact path="/Stellar-Burgers/profile" onlyForAuth>
           {userData && <Profile />}
         </ProtectedRoute>
-        <ProtectedRoute exact path="/profile/orders/" onlyForAuth>
+        <ProtectedRoute exact path="/Stellar-Burgers/profile/orders/" onlyForAuth>
           {userData && <Profile />}
         </ProtectedRoute>
-        <Route exact path="/feed/:orderNumber">
+        <Route exact path="/Stellar-Burgers/feed/:orderNumber">
           <FullOrderInfo />
         </Route>
-        <ProtectedRoute path="/profile/orders/:orderNumber" onlyForAuth>
+        <ProtectedRoute path="/Stellar-Burgers/profile/orders/:orderNumber" onlyForAuth>
           <FullOrderInfo />
         </ProtectedRoute>
         <Route exact path="*">
@@ -100,27 +100,27 @@ function App() {
         </Route> 
       </Switch>
 
-      <ProtectedRoute path="/order" onlyForAuth>
+      <ProtectedRoute path="/Stellar-Burgers/order" onlyForAuth>
         <Modal onClose={closeDetailsModal}>
           <OrderDetails />
         </Modal>
       </ProtectedRoute>
       {background && (
-        <Route path="/ingredients/:id">
+        <Route path="/Stellar-Burgers/ingredients/:id">
           <Modal onClose={closeIngredientModal}>
             <IngredientDetails />
           </Modal>
         </Route>
       )}
       {background && (
-        <Route path="/feed/:orderNumber">
+        <Route path="/Stellar-Burgers/feed/:orderNumber">
           <Modal onClose={closeOrderModal}>
             <FullOrderInfo />
           </Modal>
         </Route>
       )}
       {background && (
-        <Route path="/profile/orders/:orderNumber">
+        <Route path="/Stellar-Burgers/profile/orders/:orderNumber">
           <Modal onClose={closeOrderModal}>
             <FullOrderInfo />
           </Modal>

@@ -18,7 +18,6 @@ import {
 import { useDrop } from "react-dnd";
 import ConstructorItem from "./ConstructorItem";
 import { useHistory, useLocation } from "react-router-dom";
-import { randomId } from "../../utils/data";
 const BurgerConstructor = () => {
   const location = useLocation();
   const history = useHistory();
@@ -43,10 +42,10 @@ const BurgerConstructor = () => {
 
   const handlePlaceOrder = () => {
     if (!userData) {
-      history.push("/login");
+      history.push("/Stellar-Burgers/login");
     } else {
       history.push({
-        pathname: "/order",
+        pathname: "/Stellar-Burgers/order",
         state: {
           background: location,
         },

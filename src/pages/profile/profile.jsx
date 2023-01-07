@@ -44,7 +44,7 @@ export const Profile = () => {
         token: refreshToken,
       })
     );
-    history.push("/login");
+    history.push("/Stellar-Burgers/login");
   };
   const onChange = (e) => {
     setLoginData({ ...loginData, [e.target.name]: e.target.value });
@@ -77,7 +77,7 @@ export const Profile = () => {
                 <NavLink
                   className={`${styles.profile__link} text text_type_main-medium text_color_inactive`}
                   activeClassName={styles.profile__link_active}
-                  to="/profile/"
+                  to="/Stellar-Burgers/profile/"
                 >
                   Профиль
                 </NavLink>
@@ -87,7 +87,7 @@ export const Profile = () => {
                 <NavLink
                   className={`${styles.profile__link} text text_type_main-medium text_color_inactive`}
                   activeClassName={styles.profile__link_active}
-                  to="/profile/orders"
+                  to="/Stellar-Burgers/profile/orders"
                 >
                   История заказов
                 </NavLink>
@@ -107,7 +107,7 @@ export const Profile = () => {
             </p>
           </nav>
           <Switch>
-            <Route path="/profile" exact>
+            <Route path="/Stellar-Burgers/profile" exact>
               <form onSubmit={submitData} className={styles.profile__form}>
                 <Input
                   onChange={onChange}
@@ -151,7 +151,7 @@ export const Profile = () => {
                 )}
               </form>
             </Route>
-            <Route path="/profile/orders/" exact>
+            <Route path="/Stellar-Burgers/profile/orders/" exact>
               {orders ? (
                 <div className="ml-10">
                   <OrdersFeed />

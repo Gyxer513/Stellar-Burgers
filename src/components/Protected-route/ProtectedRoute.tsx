@@ -8,7 +8,7 @@ export const ProtectedRoute = ({ onlyForAuth, children, ...rest } : {onlyForAuth
   const location = useLocation();
 
   if (!onlyForAuth && isAuthorized) {
-    const { from } = location.state || { from: { pathname: "/" } };
+    const { from } = location.state || { from: { pathname: "/Stellar-Burgers/" } };
     return (
       <Route {...rest}>
         <Redirect to={from} />
@@ -19,7 +19,7 @@ export const ProtectedRoute = ({ onlyForAuth, children, ...rest } : {onlyForAuth
   if (onlyForAuth && !isAuthorized) {
     return (
       <Route {...rest}>
-        <Redirect to={{ pathname: "/login", state: { from: location } }} />
+        <Redirect to={{ pathname: "/Stellar-Burgers/login", state: { from: location } }} />
       </Route>
     );
   }
