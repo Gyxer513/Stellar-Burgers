@@ -105,7 +105,6 @@ function App() {
           <OrderDetails />
         </Modal>
       </ProtectedRoute>
-
       {background && (
         <Route path="/ingredients/:id">
           <Modal onClose={closeIngredientModal}>
@@ -113,7 +112,6 @@ function App() {
           </Modal>
         </Route>
       )}
-
       {background && (
         <Route path="/feed/:orderNumber">
           <Modal onClose={closeOrderModal}>
