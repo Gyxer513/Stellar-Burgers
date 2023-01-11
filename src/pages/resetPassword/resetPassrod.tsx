@@ -1,5 +1,5 @@
 /* cSpell:disable */
-import React from "react";
+import React, {FormEvent} from "react";
 import styles from "./resetPassword.module.css";
 import { NavLink, useHistory } from "react-router-dom";
 import { updatePass } from "../../services/reducers/authorization";
@@ -11,6 +11,7 @@ import {
   PasswordInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
+
 export const ResertPassword = () => {
   const [InputData, setInputData] = React.useState({
     password: "",
@@ -19,19 +20,19 @@ export const ResertPassword = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const onChange = (e) => {
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputData({
       ...InputData,
       [e.target.name]: e.target.value,
     });
   };
-  const submitAutorization = (e) => {
+  const submitAutorization = (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
     dispatch(
       updatePass({
         password: InputData.password,
         token: InputData.resetCode,
-      })
+      } )
     );
     history.push("/");
   };
@@ -40,7 +41,6 @@ export const ResertPassword = () => {
       <h2 className="m-10 text text_type_main-medium">Вход</h2>
       <div className={styles.ResertPassword__input}>
         <PasswordInput
-          type={"text"}
           placeholder="Введите новый пароль"
           value={InputData.password}
           name={"password"}

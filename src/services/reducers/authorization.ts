@@ -1,7 +1,8 @@
 /* cSpell:disable; */
 import { api } from "../../utils/Api";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { setCookie, deleteCookie, getCookie } from "../../utils/cookie";
+import { setCookie, deleteCookie } from "../../utils/cookie";
+
 
 /* ***** Регистрация нового пользователя ***** */
 
@@ -34,7 +35,7 @@ export const updateUserData = createAsyncThunk("updateUser", async (data) =>
 );
 
 /* ***** Обновление пароля ***** */
-export const updatePass = createAsyncThunk("updatePass", async (data) =>
+export const updatePass = createAsyncThunk("updatePass", async (data: any) =>
   api.updatePass(data)
 );
 
@@ -57,7 +58,6 @@ const authorizationReducer = createSlice({
     accessToken: null,
     error: null,
     resetStatus: null,
-    error: null,
     tokenError: false,
   },
 
