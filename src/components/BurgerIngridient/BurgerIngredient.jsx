@@ -44,7 +44,7 @@ const BurgerIngredient = ({ data }) => {
   
   return (
     <Link className={styles.burgerIngredient__link} to={{
-      pathname: `/ingredients/${_id}`,
+      pathname: `/Stellar-Burgers/ingredients/${_id}`,
       state: {background: location}
       }}>
     <div

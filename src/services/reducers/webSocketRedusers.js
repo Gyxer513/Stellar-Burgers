@@ -39,9 +39,6 @@ export const webSocketReducers = createSlice({
       state.wsData = action.payload;
     },
   },
-  extraReducers: {
-    
-  },
 });
 export const {
   wsOpen,

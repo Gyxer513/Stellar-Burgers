@@ -2,20 +2,19 @@
 import React from "react";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./burgerIngredients.module.css";
-import PropTypes from "prop-types";
 import BurgerIngredient from "../BurgerIngridient/BurgerIngredient";
-import { ingredientPropType } from "../../utils/prop-types";
+import { Iingredient } from "../../services/types/ingredients";
 import { useSelector } from "react-redux";
 
-const BurgerIngredients = ({ openModal }) => {
+const BurgerIngredients = ( openModal ) => {
   const [current, setCurrent] = React.useState("one");
   const { ingredients } = useSelector((state) => state.ingredientsReducer);
 
-  const menu = React.useRef();
+  const menu = React.useRef<HTMLDivElement>(null);
 
-  const bun = React.useRef();
-  const sauce = React.useRef();
-  const rolls = React.useRef();
+  const bun = React.useRef<HTMLDivElement>(null);
+  const sauce = React.useRef<HTMLDivElement>(null);
+  const rolls = React.useRef<HTMLDivElement>(null);
 
   React.useEffect(() => {
     const putScroll = () => {
@@ -30,7 +29,7 @@ const BurgerIngredients = ({ openModal }) => {
     menu.current.addEventListener("scroll", putScroll)
   }, []);
 
-  const handleTabClick = (type) => {
+  const handleTabClick = (type: string) => {
     setCurrent(type);
     document
       .querySelector(`#${type}`)
@@ -65,7 +64,9 @@ const BurgerIngredients = ({ openModal }) => {
             Булки
           </p>
           <div ref={bun} className={styles.burgerConstructor_rolls}>
-            {ingredients.map((item) => {
+            {ingredients.map((item: Iingredient) => {
+              console.log(item);
+              
               if (item.type == "bun") {
                 return (
                   <BurgerIngredient
@@ -82,7 +83,7 @@ const BurgerIngredients = ({ openModal }) => {
             Соусы
           </p>
           <div ref={sauce} className={styles.burgerConstructor_rolls}>
-            {ingredients.map((item, index) => {
+            {ingredients.map((item: Iingredient, index: number) => {
               if (item.type == "sauce") {
                 return (
                   <BurgerIngredient
@@ -99,7 +100,7 @@ const BurgerIngredients = ({ openModal }) => {
             Начинки
           </p>
           <div ref={rolls} className={styles.burgerConstructor_rolls}>
-            {ingredients.map((item) => {
+            {ingredients.map((item: Iingredient) => {
               if (item.type == "main") {
                 return (
                   <BurgerIngredient
@@ -116,8 +117,5 @@ const BurgerIngredients = ({ openModal }) => {
     </section>
   );
 };
-BurgerIngredient.propType = {
-  ingredients: PropTypes.arrayOf(ingredientPropType).isRequired,
-  getData: PropTypes.func.isRequired,
-};
+
 export default BurgerIngredients;
