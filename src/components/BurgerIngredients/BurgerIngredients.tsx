@@ -6,7 +6,7 @@ import BurgerIngredient from "../BurgerIngridient/BurgerIngredient";
 import { Iingredient } from "../../services/types/ingredients";
 import { useSelector } from "react-redux";
 
-const BurgerIngredients = ( openModal ) => {
+const BurgerIngredients = () => {
   const [current, setCurrent] = React.useState("one");
   const { ingredients } = useSelector((state) => state.ingredientsReducer);
 
@@ -72,7 +72,6 @@ const BurgerIngredients = ( openModal ) => {
                   <BurgerIngredient
                     key={item._id}
                     data={item}
-                    openModal={openModal}
                   />
                 );
               }
@@ -89,7 +88,6 @@ const BurgerIngredients = ( openModal ) => {
                   <BurgerIngredient
                     key={item._id}
                     data={item}
-                    openModal={openModal}
                   />
                 );
               }
@@ -106,7 +104,6 @@ const BurgerIngredients = ( openModal ) => {
                   <BurgerIngredient
                     key={item._id}
                     data={item}
-                    openModal={openModal}
                   />
                 );
               }

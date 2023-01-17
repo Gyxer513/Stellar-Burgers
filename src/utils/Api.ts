@@ -3,10 +3,11 @@ import { BASE_URL } from "./data";
 import { getCookie } from "./cookie";
 
 class Api {
-  constructor(link) {
+  private _link: string;
+  constructor(link: string) {
     this._link = link;
   }
-  _checkResponse(res) {
+  _checkResponse(res: Response) {
     return res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`);
   }
   getData() {
@@ -14,7 +15,7 @@ class Api {
       this._checkResponse(res)
     );
   }
-  sendData(orderList) {
+  sendData(orderList: object | void) {
     return fetch(`${this._link}/orders`, {
       method: "POST",
       headers: {
@@ -28,7 +29,7 @@ class Api {
   /*   Запросы авторизации спринт 9 роутинг и авторизация */
 
   /* Регистрация пользователя */
-  newUser(data) {
+  newUser(data: object | void) {
     return fetch(`${this._link}/auth/register`, {
       method: "POST",
       headers: {
@@ -40,7 +41,7 @@ class Api {
 
   /* Вход по логину паролю */
 
-  loginUser(data) {
+  loginUser(data: object | void) {
     return fetch(`${this._link}/auth/login`, {
       method: "POST",
       headers: {
@@ -52,7 +53,7 @@ class Api {
 
   /* Восстановление пароля  */
 
-  fogotPassword(data) {
+  fogotPassword(data: object | void) {
     return fetch(`${this._link}/password-reset`, {
       method: "POST",
       headers: {
@@ -63,7 +64,7 @@ class Api {
   }
 
   /* Выход */
-  logout(data) {
+  logout(data: object | void) {
     return fetch(`${this._link}/auth/logout`, {
       method: "POST",
       headers: {
@@ -74,7 +75,7 @@ class Api {
   }
   /* Обновление данных пользователя */
 
-  updateUserData(data) {
+  updateUserData(data: object | void) {
     return fetch(`${this._link}/auth/user`, {
       method: "PATCH",
       headers: {
@@ -86,7 +87,7 @@ class Api {
   }
 
   /* Обновление пароля */
-  updatePass(data) {
+  updatePass(data: object | void) {
     return fetch(`${this._link}/password-reset/reset`, {
       method: "POST",
       headers: {
@@ -97,7 +98,7 @@ class Api {
   }
 
   /* Проверка авторизации */
-  checkAuth(data) {
+  checkAuth(data: object | void) {
     return fetch(`${this._link}/auth/user`, {
       method: "GET",
       headers: {
@@ -119,7 +120,7 @@ class Api {
     }).then((res) => this._checkResponse(res));
   }
   /* Запрос на двнные заказа */
-  getFullOrderInfo(order_number) {
+  getFullOrderInfo(order_number: number) {
     return fetch(`${this._link}/orders/${order_number}`).then((res) =>
       this._checkResponse(res)
     );
