@@ -1,10 +1,10 @@
 /* cSpell:disable */
-import React, {FormEvent} from "react";
+import React, {} from "react";
 import styles from "./resetPassword.module.css";
 import { NavLink, useHistory } from "react-router-dom";
 import { updatePass } from "../../services/reducers/authorization";
 import { useDispatch } from "react-redux";
-
+import { AppDispatch } from "../../services/store"
 import {
   Input,
   Button,
@@ -17,7 +17,7 @@ export const ResertPassword = () => {
     password: "",
     resetCode: "",
   });
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const history = useHistory();
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {

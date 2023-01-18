@@ -1,6 +1,7 @@
 /* cSpell:disable */
 import { BASE_URL } from "./data";
 import { getCookie } from "./cookie";
+import { IuserData } from "../services/types/user";
 
 class Api {
   private _link: string;
@@ -29,7 +30,7 @@ class Api {
   /*   Запросы авторизации спринт 9 роутинг и авторизация */
 
   /* Регистрация пользователя */
-  newUser(data: object | void) {
+  newUser(data: IuserData) {
     return fetch(`${this._link}/auth/register`, {
       method: "POST",
       headers: {
@@ -41,7 +42,7 @@ class Api {
 
   /* Вход по логину паролю */
 
-  loginUser(data: object | void) {
+  loginUser(data: IuserData) {
     return fetch(`${this._link}/auth/login`, {
       method: "POST",
       headers: {

@@ -4,6 +4,7 @@ import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./burgerIngredients.module.css";
 import BurgerIngredient from "../BurgerIngridient/BurgerIngredient";
 import { Iingredient } from "../../services/types/ingredients";
+import { IingredientsStore } from "../../services/types/store";
 import { useSelector } from "react-redux";
 
 const BurgerIngredients = () => {
@@ -11,7 +12,6 @@ const BurgerIngredients = () => {
   const { ingredients } = useSelector((state) => state.ingredientsReducer);
 
   const menu = React.useRef<HTMLDivElement>(null);
-
   const bun = React.useRef<HTMLDivElement>(null);
   const sauce = React.useRef<HTMLDivElement>(null);
   const rolls = React.useRef<HTMLDivElement>(null);
@@ -31,9 +31,7 @@ const BurgerIngredients = () => {
 
   const handleTabClick = (type: string) => {
     setCurrent(type);
-    document
-      .querySelector(`#${type}`)
-      .scrollIntoView({ block: "start", behavior: "smooth" });
+    document.querySelector<HTMLElement>(`#${type}`)?.scrollIntoView({ block: "start", behavior: "smooth" });
   };
 
   return (
@@ -64,9 +62,7 @@ const BurgerIngredients = () => {
             Булки
           </p>
           <div ref={bun} className={styles.burgerConstructor_rolls}>
-            {ingredients.map((item: Iingredient) => {
-              console.log(item);
-              
+            {ingredients.map((item: Iingredient) => {           
               if (item.type == "bun") {
                 return (
                   <BurgerIngredient

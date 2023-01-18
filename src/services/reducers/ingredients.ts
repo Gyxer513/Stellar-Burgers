@@ -1,24 +1,28 @@
 /* cSpell:disable; */
 import { api } from "../../utils/Api";
 import { randomId } from "../../utils/data";
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
+import { IingredientsStore } from "../types/store"
+import { Iingredient } from "../types/ingredients"
 
 export const getData = createAsyncThunk("getData", async () => {
   return api.getData();
 });
 
+const initialState: IingredientsStore = {
+  ingredients: [],
+  chosenIngredients: [],
+  chosenBun: null,
+  ingredientsRequest: false,
+  ingredientsFailed: false,
+}
+
 export const ingredientsReducer = createSlice({
   name: "reducerIngredients",
-  initialState: {
-    ingredients: [],
-    chosenIngredients: [],
-    chosenBun: null,
-    ingredientsRequest: false,
-    ingredientsFailed: false,
-  },
+  initialState,
   reducers: {
     addIngredient: {
-      reducer: (state, action) => {
+      reducer: (state, action: PayloadAction<object>) => {
         state.chosenIngredients.push(action.payload);
       },
       prepare: (targetIngredient) => {
@@ -30,7 +34,7 @@ export const ingredientsReducer = createSlice({
       },
     },
     addBun: {
-      reducer: (state, action) => {
+      reducer: (state, action: PayloadAction<object>) => {
         state.chosenBun = action.payload;
       },
       prepare: (addedBun) => {
@@ -45,18 +49,18 @@ export const ingredientsReducer = createSlice({
       state.chosenIngredients = action.payload;
     },
   },
-  extraReducers: {
-    [getData.pending]: (state) => {
+  extraReducers: (builder) => {
+    builder.addCase(getData.pending, (state) => {
       state.ingredientsRequest = true;
-    },
-    [getData.fulfilled]: (state, action) => {
+    }),
+    builder.addCase(getData.fulfilled, (state, action) => {
       state.ingredients = action.payload.data;
       state.ingredientsRequest = false;
-    },
-    [getData.rejected]: (state, action) => {
+    }),
+    builder.addCase(getData.rejected, (state, action) => {
       state.ingredientsFailed = true;
       console.warn(action.error);
-    },
+    })
   },
 });
 export const {
@@ -64,6 +68,5 @@ export const {
   addBun,
   deleteIngredient,
   sortIngredients,
-  selectIngredientData,
 } = ingredientsReducer.actions;
 export default ingredientsReducer.reducer;

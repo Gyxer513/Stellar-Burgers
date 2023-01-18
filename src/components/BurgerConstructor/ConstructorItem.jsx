@@ -8,8 +8,7 @@ import {
 import { useDrag, useDrop } from "react-dnd";
 import { useRef } from "react";
 import { deleteIngredient } from "../../services/reducers/ingredients";
-import { ingredientPropType } from "../../utils/prop-types";
-import PropTypes from "prop-types";
+
 
 const ConstructorItem = ({ data, id, moveIngredient, index }) => {
   const { image, name, price } = data;
@@ -79,11 +78,6 @@ const ConstructorItem = ({ data, id, moveIngredient, index }) => {
     </li>
   );
 };
-ConstructorItem.propTypes = {
-  id: PropTypes.string.isRequired,
-  moveIngredient: PropTypes.func.isRequired,
-  index: PropTypes.number.isRequired,
-  data: ingredientPropType,
-};
+
 
 export default ConstructorItem;

@@ -1,3 +1,4 @@
+/* cSpell:disable; */
 import styles from "./feed.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import {

@@ -3,16 +3,17 @@ import { api } from "../../utils/Api";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { setCookie, deleteCookie } from "../../utils/cookie";
 import { IauthorizationStore } from "../types/store";
+import { IuserData } from "../types/user";
 
 /* ***** Регистрация нового пользователя ***** */
 
-export const registerNewUser = createAsyncThunk("registerUser", async (data) =>
+export const registerNewUser = createAsyncThunk("registerUser", async (data: IuserData) =>
   api.newUser(data)
 );
 
 /* ***** Авторизация существующего пользователя ***** */
 
-export const loginUser = createAsyncThunk("loginUser", async (data) => {
+export const loginUser = createAsyncThunk("loginUser", async (data: IuserData) => {
   return api.loginUser(data);
 });
 
@@ -48,6 +49,7 @@ export const checkAuth = createAsyncThunk("checkAuth", async (data) =>
 export const refreshToken = createAsyncThunk("refreshToken", async () =>
   api.refreshToken()
 );
+
 
 const initialState: IauthorizationStore = {
   isLoading: false,

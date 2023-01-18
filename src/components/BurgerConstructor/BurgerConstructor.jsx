@@ -1,7 +1,5 @@
 /* cSpell:disable; */
 import React from "react";
-import PropTypes from "prop-types";
-import { ingredientPropType } from "../../utils/prop-types";
 import {
   ConstructorElement,
   Button,
@@ -158,8 +156,4 @@ const BurgerConstructor = () => {
     </section>
   );
 };
-BurgerConstructor.propTypes = {
-  data: PropTypes.arrayOf(ingredientPropType),
-};
-
 export default BurgerConstructor;

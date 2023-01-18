@@ -1,9 +1,12 @@
+
+/* cSpell:disable; */
 import { configureStore } from "@reduxjs/toolkit";
 import ingredientsReducer from "./reducers/ingredients";
 import orderReducer from "./reducers/order";
 import authorizationReducer from "./reducers/authorization";
 import { socketMiddleware } from "./middelwares/socketMiddleware";
 import  webSocketReducers  from "./reducers/webSocketRedusers"
+import {} from ""
 
 const wsActions = {
   wsConnection: 'webSocketReducers/wsConnection',
@@ -14,7 +17,7 @@ const wsActions = {
   wsMessage: 'webSocketReducers/wsGetOrders',
 }
 
-const store = new configureStore({
+const store = configureStore({
   reducer: {
     orderReducer,
     ingredientsReducer,
@@ -24,5 +27,6 @@ const store = new configureStore({
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(socketMiddleware(wsActions)),
 });
-
+export type AppDispatch = typeof store.dispatch
+export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
 export default store;

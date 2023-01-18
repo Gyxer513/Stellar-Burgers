@@ -1,7 +1,5 @@
 /* cSpell:disable */
 import React from "react";
-import PropTypes from "prop-types";
-import { ingredientPropType } from "../../utils/prop-types";
 import { Link, useLocation} from 'react-router-dom';
 import {
   Counter,
@@ -71,7 +69,5 @@ const BurgerIngredient = ({ data }) => {
     </Link >
   );
 };
-BurgerIngredient.propType = {
-  data: PropTypes.arrayOf(ingredientPropType).isRequired,
-};
+
 export default BurgerIngredient;

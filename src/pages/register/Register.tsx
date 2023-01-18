@@ -1,7 +1,8 @@
 /* cSpell:disable; */
-import React from "react";
+import React, { FormEvent } from "react";
 import styles from "./register.module.css";
 import { NavLink, useHistory } from "react-router-dom";
+import { AppDispatch } from "../../services/store"
 import {
   Input,
   EmailInput,
@@ -19,21 +20,20 @@ export const Register = () => {
     password: "",
   });
   const { userName, email, password } = userData;
-  const dispatch = useDispatch();
-  const onChange = (e) => {
+  const dispatch = useDispatch<AppDispatch>();
+  const onChange = (e: any) => {
     setUserData({
       ...userData,
       [e.target.name]: e.target.value
     });
   };
-  const submitRegistration = (e) => {
+  const submitRegistration = (e: FormEvent) => {
     e.preventDefault();
-    console.log(userData);
     dispatch(registerNewUser({
       "email": email, 
       "password": password, 
       "name": userName 
-  } )).then(res => console.log(res));
+  } ));
   history.push('/');
   };
   return (
@@ -50,12 +50,9 @@ export const Register = () => {
       </div>
       <div className={styles.register__input}>
         <EmailInput
-          type={"text"}
           placeholder={"E-mail"}
           value={email}
           name={"email"}
-          errorText={"Ошибка в email"}
-          error={false}
           size={"default"}
           onChange={onChange}
         />

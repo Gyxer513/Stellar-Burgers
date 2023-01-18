@@ -1,7 +1,4 @@
 /* cSpell:disable; */
-type TuserData = {
-
-}
 
 export interface IauthorizationStore {
     isLoading: boolean;
@@ -11,4 +8,11 @@ export interface IauthorizationStore {
     error: string | null,
     resetStatus: boolean | null,
     tokenError: boolean,
+}
+export interface IingredientsStore {
+    ingredients: [],
+    chosenIngredients: [],
+    chosenBun: object | null,
+    ingredientsRequest: boolean,
+    ingredientsFailed: boolean,
 }

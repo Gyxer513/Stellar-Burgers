@@ -32,7 +32,7 @@ export const Login = () => {
         email: email,
         password: password,
       }),
-      history.push("/")
+      history.push("/Stellar-Burgers/")
     );
   };
   return (
@@ -66,7 +66,7 @@ export const Login = () => {
           Вы — новый пользователь?
         </p>
         <NavLink
-          to="/register"
+          to="/Stellar-Burgers/register"
           className={`${styles.login__link} text text_type_main-default text_color_inactive `}
         >
           Зарегистрироваться
@@ -77,7 +77,7 @@ export const Login = () => {
           Забыли пароль?
         </p>
         <NavLink
-          to="/forgot-password"
+          to="/Stellar-Burgers/forgot-password"
           className={`${styles.login__link} text text_type_main-default text_color_inactive `}
         >
           Восстановить пароль
