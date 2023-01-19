@@ -12,4 +12,4 @@ export interface Iingredient {
   type: string;
   __v: number;
   _id: string;
-}
+} 

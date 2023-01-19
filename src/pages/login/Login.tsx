@@ -1,15 +1,15 @@
 /* cSpell:disable */
-import React from "react";
 import styles from "./login.module.css";
 import { NavLink, useHistory } from "react-router-dom";
 import { loginUser } from "../../services/reducers/authorization";
 import { useDispatch } from "react-redux";
-
 import {
   EmailInput,
   Button,
   PasswordInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import React, { SyntheticEvent } from "react";
+import { AppDispatch } from "../../services/store"
 
 export const Login = () => {
   const history = useHistory();
@@ -18,34 +18,31 @@ export const Login = () => {
     password: "",
   });
   const { email, password } = userData;
-  const dispatch = useDispatch();
-  const onChange = (e) => {
+  const dispatch = useDispatch<AppDispatch>();
+  const onChange = (e: any) => {
     setUserData({
       ...userData,
       [e.target.name]: e.target.value,
     });
   };
-  const submitAutorization = (e) => {
+  const submitAutorization = (e: SyntheticEvent) => {
     e.preventDefault();
     dispatch(
       loginUser({
         email: email,
         password: password,
       }),
-      history.push("/Stellar-Burgers/")
     );
+    history.push("/Stellar-Burgers/")
   };
   return (
     <form onSubmit={submitAutorization} className={styles.login}>
       <h2 className="m-10 text text_type_main-medium">Вход</h2>
       <div className={styles.login__input}>
         <EmailInput
-          type={"text"}
           placeholder={"E-mail"}
           value={email}
           name={"email"}
-          errorText={"Ошибка в email"}
-          error={false}
           size={"default"}
           onChange={onChange}
         />

@@ -1,12 +1,13 @@
 /* cSpell:disable */
 import styles from "./ingredientDetails.module.css";
-import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import Loader from "../../components/Loader/Loader";
+import Loader from "../Loader/Loader";
+import { useAppSelector } from "../../services/store";
+import { Iingredient } from "../../services/types/ingredients";
 
 function IngredientDetails() {
   const { id } = useParams();
-  const { ingredients } = useSelector((state) => state?.ingredientsReducer);
+  const { ingredients } = useAppSelector((state) => state?.ingredientsReducer);
 
   let selectedIngredient = null;
 
@@ -16,7 +17,7 @@ function IngredientDetails() {
 
   if (ingredients.length > 0) {
     selectedIngredient = ingredients?.find(
-      (ingredient) => ingredient._id.toString() === id
+      (ingredient: Iingredient) => ingredient._id.toString() === id
     );
   }
 

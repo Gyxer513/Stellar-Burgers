@@ -3,7 +3,8 @@ import { api } from "../../utils/Api";
 import { randomId } from "../../utils/data";
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import { IingredientsStore } from "../types/store"
-import { Iingredient } from "../types/ingredients"
+import { Iingredient } from "../types/ingredients";
+
 
 export const getData = createAsyncThunk("getData", async () => {
   return api.getData();
@@ -22,7 +23,7 @@ export const ingredientsReducer = createSlice({
   initialState,
   reducers: {
     addIngredient: {
-      reducer: (state, action: PayloadAction<object>) => {
+      reducer: (state, action: PayloadAction<never[]>) => {
         state.chosenIngredients.push(action.payload);
       },
       prepare: (targetIngredient) => {
@@ -34,7 +35,7 @@ export const ingredientsReducer = createSlice({
       },
     },
     addBun: {
-      reducer: (state, action: PayloadAction<object>) => {
+      reducer: (state, action: PayloadAction<Iingredient>) => {
         state.chosenBun = action.payload;
       },
       prepare: (addedBun) => {

@@ -1,5 +1,5 @@
 /* cSpell:disable; */
-import React, { FormEvent } from "react";
+import React, { SyntheticEvent } from "react";
 import styles from "./register.module.css";
 import { NavLink, useHistory } from "react-router-dom";
 import { AppDispatch } from "../../services/store"
@@ -11,15 +11,16 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { registerNewUser } from '../../services/reducers/authorization';
 import { useDispatch } from 'react-redux';
+import { IuserData } from "../../services/types/user";
 
 export const Register = () => {
   const history = useHistory();
-  const [userData, setUserData] = React.useState({
-    userName: "",
+  const [userData, setUserData] = React.useState<IuserData>({
+    name: "",
     email: "",
     password: "",
   });
-  const { userName, email, password } = userData;
+  const { name, email, password } = userData;
   const dispatch = useDispatch<AppDispatch>();
   const onChange = (e: any) => {
     setUserData({
@@ -27,12 +28,12 @@ export const Register = () => {
       [e.target.name]: e.target.value
     });
   };
-  const submitRegistration = (e: FormEvent) => {
+  const submitRegistration = (e: SyntheticEvent) => {
     e.preventDefault();
     dispatch(registerNewUser({
       "email": email, 
       "password": password, 
-      "name": userName 
+      "name": name 
   } ));
   history.push('/');
   };
@@ -42,9 +43,9 @@ export const Register = () => {
       <div className={styles.register__input}>
       <Input
           type={"text"}
-          name={"userName"}
+          name={"name"}
           placeholder={"Имя"}
-          value={userName}
+          value={name!}
           onChange={onChange}
         /> 
       </div>
@@ -59,13 +60,13 @@ export const Register = () => {
       </div>
       <div className={styles.register__input}>
         <PasswordInput
-          value={password}
+          value={password!}
           name={"password"}
           onChange={onChange}
         />
       </div>
       <Button
-        disabled={!userName || !email || !password} 
+        disabled={!name || !email || !password} 
         htmlType="submit"
         type="primary"
         size="medium"

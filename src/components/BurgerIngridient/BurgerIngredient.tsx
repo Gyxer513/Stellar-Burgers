@@ -1,19 +1,19 @@
 /* cSpell:disable */
-import React from "react";
+import React, { FC } from "react";
 import { Link, useLocation} from 'react-router-dom';
 import {
   Counter,
   CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./burgerIngredient.module.css";
-import { useSelector } from "react-redux";
 import { useDrag } from "react-dnd";
+import { useAppSelector } from "../../services/store"
+import { Iingredient } from "../../services/types/ingredients";
 
-
-const BurgerIngredient = ({ data }) => {
+const BurgerIngredient: FC<{data: Iingredient}> = ( { data } ) => {
   const location = useLocation();
   const { image, price, name, _id } = data;
-  const { chosenBun, chosenIngredients } = useSelector(
+  const { chosenBun, chosenIngredients } = useAppSelector(
     (state) => state.ingredientsReducer
   );
   const [, dragRef] = useDrag({
@@ -31,7 +31,7 @@ const BurgerIngredient = ({ data }) => {
     if (chosenBun?._id == _id) {
       ingredientCounter = 2;
     } else {
-      chosenIngredients?.forEach((ingredient) => {
+      chosenIngredients?.forEach((ingredient: Iingredient) => {
         if (ingredient.name === name) {
           ingredientCounter += 1;
         }
@@ -46,7 +46,6 @@ const BurgerIngredient = ({ data }) => {
       state: {background: location}
       }}>
     <div
-      disabled={true}
       ref={dragRef}
       className={styles.burgerIngredient}
     >

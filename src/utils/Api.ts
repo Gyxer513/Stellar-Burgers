@@ -42,7 +42,7 @@ class Api {
 
   /* Вход по логину паролю */
 
-  loginUser(data: IuserData) {
+  loginUser(data: object | void) {
     return fetch(`${this._link}/auth/login`, {
       method: "POST",
       headers: {

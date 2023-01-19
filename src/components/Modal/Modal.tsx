@@ -1,14 +1,13 @@
 /* cSpell:disable */
-import React, { useEffect } from "react";
+import React, { useEffect, FC } from "react";
 import styles from "./modal.module.css";
 import ReactDOM from "react-dom";
 import ModalOverlay from "../ModalOverlay/ModalOverlay";
-import PropTypes from "prop-types";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import { getCookie } from "../../utils/cookie";
-const modalsContainer = document.querySelector("#modals");
+import { IModalProps } from "../../services/types/types";
 
-const Modal = ({ onClose, children }) => {
+
+const Modal: FC<IModalProps> = ({ onClose, children }) => {
   useEffect(() => {
     document.addEventListener("keydown", handleEscKeydown);
 
@@ -16,8 +15,8 @@ const Modal = ({ onClose, children }) => {
       document.removeEventListener("keydown", handleEscKeydown);
     };
   }, []);
-
-  const handleEscKeydown = (e) => {
+  const modalsContainer = document.querySelector("#modals") as HTMLElement;
+  const handleEscKeydown = (e: { key: string }) => {
     e.key === "Escape" && onClose();
   };
 
@@ -40,6 +39,4 @@ const Modal = ({ onClose, children }) => {
 };
 
 export default Modal;
-Modal.propTypes = {
-  onClose: PropTypes.func.isRequired,
-};
+

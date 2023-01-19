@@ -5,11 +5,14 @@ import {
   CurrencyIcon,
   FormattedDate,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useSelector } from "react-redux";
+import { useAppSelector } from "../../services/store"
+import React, { FC } from "react";
+import { IOrderCard } from "../../services/types/types";
 
-export const OrderCard = ({ orderIngredients, status, name, number, date }) => {
+export const OrderCard: FC<IOrderCard> = ({ orderIngredients, status, name, number, date }) => {
   const location = useLocation();
-  const { ingredients } = useSelector((state) => state.ingredientsReducer);
+  const { ingredients } = useAppSelector((state) => state.ingredientsReducer);
+
 
   if (status === "cancelled") {
     status = "Отменен";
@@ -89,7 +92,7 @@ export const OrderCard = ({ orderIngredients, status, name, number, date }) => {
         </ul>
         <div className={styles.orderCard__priceBox}>
           <p className="mr-3 text text_type_digits-medium">{getPrice()}</p>
-          <CurrencyIcon />
+          <CurrencyIcon type="primary"/>
         </div>
       </div>
     </Link>

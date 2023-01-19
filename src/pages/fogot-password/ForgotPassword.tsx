@@ -1,22 +1,23 @@
 /* cSpell:disable; */
-import React from "react";
+import React, { FormEvent } from "react";
 import styles from "./forgotPassword.module.css";
 import { NavLink, Redirect } from "react-router-dom";
 import { fogotPass } from "../../services/reducers/authorization";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import {
   EmailInput,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import { useAppSelector, AppDispatch } from "../../services/store"
 
 export const ForgotPassword = () => {
   const [emailValue, setEmailValue] = React.useState("");
-  const dispatch = useDispatch();
-  const { resetStatus } = useSelector((state) => state.authorizationReducer);
-  const onChange = (e) => {
+  const dispatch = useDispatch<AppDispatch>();
+  const { resetStatus } = useAppSelector((state) => state.authorizationReducer);
+  const onChange = (e: any) => {
     setEmailValue(e.target.value);
   };
-  const submitResetPassword = (e) => {
+  const submitResetPassword = (e: FormEvent) => {
     e.preventDefault();
     dispatch(
       fogotPass({
@@ -35,12 +36,9 @@ export const ForgotPassword = () => {
       <h2 className="m-10 text text_type_main-medium">Восстановить пароль</h2>
       <div className={styles.forgotPassword__input}>
         <EmailInput
-          type={"text"}
           placeholder={"E-mail"}
           value={emailValue}
           name={"email"}
-          errorText={"Ошибка в email"}
-          error={false}
           size={"default"}
           onChange={onChange}
         />

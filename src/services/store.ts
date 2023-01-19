@@ -6,7 +6,7 @@ import orderReducer from "./reducers/order";
 import authorizationReducer from "./reducers/authorization";
 import { socketMiddleware } from "./middelwares/socketMiddleware";
 import  webSocketReducers  from "./reducers/webSocketRedusers"
-import {} from ""
+import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 
 const wsActions = {
   wsConnection: 'webSocketReducers/wsConnection',
@@ -27,6 +27,7 @@ const store = configureStore({
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(socketMiddleware(wsActions)),
 });
+export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
 export default store;

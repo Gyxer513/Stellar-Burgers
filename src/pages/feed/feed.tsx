@@ -10,10 +10,11 @@ import { useEffect } from "react";
 import { OrdersFeed } from "../../components/OdersFeed/OdersFeed";
 import Loader from "../../components/Loader/Loader";
 import { OrdersInfo } from "../../components/OrdersInfo/OrdersInfo";
+import { useAppSelector} from "../../services/store"
 
 export const Feed = () => {
   const dispatch = useDispatch();
-  const { orders } = useSelector((state) => state.webSocketReducers);
+  const { orders } = useAppSelector((state) => state.webSocketReducers);
 
   useEffect(() => {
     dispatch(wsConnection(`${BASE_WSS}/all`));

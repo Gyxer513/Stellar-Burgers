@@ -20,7 +20,7 @@ export const FullOrderInfo = () => {
   useEffect(() => {
     dispatch(fullOrderInfo(orderNumber.orderNumber));
   }, [dispatch, orderNumber]);
-  console.log(orderNumber);
+  
   const orderInfo = orderData?.orders[0];
 
   let status = orderInfo?.status;

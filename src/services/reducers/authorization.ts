@@ -19,7 +19,7 @@ export const loginUser = createAsyncThunk("loginUser", async (data: IuserData) =
 
 /* ***** Восстановление пароля ***** */
 
-export const fogotPass = createAsyncThunk("fogotPass", async (data) => {
+export const fogotPass = createAsyncThunk("fogotPass", async (data: IuserData) => {
   return api.fogotPassword(data);
 });
 

@@ -12,7 +12,7 @@ import Modal from "../Modal/Modal";
 import OrderDetails from "../OrderDetails/OrderDetails";
 import IngredientDetails from "../IngredientDetails/IngredientDetails";
 import { getData } from "../../services/reducers/ingredients";
-import { Login } from "../../pages/login/Login.jsx";
+import { Login } from "../../pages/login/Login";
 import { Register } from "../../pages/register/Register";
 import { ForgotPassword } from "../../pages/fogot-password/ForgotPassword";
 import { PageNotFound } from "../../pages/pageNotFound/PageNotFound";

@@ -4,12 +4,11 @@ import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./burgerIngredients.module.css";
 import BurgerIngredient from "../BurgerIngridient/BurgerIngredient";
 import { Iingredient } from "../../services/types/ingredients";
-import { IingredientsStore } from "../../services/types/store";
-import { useSelector } from "react-redux";
+import { useAppSelector } from "../../services/store"
 
 const BurgerIngredients = () => {
   const [current, setCurrent] = React.useState("one");
-  const { ingredients } = useSelector((state) => state.ingredientsReducer);
+  const { ingredients } = useAppSelector((state) => state.ingredientsReducer);
 
   const menu = React.useRef<HTMLDivElement>(null);
   const bun = React.useRef<HTMLDivElement>(null);
@@ -18,15 +17,15 @@ const BurgerIngredients = () => {
 
   React.useEffect(() => {
     const putScroll = () => {
-      if (menu.current.scrollTop <= 240) {
+      if (menu.current!.scrollTop <= 240) {
         setCurrent("one");
-      } else if (menu.current.scrollTop <= 650) {
+      } else if (menu.current!.scrollTop <= 650) {
         setCurrent("two");
       } else {
         setCurrent("three");
       }
     };
-    menu.current.addEventListener("scroll", putScroll)
+    menu.current!.addEventListener("scroll", putScroll)
   }, []);
 
   const handleTabClick = (type: string) => {
