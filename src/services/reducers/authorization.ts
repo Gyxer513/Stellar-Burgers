@@ -186,9 +186,9 @@ const authorizationReducer = createSlice({
         );
         localStorage.setItem("refreshToken", action.payload.refreshToken);
       })
-      .addCase(refreshToken.rejected, (state, action) => {
+      .addCase(refreshToken.rejected, (state, error) => {
         state.isAuthorizationSuccess = false;
-        console.warn(action.error);
+        console.warn(error.error);
       });
   },
 });
