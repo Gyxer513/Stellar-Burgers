@@ -1,5 +1,6 @@
 /* cSpell:disable; */
 import styles from "./burgerConstructor.module.css";
+import React, { FC } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   DragIcon,
@@ -8,15 +9,22 @@ import {
 import { useDrag, useDrop } from "react-dnd";
 import { useRef } from "react";
 import { deleteIngredient } from "../../services/reducers/ingredients";
+import { useAppSelector, AppDispatch } from "../../services/store";
+import { Iingredient } from "../../services/types/ingredients";
+import { IConstructorItem } from "../../services/types/types";
 
-
-const ConstructorItem = ({ data, id, moveIngredient, index }) => {
+const ConstructorItem: FC<IConstructorItem> = ({
+  data,
+  id,
+  moveIngredient,
+  index,
+}) => {
   const { image, name, price } = data;
-  const { chosenIngredients } = useSelector(
+  const { chosenIngredients } = useAppSelector(
     (state) => state.ingredientsReducer
   );
-  const ref = useRef(null);
-  const dispatch = useDispatch();
+  const ref = useRef<HTMLLIElement>(null);
+  const dispatch = useDispatch<AppDispatch>();
 
   const [, drag] = useDrag({
     type: "chosen-ingredients",
@@ -27,13 +35,14 @@ const ConstructorItem = ({ data, id, moveIngredient, index }) => {
 
   const [, drop] = useDrop({
     accept: "chosen-ingredients",
-    drop(item, monitor) {
+    drop(item: { id: string; index: number }, monitor) {
       if (!ref.current) {
         return;
       }
+      console.log(item);
 
-      const dragIndex = item.index;
-      const hoverIndex = index;
+      const dragIndex = item?.index;
+      let hoverIndex = index;
 
       if (dragIndex === hoverIndex) {
         return;
@@ -42,7 +51,7 @@ const ConstructorItem = ({ data, id, moveIngredient, index }) => {
       const hoverMiddleY =
         (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
       const clientOffset = monitor.getClientOffset();
-      const hoverClientY = clientOffset.y - hoverBoundingRect.top;
+      const hoverClientY = clientOffset!.y - hoverBoundingRect.top;
       if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
         return;
       }
@@ -52,15 +61,15 @@ const ConstructorItem = ({ data, id, moveIngredient, index }) => {
       }
 
       moveIngredient(dragIndex, hoverIndex);
-
-      item.index = hoverIndex;
+      hoverIndex = item.index;
     },
   });
 
   drag(drop(ref));
 
-  const handleDeleteIngredient = (item) => () => {
+  const handleDeleteIngredient = (item: Iingredient | unknown) => () => {
     const arrayClone = chosenIngredients.slice();
+    // @ts-ignore
     arrayClone.splice(chosenIngredients.indexOf(item), 1);
     dispatch(deleteIngredient(arrayClone));
   };
@@ -78,6 +87,5 @@ const ConstructorItem = ({ data, id, moveIngredient, index }) => {
     </li>
   );
 };
-
 
 export default ConstructorItem;

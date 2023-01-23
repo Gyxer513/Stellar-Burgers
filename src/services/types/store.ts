@@ -1,7 +1,7 @@
 /* cSpell:disable; */
 import { Iingredient } from "./ingredients";
 import { IOrderInfo } from "./ingredients";
-import { IOrderFullInfo } from "./types";
+import { IChoousenIngredients, IOrderFullInfo } from "./types";
 import { IuserData } from "./user";
 
 export interface IauthorizationStore {
@@ -15,14 +15,14 @@ export interface IauthorizationStore {
 }
 export interface IingredientsStore {
   ingredients: [Iingredient] | [];
-  chosenIngredients: [Iingredient] | [];
+  chosenIngredients: [IChoousenIngredients] | [];
   chosenBun: Iingredient | null;
   ingredientsRequest: boolean;
   ingredientsFailed: boolean;
 }
 
 export interface IorderStore {
-  orderDetails: null | object;
+  orderDetails: null | number;
   orderRequest: boolean;
   orderFailed: boolean;
   orderData: IOrderInfo | null ;

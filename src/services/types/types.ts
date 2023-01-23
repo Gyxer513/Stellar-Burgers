@@ -1,4 +1,7 @@
+
 /* cSpell:disable; */
+import { Iingredient } from "./ingredients";
+
 export interface IModalProps {
   onClose: () => void;
   children: React.ReactElement | React.ReactNode;
@@ -27,4 +30,19 @@ export interface IOrderFullInfo {
 
 export interface IOrderNumber {
   orderNumber: string;
+}
+
+export interface IChoousenIngredients extends Iingredient {
+  randomId: string;
+}
+
+export interface IConstructorItem {
+  data: {
+    image: string;
+    name: string;
+    price: number;
+  }
+  id: string;
+  moveIngredient: (dragIndex: number, hoverIndex: number) => void;
+  index: number;
 }

@@ -5,14 +5,19 @@ import {
   CurrencyIcon,
   FormattedDate,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useAppSelector } from "../../services/store"
+import { useAppSelector } from "../../services/store";
 import React, { FC } from "react";
 import { IOrderCard } from "../../services/types/types";
 
-export const OrderCard: FC<IOrderCard> = ({ orderIngredients, status, name, number, createdAt }) => {
+export const OrderCard: FC<IOrderCard> = ({
+  orderIngredients,
+  status,
+  name,
+  number,
+  createdAt,
+}) => {
   const location = useLocation();
   const { ingredients } = useAppSelector((state) => state.ingredientsReducer);
-
 
   if (status === "cancelled") {
     status = "Отменен";
@@ -31,7 +36,6 @@ export const OrderCard: FC<IOrderCard> = ({ orderIngredients, status, name, numb
           )[0]?.image_mobile
       );
     }
-    
   };
 
   const getPrice = () => {
@@ -85,14 +89,18 @@ export const OrderCard: FC<IOrderCard> = ({ orderIngredients, status, name, numb
                   className={styles.orderCard__listImage}
                   style={{ zIndex: 6 - index }}
                 >
-                  <img className={styles.orderCard__image} src={image} alt={name} />
+                  <img
+                    className={styles.orderCard__image}
+                    src={image}
+                    alt={name}
+                  />
                 </li>
               );
           })}
         </ul>
         <div className={styles.orderCard__priceBox}>
           <p className="mr-3 text text_type_digits-medium">{getPrice()}</p>
-          <CurrencyIcon type="primary"/>
+          <CurrencyIcon type="primary" />
         </div>
       </div>
     </Link>

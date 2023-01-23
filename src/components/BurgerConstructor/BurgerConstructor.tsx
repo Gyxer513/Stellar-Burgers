@@ -16,20 +16,23 @@ import {
 import { useDrop } from "react-dnd";
 import ConstructorItem from "./ConstructorItem";
 import { useHistory, useLocation } from "react-router-dom";
+import { useAppSelector, AppDispatch } from "../../services/store";
+import { Iingredient } from "../../services/types/ingredients";
+
 const BurgerConstructor = () => {
   const location = useLocation();
   const history = useHistory();
-  const dispatch = useDispatch();
-  const { userData } = useSelector((state) => state.authorizationReducer);
-  const { ingredients, chosenBun, chosenIngredients } = useSelector(
+  const dispatch = useDispatch<AppDispatch>();
+  const { userData } = useAppSelector((state) => state.authorizationReducer);
+  const { ingredients, chosenBun, chosenIngredients } = useAppSelector(
     (state) => state.ingredientsReducer
   );
 
-  const handleDrop = (ingredientId) => {
+  const handleDrop = (ingredientId: Iingredient) => {
     const targetIngredient = ingredients.find(
       (ingredient) => ingredient._id === ingredientId._id
     );
-    if (targetIngredient.type === "bun") {
+    if (targetIngredient?.type === "bun") {
       dispatch(addBun(targetIngredient));
     } else {
       if (chosenBun != null) {
@@ -53,7 +56,7 @@ const BurgerConstructor = () => {
 
   const [, burgerIngredientsContainer] = useDrop({
     accept: "ingredient",
-    drop(ingredientId) {
+    drop(ingredientId: Iingredient) {
       handleDrop(ingredientId);
     },
     collect: (monitor) => ({
@@ -61,17 +64,18 @@ const BurgerConstructor = () => {
     }),
   });
 
-  const totalPrice = React.useMemo(
+  const totalPrice = React.useMemo<number>(
     () =>
-      chosenBun?.price * 2 +
+      chosenBun?.price! * 2 +
+// @ts-ignore
       chosenIngredients.reduce(
-        (res, currentElement) => res + currentElement.price,
+        (res: number, currentElement: Iingredient) => res + currentElement.price,
         0
       ),
     [chosenBun, chosenIngredients]
   );
   const moveIngredient = React.useCallback(
-    (dragIndex, hoverIndex) => {
+    (dragIndex: number, hoverIndex: any) => {
       const sortedIngredients = update(
         chosenIngredients,
         {
@@ -80,7 +84,6 @@ const BurgerConstructor = () => {
             [hoverIndex, 0, chosenIngredients[dragIndex]],
           ],
         },
-        [chosenIngredients]
       );
 
       dispatch(sortIngredients([...sortedIngredients]));

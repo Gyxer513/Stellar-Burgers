@@ -3,7 +3,7 @@ import { api } from "../../utils/Api";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { IorderStore } from "../types/store";
 
-export const sendOrder = createAsyncThunk("sendOrder", async (list: []) => 
+export const sendOrder = createAsyncThunk("sendOrder", async (list: string[]) => 
    api.sendData(list)
 );
 

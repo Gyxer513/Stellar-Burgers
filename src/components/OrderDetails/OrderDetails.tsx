@@ -5,24 +5,27 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { sendOrder } from "../../services/reducers/order";
 import Loader from "../Loader/Loader";
+import { useAppSelector, AppDispatch } from "../../services/store";
 
 function OrderDetails() {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
 
   React.useEffect(() => {
     dispatch(sendOrder(orderList));
+    
   }, [dispatch]);
-  const { orderDetails } = useSelector((state) => state.orderReducer);
-  const { chosenBun, chosenIngredients } = useSelector(
+  const { orderDetails } = useAppSelector((state) => state.orderReducer);
+  const { chosenBun, chosenIngredients } = useAppSelector(
     (state) => state.ingredientsReducer
   );
+
 
   const orderList = React.useMemo(() => {
     const ingredientsList = chosenIngredients?.map(
       (ingredient) => ingredient._id
     );
-    ingredientsList.splice(0, 0, chosenBun?._id);
-    ingredientsList.splice(ingredientsList.length, 0, chosenBun?._id);
+    ingredientsList.splice(0, 0, chosenBun?._id!);
+    ingredientsList.splice(ingredientsList.length, 0, chosenBun?._id!);
     return ingredientsList;
   }, []);
 
