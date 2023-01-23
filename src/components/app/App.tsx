@@ -23,12 +23,13 @@ import { checkAuth, refreshToken } from "../../services/reducers/authorization";
 import { Feed } from "../../pages/feed/feed";
 import { FullOrderInfo } from "../FullOrderInfo/FullOrderInfo";
 import { getCookie } from "../../utils/cookie";
+import { useAppSelector, AppDispatch } from "../../services/store";
 
 function App() {
   const location = useLocation();
   const history = useHistory();
-  const dispatch = useDispatch();
-  const { userData, tokenError } = useSelector(
+  const dispatch = useDispatch<AppDispatch>();
+  const { userData, tokenError } = useAppSelector(
     (state) => state.authorizationReducer
   );
 
@@ -57,7 +58,7 @@ function App() {
     <>
       <AppHeader />
       <Switch location={background || location}>
-        <Route exact path="/Stellar-Burgers">
+        <Route exact path="/Stellar-Burgers/">
           <main className={styles.main}>
             <DndProvider backend={HTML5Backend}>
               <BurgerIngredients />
@@ -127,6 +128,7 @@ function App() {
         </Route>
       )}
     </>
+    
   );
 }
 

@@ -1,20 +1,21 @@
 /* cSpell:disable */
 import { createSlice } from "@reduxjs/toolkit";
+import { IWsStore } from "../types/store";
 
-
+const initialState: IWsStore = {
+  wsOpen: null,
+  wsClose: null,
+  wsConnectionStatus: true,
+  wsError: null,
+  fetchError: null,
+  fetchRequest: false,
+  orders: null,
+  wsData: null,
+}
 
 export const webSocketReducers = createSlice({
   name: 'webSocketReducers',
-  initialState: {
-    wsOpen: null,
-    wsClose: null,
-    wsConnectionStatus: true,
-    wsError: null,
-    fetchError: null,
-    fetchRequest: false,
-    orders: null,
-    wsData: null,
-  },
+  initialState,
   reducers: {
     wsOpen: (state, action) => {
       state.wsOpen = action.payload;

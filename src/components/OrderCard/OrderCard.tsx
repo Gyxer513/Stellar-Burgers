@@ -9,7 +9,7 @@ import { useAppSelector } from "../../services/store"
 import React, { FC } from "react";
 import { IOrderCard } from "../../services/types/types";
 
-export const OrderCard: FC<IOrderCard> = ({ orderIngredients, status, name, number, date }) => {
+export const OrderCard: FC<IOrderCard> = ({ orderIngredients, status, name, number, createdAt }) => {
   const location = useLocation();
   const { ingredients } = useAppSelector((state) => state.ingredientsReducer);
 
@@ -58,7 +58,7 @@ export const OrderCard: FC<IOrderCard> = ({ orderIngredients, status, name, numb
         <h3 className={`text text_type_digits-default`}>#{number}</h3>
         <FormattedDate
           className="text text_type_main-default text_color_inactive"
-          date={new Date(date)}
+          date={new Date(createdAt)}
         />
       </div>
       {status ? (

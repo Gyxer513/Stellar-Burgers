@@ -1,5 +1,6 @@
 /* cSpell:disable; */
-export interface Iingredient {
+import { IOrderFullInfo } from "./types";
+export interface Iingredient  {
   calories: number;
   carbohydrates: number;
   fat: number;
@@ -12,4 +13,9 @@ export interface Iingredient {
   type: string;
   __v: number;
   _id: string;
-} 
+}
+
+export interface IOrderInfo {
+  success: boolean,
+  orders: [IOrderFullInfo]
+}

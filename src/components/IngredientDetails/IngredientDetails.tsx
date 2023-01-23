@@ -21,19 +21,16 @@ function IngredientDetails() {
     );
   }
 
-  const { image_large, name, calories, carbohydrates, fat, proteins } =
-    selectedIngredient;
-
   return (
     <div className={`pl-10 pr-10 ${styles.ingredient}`}>
       <div className={`mt-10 ${styles.ingredient__top}`}>
         <h2 className="text text_type_main-large">{"Детали ингридиента"}</h2>
       </div>
-      <img className="mt-15 mb-15" src={image_large} alt="Ингредиент" />
+      <img className="mt-15 mb-15" src={selectedIngredient?.image_large} alt="Ингредиент" />
       <p
         className={`text text_type_main-medium mt-4 mb-8 ${styles.ingredient__name}`}
       >
-        {name}
+        {selectedIngredient?.name}
       </p>
       <ul
         className={`text text_type_main-default mb-15 ${styles.ingredient__listBox}`}
@@ -46,7 +43,7 @@ function IngredientDetails() {
           >
             Калории,ккал
           </p>
-          <p className={`${styles.ingredient__specifications}`}>{calories}</p>
+          <p className={`${styles.ingredient__specifications}`}>{selectedIngredient?.calories}</p>
         </li>
         <li
           className={`text text_type_main-default ${styles.ingredient__element}`}
@@ -57,7 +54,7 @@ function IngredientDetails() {
             Белки, г
           </p>
           <p className={`${styles.ingredient__specifications}`}>
-            {carbohydrates}
+            {selectedIngredient?.carbohydrates}
           </p>
         </li>
         <li
@@ -68,7 +65,7 @@ function IngredientDetails() {
           >
             Жиры, г
           </p>
-          <p className={`${styles.ingredient__specifications}`}>{fat}</p>
+          <p className={`${styles.ingredient__specifications}`}>{selectedIngredient?.fat}</p>
         </li>
         <li
           className={`text text_type_main-default ${styles.ingredient__element}`}
@@ -78,7 +75,7 @@ function IngredientDetails() {
           >
             Углеводы, г
           </p>
-          <p className={`${styles.ingredient__specifications}`}>{proteins}</p>
+          <p className={`${styles.ingredient__specifications}`}>{selectedIngredient?.proteins}</p>
         </li>
       </ul>
     </div>

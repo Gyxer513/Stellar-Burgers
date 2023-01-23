@@ -52,7 +52,7 @@ export const Register = () => {
       <div className={styles.register__input}>
         <EmailInput
           placeholder={"E-mail"}
-          value={email}
+          value={email!}
           name={"email"}
           size={"default"}
           onChange={onChange}

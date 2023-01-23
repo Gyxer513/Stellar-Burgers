@@ -4,24 +4,29 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { fullOrderInfo } from "../../services/reducers/order";
-import Loader from "../../components/Loader/Loader";
+import Loader from "../Loader/Loader";
 import {
   CurrencyIcon,
   FormattedDate,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import { useAppSelector, AppDispatch } from "../../services/store";
+import { IOrderNumber } from "../../services/types/types";
+
 
 export const FullOrderInfo = () => {
-  const dispatch = useDispatch();
-  const orderNumber = useParams();
+  const dispatch = useDispatch<AppDispatch>();
+  const orderNumber = useParams<keyof IOrderNumber>() as IOrderNumber;
 
-  const { orderData } = useSelector((state) => state.orderReducer);
-  const { ingredients } = useSelector((state) => state.ingredientsReducer);
-
+  const { orderData } = useAppSelector((state) => state.orderReducer);
+  const { ingredients } = useAppSelector((state) => state.ingredientsReducer);
+  console.log(orderNumber.orderNumber);
+  
+  
   useEffect(() => {
     dispatch(fullOrderInfo(orderNumber.orderNumber));
   }, [dispatch, orderNumber]);
   
-  const orderInfo = orderData?.orders[0];
+  const orderInfo= orderData?.orders[0];
 
   let status = orderInfo?.status;
 
@@ -32,7 +37,7 @@ export const FullOrderInfo = () => {
   } else {
     status = "Готовится";
   }
-  let orderIngredients = [...new Set(orderInfo?.ingredients)];
+  let orderIngredients = Array.from(new Set(orderInfo?.ingredients));
 
   const getIngredientsInfo = () => {
     if (orderData) {
@@ -44,7 +49,7 @@ export const FullOrderInfo = () => {
       );
     }
   };
-  const count = (id) => {
+  const count = (id: string) => {
     let counter = 0;
     orderInfo?.ingredients.forEach((ingredient) => {
       if (ingredient === id) {
@@ -76,7 +81,7 @@ export const FullOrderInfo = () => {
           >
             #{orderNumber.orderNumber}
           </h3>
-          <h2>{orderInfo.name}</h2>
+          <h2>{orderInfo?.name}</h2>
           {status ? (
             <span
               className={
@@ -92,7 +97,7 @@ export const FullOrderInfo = () => {
           )}
           {getIngredientsInfo() ? (
             <ul className={styles.fullOrderInfo__ingredientBox}>
-              {getIngredientsInfo().map((ingredient, index) => {
+              {getIngredientsInfo()?.map((ingredient, index) => {
                 return (
                   <li className={styles.fullOrderInfo__listBox} key={index}>
                     <div className={styles.fullOrderInfo__box}>
@@ -128,7 +133,7 @@ export const FullOrderInfo = () => {
               <p className="mr-3 text text_type_digits-medium">
                 {getFullPrice()}
               </p>
-              <CurrencyIcon />
+              <CurrencyIcon type="primary" />
             </div>
           </div>
         </div>

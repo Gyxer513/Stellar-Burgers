@@ -1,7 +1,7 @@
 /* cSpell:disable; */
 
 export interface IuserData {
-  email: string;
+  email?: string;
   password?: string;
   name?: string;
 }

@@ -12,7 +12,7 @@ import { deleteIngredient } from "../../services/reducers/ingredients";
 
 const ConstructorItem = ({ data, id, moveIngredient, index }) => {
   const { image, name, price } = data;
-  const {chosenIngredients } = useSelector(
+  const { chosenIngredients } = useSelector(
     (state) => state.ingredientsReducer
   );
   const ref = useRef(null);

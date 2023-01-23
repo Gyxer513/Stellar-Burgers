@@ -1,9 +1,12 @@
+/* cSpell:disable */
 import styles from "./OrdersInfo.module.css";
-import { useSelector } from "react-redux";
+import { useAppSelector } from "../../services/store"
 
 export const OrdersInfo = () => {
-  const { orders, wsData } = useSelector((state) => state.webSocketReducers);
+  const { orders, wsData } = useAppSelector((state) => state.webSocketReducers);
 
+  console.log(orders);
+  
   const readyOrders = orders?.map((order) => {
     if (order.status === "done") {
       return (

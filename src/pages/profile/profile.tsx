@@ -1,5 +1,5 @@
 /* cSpell:disable */
-import React from "react";
+import React, { SyntheticEvent } from "react";
 import styles from "./profile.module.css";
 import { NavLink, useHistory, Route, Switch } from "react-router-dom";
 import {
@@ -19,12 +19,14 @@ import {
   wsOffline,
 } from "../../services/reducers/webSocketRedusers";
 import { getCookie } from "../../utils/cookie";
+import { useAppSelector, AppDispatch } from "../../services/store";
+import { IuserData } from "../../services/types/user";
 
 export const Profile = () => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const history = useHistory();
-  const { userData } = useSelector((state) => state.authorizationReducer);
-  const { orders } = useSelector((state) => state.webSocketReducers);
+  const { userData } = useAppSelector((state) => state.authorizationReducer);
+  const { orders } = useAppSelector((state) => state.webSocketReducers);
   const [loginData, setLoginData] = React.useState({
     userName: userData?.name,
     email: userData?.email,
@@ -46,10 +48,10 @@ export const Profile = () => {
     );
     history.push("/Stellar-Burgers/login");
   };
-  const onChange = (e) => {
+  const onChange = (e: any) => {
     setLoginData({ ...loginData, [e.target.name]: e.target.value });
   };
-  const submitData = (e) => {
+  const submitData = (e: SyntheticEvent) => {
     e.preventDefault();
     dispatch(
       updateUserData({
@@ -62,8 +64,8 @@ export const Profile = () => {
 
   const reverse = () => {
     setLoginData({
-      userName: userData.name,
-      email: userData.email,
+      userName: userData?.name,
+      email: userData?.email,
       password: "",
     });
   };
@@ -107,30 +109,27 @@ export const Profile = () => {
             </p>
           </nav>
           <Switch>
-            <Route path="/Stellar-Burgers/profile" exact>
+            <Route path="/Stellar-Burgers/profile">
               <form onSubmit={submitData} className={styles.profile__form}>
                 <Input
                   onChange={onChange}
                   type={"text"}
                   name={"userName"}
                   placeholder={"Имя"}
-                  value={loginData.userName}
+                  value={loginData.userName!}
                   icon={"EditIcon"}
                 />
                 <div className="p-3"></div>
                 <EmailInput
                   onChange={onChange}
                   name={"email"}
-                  value={loginData.email}
-                  icon={"EditIcon"}
+                  value={loginData.email!}
                 />
                 <div className="p-3"></div>
                 <PasswordInput
                   onChange={onChange}
                   name={"password"}
                   value={loginData.password}
-                  icon={"EditIcon"}
-                  type="text"
                 />
                 {loginData.userName !== userData.name ||
                 loginData.email !== userData.email ||
@@ -151,7 +150,7 @@ export const Profile = () => {
                 )}
               </form>
             </Route>
-            <Route path="/Stellar-Burgers/profile/orders/" exact>
+            <Route path="/Stellar-Burgers/profile/orders/">
               {orders ? (
                 <div className="ml-10">
                   <OrdersFeed />
