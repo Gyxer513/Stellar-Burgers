@@ -1,6 +1,6 @@
 /* cSpell:disable; */
 import styles from "./feed.module.css";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import {
   wsConnection,
   wsOffline,
@@ -10,10 +10,10 @@ import { useEffect } from "react";
 import { OrdersFeed } from "../../components/OdersFeed/OdersFeed";
 import Loader from "../../components/Loader/Loader";
 import { OrdersInfo } from "../../components/OrdersInfo/OrdersInfo";
-import { useAppSelector} from "../../services/store"
+import { AppDispatch, useAppSelector} from "../../services/store"
 
 export const Feed = () => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const { orders } = useAppSelector((state) => state.webSocketReducers);
 
   useEffect(() => {

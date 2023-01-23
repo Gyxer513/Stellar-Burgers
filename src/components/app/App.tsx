@@ -1,6 +1,6 @@
 /* cSpell:disable */
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useEffect, FC } from "react";
+import { useDispatch } from "react-redux";
 import { Switch, Route, useHistory, useLocation } from "react-router-dom";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
@@ -24,6 +24,7 @@ import { Feed } from "../../pages/feed/feed";
 import { FullOrderInfo } from "../FullOrderInfo/FullOrderInfo";
 import { getCookie } from "../../utils/cookie";
 import { useAppSelector, AppDispatch } from "../../services/store";
+
 
 function App() {
   const location = useLocation();
@@ -58,7 +59,7 @@ function App() {
     <>
       <AppHeader />
       <Switch location={background || location}>
-        <Route exact path="/Stellar-Burgers/">
+        <Route  exact path="/Stellar-Burgers/">
           <main className={styles.main}>
             <DndProvider backend={HTML5Backend}>
               <BurgerIngredients />

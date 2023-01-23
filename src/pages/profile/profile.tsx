@@ -20,7 +20,6 @@ import {
 } from "../../services/reducers/webSocketRedusers";
 import { getCookie } from "../../utils/cookie";
 import { useAppSelector, AppDispatch } from "../../services/store";
-import { IuserData } from "../../services/types/user";
 
 export const Profile = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -109,7 +108,7 @@ export const Profile = () => {
             </p>
           </nav>
           <Switch>
-            <Route path="/Stellar-Burgers/profile">
+            <Route exact path="/Stellar-Burgers/profile">
               <form onSubmit={submitData} className={styles.profile__form}>
                 <Input
                   onChange={onChange}
@@ -150,7 +149,7 @@ export const Profile = () => {
                 )}
               </form>
             </Route>
-            <Route path="/Stellar-Burgers/profile/orders/">
+            <Route  path="/Stellar-Burgers/profile/orders" >
               {orders ? (
                 <div className="ml-10">
                   <OrdersFeed />

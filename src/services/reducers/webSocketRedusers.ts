@@ -1,5 +1,5 @@
 /* cSpell:disable */
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IWsStore } from "../types/store";
 
 const initialState: IWsStore = {
@@ -17,7 +17,7 @@ export const webSocketReducers = createSlice({
   name: 'webSocketReducers',
   initialState,
   reducers: {
-    wsOpen: (state, action) => {
+    wsOpen: (state, action: PayloadAction<string>) => {
       state.wsOpen = action.payload;
       state.wsError = null;
     },
@@ -25,7 +25,7 @@ export const webSocketReducers = createSlice({
       state.wsClose = action.payload;
       state.wsError = null;
     },
-    wsConnection: (state) => {
+    wsConnection: (state, action) => {
       state.wsConnectionStatus = true;
     },
     wsOffline: (state) => {
