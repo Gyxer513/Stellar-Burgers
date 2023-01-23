@@ -24,17 +24,18 @@ import { Feed } from "../../pages/feed/feed";
 import { FullOrderInfo } from "../FullOrderInfo/FullOrderInfo";
 import { getCookie } from "../../utils/cookie";
 import { useAppSelector, AppDispatch } from "../../services/store";
+import { ILocationState } from "../../services/types/types";
 
 
 function App() {
-  const location = useLocation();
+  const location = useLocation<ILocationState & { background: Location }>();
   const history = useHistory();
   const dispatch = useDispatch<AppDispatch>();
   const { userData, tokenError } = useAppSelector(
     (state) => state.authorizationReducer
   );
 
-  const background = location.state?.background;
+  const background = location.state && location.state.background;
   useEffect(() => {
     dispatch(getData());
     if (getCookie("accessToken")) {

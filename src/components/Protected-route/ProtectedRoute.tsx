@@ -1,17 +1,14 @@
-import { Route, Redirect, useLocation } from "react-router-dom";
+import { Route, Redirect, useLocation, RouteProps } from "react-router-dom";
+import { ILocationState } from "../../services/types/types";
 import { getCookie } from "../../utils/cookie";
 
-export const ProtectedRoute = ({
+export const ProtectedRoute: React.FC<RouteProps & {onlyForAuth: boolean}> = ({
   onlyForAuth,
   children,
   ...rest
-}: {
-  onlyForAuth?: boolean;
-  children: JSX.Element | null;
-  path: string;
 }) => {
   const isAuthorized = getCookie("accessToken");
-  const location = useLocation();
+  const location = useLocation<ILocationState & { background: Location }>();
 
   if (!onlyForAuth && isAuthorized) {
     const { from } = location.state || {

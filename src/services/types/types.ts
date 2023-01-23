@@ -46,3 +46,10 @@ export interface IConstructorItem {
   moveIngredient: (dragIndex: number, hoverIndex: number) => void;
   index: number;
 }
+
+export interface ILocationState {
+  from: {
+    pathname: string;
+  };
+  background?: any;
+}

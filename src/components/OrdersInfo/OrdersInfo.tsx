@@ -4,9 +4,7 @@ import { useAppSelector } from "../../services/store"
 
 export const OrdersInfo = () => {
   const { orders, wsData } = useAppSelector((state) => state.webSocketReducers);
-
-  console.log(orders);
-  
+ 
   const readyOrders = orders?.map((order) => {
     if (order.status === "done") {
       return (

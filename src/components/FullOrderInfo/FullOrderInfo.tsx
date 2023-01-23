@@ -15,13 +15,11 @@ import { IOrderNumber } from "../../services/types/types";
 
 export const FullOrderInfo = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const orderNumber = useParams<keyof IOrderNumber>() as IOrderNumber;
+  const orderNumber = useParams<IOrderNumber>();
 
   const { orderData } = useAppSelector((state) => state.orderReducer);
   const { ingredients } = useAppSelector((state) => state.ingredientsReducer);
-  console.log(orderNumber.orderNumber);
-  
-  
+
   useEffect(() => {
     dispatch(fullOrderInfo(orderNumber.orderNumber));
   }, [dispatch, orderNumber]);

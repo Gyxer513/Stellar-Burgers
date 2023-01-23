@@ -6,9 +6,9 @@ import { useAppSelector } from "../../services/store";
 import { Iingredient } from "../../services/types/ingredients";
 
 function IngredientDetails() {
-  const { id } = useParams();
+  const { id } = useParams<any>();
   const { ingredients } = useAppSelector((state) => state?.ingredientsReducer);
-
+  
   let selectedIngredient = null;
 
   if (ingredients.length < 1) {
