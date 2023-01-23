@@ -5,7 +5,7 @@ import {
   Button,
   CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import styles from "./burgerConstructor.module.css";
 import update from "immutability-helper";
 import {
@@ -85,7 +85,6 @@ const BurgerConstructor = () => {
           ],
         },
       );
-
       dispatch(sortIngredients([...sortedIngredients]));
     },
     [chosenIngredients, dispatch]

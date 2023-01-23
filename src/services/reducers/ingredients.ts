@@ -4,6 +4,7 @@ import { randomId } from "../../utils/data";
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import { IingredientsStore } from "../types/store";
 import { Iingredient } from "../types/ingredients";
+import { IChoousenIngredients } from "../types/types";
 
 export const getData = createAsyncThunk("getData", async () => {
   return api.getData();
@@ -22,7 +23,7 @@ export const ingredientsReducer = createSlice({
   initialState,
   reducers: {
     addIngredient: {
-      reducer: (state, action: PayloadAction<never[]>) => {
+      reducer: (state, action: PayloadAction<Iingredient>) => {
         // @ts-ignore
         state.chosenIngredients.push(action.payload);
       },
@@ -43,10 +44,10 @@ export const ingredientsReducer = createSlice({
         return { payload: newBan };
       },
     },
-    deleteIngredient: (state, action) => {
+    deleteIngredient: (state, action: PayloadAction<IChoousenIngredients[]>) => {
       state.chosenIngredients = action.payload;
     },
-    sortIngredients: (state, action) => {
+    sortIngredients: (state, action: PayloadAction<IChoousenIngredients[]>) => {
       state.chosenIngredients = action.payload;
     },
   },
@@ -55,13 +56,13 @@ export const ingredientsReducer = createSlice({
       .addCase(getData.pending, (state) => {
         state.ingredientsRequest = true;
       })
-      .addCase(getData.fulfilled, (state, action) => {
+      .addCase(getData.fulfilled, (state, action: PayloadAction<{data: [Iingredient]}>) => {
         state.ingredients = action.payload.data;
         state.ingredientsRequest = false;
       })
-      .addCase(getData.rejected, (state, action) => {
+      .addCase(getData.rejected, (state, error) => {
         state.ingredientsFailed = true;
-        console.warn(action.error);
+        console.warn(error.error);
       });
   },
 });

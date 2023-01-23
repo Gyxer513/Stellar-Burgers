@@ -8,7 +8,7 @@ export const ProtectedRoute: React.FC<RouteProps & {onlyForAuth: boolean}> = ({
   ...rest
 }) => {
   const isAuthorized = getCookie("accessToken");
-  const location = useLocation<ILocationState & { background: Location }>();
+  const location = useLocation<ILocationState>();
 
   if (!onlyForAuth && isAuthorized) {
     const { from } = location.state || {

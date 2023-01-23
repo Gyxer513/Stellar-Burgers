@@ -1,7 +1,8 @@
 /* cSpell:disable; */
 import { api } from "../../utils/Api";
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import { IorderStore } from "../types/store";
+import { IOrderInfo } from "../types/ingredients";
 
 export const sendOrder = createAsyncThunk("sendOrder", async (list: string[]) => 
    api.sendData(list)
@@ -38,25 +39,25 @@ export const orderReducer = createSlice({
     builder.addCase(sendOrder.pending, (state) => {
       state.orderRequest = true;
     })
-    .addCase(sendOrder.fulfilled, (state, action) => {
+    .addCase(sendOrder.fulfilled, (state, action: PayloadAction<{order: {number: number}}>) => {
       state.orderDetails = action.payload.order?.number;
       state.orderRequest = false;
     })
-    .addCase(sendOrder.rejected, (state, action) => {
+    .addCase(sendOrder.rejected, (state, error) => {
       state.orderFailed = true;
-      console.warn(action.error);
+      console.warn(error.error);
     })
 
     .addCase(fullOrderInfo.pending, (state) => {
       state.orderDataStatus = false;
     })
-    .addCase(fullOrderInfo.fulfilled, (state, action) => {
+    .addCase(fullOrderInfo.fulfilled, (state, action: PayloadAction<IOrderInfo>) => {
       state.orderDataStatus = true;
       state.orderData = action.payload;
     })
-   .addCase(fullOrderInfo.rejected, (state, action) => {
+   .addCase(fullOrderInfo.rejected, (state, error) => {
       state.orderDataStatus = false;
-      console.warn(action.error);
+      console.warn(error.error);
     })
   },
 });

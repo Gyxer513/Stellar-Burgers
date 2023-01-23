@@ -1,6 +1,8 @@
 /* cSpell:disable */
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { Iingredient } from "../types/ingredients";
 import { IWsStore } from "../types/store";
+import { IOrderFullInfo } from "../types/types";
 
 const initialState: IWsStore = {
   wsOpen: null,
@@ -21,21 +23,21 @@ export const webSocketReducers = createSlice({
       state.wsOpen = action.payload;
       state.wsError = null;
     },
-    wsClose: (state, action) => {
+    wsClose: (state, action: PayloadAction<string>) => {
       state.wsClose = action.payload;
       state.wsError = null;
     },
-    wsConnection: (state, action) => {
+    wsConnection: (state, action: PayloadAction<string>) => {
       state.wsConnectionStatus = true;
     },
     wsOffline: (state) => {
       state.wsConnectionStatus = false;
       state.orders = null;
     },
-    wsError: (state, action) => {
+    wsError: (state, action: PayloadAction<string>) => {
       state.wsError = action.payload;
     },
-    wsGetOrders: (state, action) => {
+    wsGetOrders: (state, action: PayloadAction<{orders: IOrderFullInfo[]}>) => {
       state.orders = action.payload.orders;
       state.wsData = action.payload;
     },

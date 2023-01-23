@@ -1,5 +1,5 @@
 /* cSpell:disable; */
-import React, { FormEvent } from "react";
+import React, { FormEvent, ChangeEvent } from "react";
 import styles from "./forgotPassword.module.css";
 import { NavLink, Redirect } from "react-router-dom";
 import { fogotPass } from "../../services/reducers/authorization";
@@ -14,7 +14,7 @@ export const ForgotPassword = () => {
   const [emailValue, setEmailValue] = React.useState("");
   const dispatch = useDispatch<AppDispatch>();
   const { resetStatus } = useAppSelector((state) => state.authorizationReducer);
-  const onChange = (e: any) => {
+  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     setEmailValue(e.target.value);
   };
   const submitResetPassword = (e: FormEvent) => {

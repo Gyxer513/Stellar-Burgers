@@ -28,7 +28,7 @@ import { ILocationState } from "../../services/types/types";
 
 
 function App() {
-  const location = useLocation<ILocationState & { background: Location }>();
+  const location = useLocation<ILocationState>();
   const history = useHistory();
   const dispatch = useDispatch<AppDispatch>();
   const { userData, tokenError } = useAppSelector(

@@ -14,8 +14,8 @@ export interface IauthorizationStore {
   tokenError: boolean;
 }
 export interface IingredientsStore {
-  ingredients: [Iingredient] | [];
-  chosenIngredients: [IChoousenIngredients] | [];
+  ingredients: Iingredient[] | [];
+  chosenIngredients: IChoousenIngredients[] | [];
   chosenBun: Iingredient | null;
   ingredientsRequest: boolean;
   ingredientsFailed: boolean;
@@ -36,6 +36,6 @@ export interface IWsStore {
   wsError: null | string,
   fetchError: null | string,
   fetchRequest: boolean,
-  orders: null | [IOrderFullInfo],
+  orders: null | IOrderFullInfo[],
   wsData: null | any,
 }

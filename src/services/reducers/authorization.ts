@@ -1,9 +1,9 @@
 /* cSpell:disable; */
 import { api } from "../../utils/Api";
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import { setCookie, deleteCookie } from "../../utils/cookie";
 import { IauthorizationStore } from "../types/store";
-import { IuserData } from "../types/user";
+import { IuserData, IUserFullData } from "../types/user";
 
 /* ***** Регистрация нового пользователя ***** */
 
@@ -79,21 +79,21 @@ const authorizationReducer = createSlice({
       .addCase(registerNewUser.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(registerNewUser.fulfilled, (state, action) => {
+      .addCase(registerNewUser.fulfilled, (state, action: PayloadAction<IUserFullData>) => {
         state.isLoading = false;
         state.isAuthorizationSuccess = true;
         state.userData = action.payload.user;
         localStorage.setItem("refreshToken", action.payload.refreshToken);
         state.accessToken = action.payload.accessToken;
       })
-      .addCase(registerNewUser.rejected, (state, action) => {
+      .addCase(registerNewUser.rejected, (state, error) => {
         state.isAuthorizationSuccess = false;
-        console.warn(action.error);
+        console.warn(error.error);
       })
       .addCase(loginUser.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(loginUser.fulfilled, (state: IauthorizationStore, action) => {
+      .addCase(loginUser.fulfilled, (state: IauthorizationStore, action: PayloadAction<IUserFullData>) => {
         state.isLoading = false;
         state.isAuthorizationSuccess = true;
         state.userData = action.payload.user;
@@ -104,9 +104,9 @@ const authorizationReducer = createSlice({
         );
         state.accessToken = action.payload.accessToken;
       })
-      .addCase(loginUser.rejected, (state, action: any) => {
+      .addCase(loginUser.rejected, (state, error) => {
         state.isAuthorizationSuccess = false;
-        console.warn(action.error);
+        console.warn(error.error);
       })
       .addCase(fogotPass.pending, (state) => {
         state.isLoading = true;
@@ -115,11 +115,11 @@ const authorizationReducer = createSlice({
         state.isLoading = false;
         state.resetStatus = true;
       })
-      .addCase(fogotPass.rejected, (state, action) => {
+      .addCase(fogotPass.rejected, (state, error) => {
         state.isLoading = false;
         state.isAuthorizationSuccess = false;
         state.resetStatus = false;
-        console.warn(action.error);
+        console.warn(error.error);
       })
       .addCase(logout.pending, (state) => {
         state.isLoading = true;
@@ -131,21 +131,21 @@ const authorizationReducer = createSlice({
         state.userData = null;
         deleteCookie("accessToken");
       })
-      .addCase(logout.rejected, (state, action) => {
+      .addCase(logout.rejected, (state, error) => {
         state.isLoading = false;
         state.isAuthorizationSuccess = false;
-        console.warn(action.error);
+        console.warn(error.error);
       })
       .addCase(updateUserData.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(updateUserData.fulfilled, (state, action) => {
+      .addCase(updateUserData.fulfilled, (state) => {
         state.isLoading = false;
         state.isAuthorizationSuccess = true;
       })
-      .addCase(updateUserData.rejected, (state, action) => {
+      .addCase(updateUserData.rejected, (state, error) => {
         state.isAuthorizationSuccess = false;
-        console.warn(action.error);
+        console.warn(error.error);
       })
       .addCase(updatePass.pending, (state) => {
         state.isLoading = true;
@@ -154,31 +154,30 @@ const authorizationReducer = createSlice({
       .addCase(updatePass.fulfilled, (state) => {
         state.isLoading = false;
       })
-      .addCase(updatePass.rejected, (state, action) => {
+      .addCase(updatePass.rejected, (state, error) => {
         state.isAuthorizationSuccess = false;
-        console.warn(action.error);
-        console.warn(action.error);
+        console.warn(error.error);
       })
       .addCase(checkAuth.pending, (state) => {
         state.isLoading = true;
         state.isAuthorizationSuccess = false;
       })
-      .addCase(checkAuth.fulfilled, (state, action) => {
+      .addCase(checkAuth.fulfilled, (state, action: PayloadAction<{success: boolean; user: IuserData}>) => {
         state.isLoading = false;
         state.isAuthorizationSuccess = action.payload?.success;
         state.userData = action.payload?.user;
         state.tokenError = false;
       })
-      .addCase(checkAuth.rejected, (state, action) => {
+      .addCase(checkAuth.rejected, (state, error) => {
         state.isAuthorizationSuccess = false;
         state.tokenError = true;
-        console.warn(action.error);
+        console.warn(error.error);
       })
       .addCase(refreshToken.pending, (state) => {
         state.isLoading = true;
         state.isAuthorizationSuccess = false;
       })
-      .addCase(refreshToken.fulfilled, (state, action) => {
+      .addCase(refreshToken.fulfilled, (state, action: PayloadAction<IUserFullData>) => {
         state.isLoading = false;
         state.isAuthorizationSuccess = true;
         setCookie(

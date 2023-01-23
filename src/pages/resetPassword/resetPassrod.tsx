@@ -1,5 +1,5 @@
 /* cSpell:disable */
-import React, {} from "react";
+import React, { ChangeEvent } from "react";
 import styles from "./resetPassword.module.css";
 import { NavLink, useHistory } from "react-router-dom";
 import { updatePass } from "../../services/reducers/authorization";
@@ -20,13 +20,13 @@ export const ResertPassword = () => {
   const dispatch = useDispatch<AppDispatch>();
   const history = useHistory();
 
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     setInputData({
       ...InputData,
       [e.target.name]: e.target.value,
     });
   };
-  const submitAutorization = (e: React.ChangeEvent<HTMLFormElement>) => {
+  const submitAutorization = (e: ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
     dispatch(
       updatePass({

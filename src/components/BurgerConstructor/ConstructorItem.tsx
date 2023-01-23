@@ -67,12 +67,13 @@ const ConstructorItem: FC<IConstructorItem> = ({
 
   drag(drop(ref));
 
-  const handleDeleteIngredient = (item: Iingredient | unknown) => () => {
-    const arrayClone = chosenIngredients.slice();
-    // @ts-ignore
-    arrayClone.splice(chosenIngredients.indexOf(item), 1);
-    dispatch(deleteIngredient(arrayClone));
-  };
+  const handleDeleteIngredient =
+    (item: { image: string; name: string; price: number }) => () => {
+      const arrayClone = chosenIngredients.slice();
+// @ts-ignore
+      arrayClone.splice(chosenIngredients.indexOf(item), 1);
+      dispatch(deleteIngredient(arrayClone));
+    };
 
   return (
     <li ref={ref} className={styles.burgerConstructor__elementBox}>

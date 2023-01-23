@@ -1,5 +1,5 @@
 /* cSpell:disable; */
-import React, { SyntheticEvent } from "react";
+import React, { SyntheticEvent, ChangeEvent } from "react";
 import styles from "./register.module.css";
 import { NavLink, useHistory } from "react-router-dom";
 import { AppDispatch } from "../../services/store"
@@ -22,7 +22,7 @@ export const Register = () => {
   });
   const { name, email, password } = userData;
   const dispatch = useDispatch<AppDispatch>();
-  const onChange = (e: any) => {
+  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     setUserData({
       ...userData,
       [e.target.name]: e.target.value

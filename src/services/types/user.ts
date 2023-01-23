@@ -5,4 +5,10 @@ export interface IuserData {
   password?: string;
   name?: string;
   token?: string;
+
+}
+export interface IUserFullData {
+  user: IuserData;
+  refreshToken: string;
+  accessToken: string;
 }

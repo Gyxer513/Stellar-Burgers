@@ -1,4 +1,3 @@
-
 /* cSpell:disable; */
 import { Iingredient } from "./ingredients";
 
@@ -8,7 +7,7 @@ export interface IModalProps {
 }
 export interface IOrderCard {
   createdAt: string;
-  orderIngredients: [string];
+  orderIngredients: string[];
   name: string;
   number: number;
   status: string;
@@ -20,7 +19,7 @@ export interface IModalOverlay {
 
 export interface IOrderFullInfo {
   createdAt: string;
-  ingredients: [string];
+  ingredients: string[];
   name: string;
   number: number;
   status: string;
@@ -41,7 +40,7 @@ export interface IConstructorItem {
     image: string;
     name: string;
     price: number;
-  }
+  };
   id: string;
   moveIngredient: (dragIndex: number, hoverIndex: number) => void;
   index: number;
@@ -52,4 +51,8 @@ export interface ILocationState {
     pathname: string;
   };
   background?: any;
+}
+
+export interface IUrlParamsType {
+  id: string;
 }

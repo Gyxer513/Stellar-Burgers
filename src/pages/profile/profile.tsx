@@ -1,5 +1,5 @@
 /* cSpell:disable */
-import React, { SyntheticEvent } from "react";
+import React, { SyntheticEvent, ChangeEvent } from "react";
 import styles from "./profile.module.css";
 import { NavLink, useHistory, Route, Switch } from "react-router-dom";
 import {
@@ -47,7 +47,7 @@ export const Profile = () => {
     );
     history.push("/Stellar-Burgers/login");
   };
-  const onChange = (e: any) => {
+  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     setLoginData({ ...loginData, [e.target.name]: e.target.value });
   };
   const submitData = (e: SyntheticEvent) => {

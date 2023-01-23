@@ -18,5 +18,5 @@ export interface Iingredient  {
 
 export interface IOrderInfo {
   success: boolean,
-  orders: [IOrderFullInfo]
+  orders: IOrderFullInfo[]
 }

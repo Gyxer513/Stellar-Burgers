@@ -4,9 +4,10 @@ import { useParams } from "react-router-dom";
 import Loader from "../Loader/Loader";
 import { useAppSelector } from "../../services/store";
 import { Iingredient } from "../../services/types/ingredients";
+import { IUrlParamsType } from "../../services/types/types";
 
 function IngredientDetails() {
-  const { id } = useParams<any>();
+  const { id } = useParams<IUrlParamsType>();
   const { ingredients } = useAppSelector((state) => state?.ingredientsReducer);
   
   let selectedIngredient = null;
