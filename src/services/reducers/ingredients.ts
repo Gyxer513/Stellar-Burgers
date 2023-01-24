@@ -23,8 +23,7 @@ export const ingredientsReducer = createSlice({
   initialState,
   reducers: {
     addIngredient: {
-      reducer: (state, action: PayloadAction<Iingredient>) => {
-        // @ts-ignore
+      reducer: (state, action: PayloadAction<IChoousenIngredients>) => {
         state.chosenIngredients.push(action.payload);
       },
       prepare: (targetIngredient) => {

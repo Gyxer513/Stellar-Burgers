@@ -36,11 +36,7 @@ export interface IChoousenIngredients extends Iingredient {
 }
 
 export interface IConstructorItem {
-  data: {
-    image: string;
-    name: string;
-    price: number;
-  };
+  data: IChoousenIngredients;
   id: string;
   moveIngredient: (dragIndex: number, hoverIndex: number) => void;
   index: number;

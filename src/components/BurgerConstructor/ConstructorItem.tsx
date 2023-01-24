@@ -39,8 +39,6 @@ const ConstructorItem: FC<IConstructorItem> = ({
       if (!ref.current) {
         return;
       }
-      console.log(item);
-
       const dragIndex = item?.index;
       let hoverIndex = index;
 
@@ -67,13 +65,12 @@ const ConstructorItem: FC<IConstructorItem> = ({
 
   drag(drop(ref));
 
-  const handleDeleteIngredient =
-    (item: { image: string; name: string; price: number }) => () => {
-      const arrayClone = chosenIngredients.slice();
-// @ts-ignore
-      arrayClone.splice(chosenIngredients.indexOf(item), 1);
-      dispatch(deleteIngredient(arrayClone));
-    };
+  const handleDeleteIngredient = () => {
+    const updateIngredients = chosenIngredients.filter(
+      ingredient => ingredient.randomId !== data.randomId
+    );
+    dispatch(deleteIngredient(updateIngredients));
+};
 
   return (
     <li ref={ref} className={styles.burgerConstructor__elementBox}>
@@ -83,7 +80,7 @@ const ConstructorItem: FC<IConstructorItem> = ({
         text={name}
         price={price}
         thumbnail={image}
-        handleClose={handleDeleteIngredient(data)}
+        handleClose={handleDeleteIngredient}
       />
     </li>
   );
