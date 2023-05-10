@@ -33,7 +33,7 @@ export const Login = () => {
         password: password,
       }),
     );
-    history.push("/Stellar-Burgers/")
+    history.push("/")
   };
   return (
     <form onSubmit={submitAutorization} className={styles.login}>
@@ -63,7 +63,7 @@ export const Login = () => {
           Вы — новый пользователь?
         </p>
         <NavLink
-          to="/Stellar-Burgers/register"
+          to="/register"
           className={`${styles.login__link} text text_type_main-default text_color_inactive `}
         >
           Зарегистрироваться
@@ -74,7 +74,7 @@ export const Login = () => {
           Забыли пароль?
         </p>
         <NavLink
-          to="/Stellar-Burgers/forgot-password"
+          to="/forgot-password"
           className={`${styles.login__link} text text_type_main-default text_color_inactive `}
         >
           Восстановить пароль

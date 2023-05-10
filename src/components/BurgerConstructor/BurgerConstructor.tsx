@@ -43,10 +43,10 @@ const BurgerConstructor = () => {
 
   const handlePlaceOrder = () => {
     if (!userData) {
-      history.push("/Stellar-Burgers/login");
+      history.push("/login");
     } else {
       history.push({
-        pathname: "/Stellar-Burgers/order",
+        pathname: "/order",
         state: {
           background: location,
         },

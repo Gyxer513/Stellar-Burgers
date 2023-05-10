@@ -12,7 +12,7 @@ export const ProtectedRoute: React.FC<RouteProps & {onlyForAuth: boolean}> = ({
 
   if (!onlyForAuth && isAuthorized) {
     const { from } = location.state || {
-      from: { pathname: "/Stellar-Burgers/" },
+      from: { pathname: "/" },
     };
     return (
       <Route {...rest}>
@@ -25,7 +25,7 @@ export const ProtectedRoute: React.FC<RouteProps & {onlyForAuth: boolean}> = ({
     return (
       <Route {...rest}>
         <Redirect
-          to={{ pathname: "/Stellar-Burgers/login", state: { from: location } }}
+          to={{ pathname: "/login", state: { from: location } }}
         />
       </Route>
     );

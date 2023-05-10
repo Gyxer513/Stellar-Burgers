@@ -19,7 +19,7 @@ const AppHeader:FC = () => {
         </div>
         <div className="p-3">
           <NavLink
-            to="/Stellar-Burgers"
+            to="/"
             className={`${styles.header__link} text text_type_main-default text_color_inactive `}
             activeClassName={styles.header__link_active}
           >
@@ -32,7 +32,7 @@ const AppHeader:FC = () => {
         <div className="p-3">
           <NavLink
             exact 
-            to="/Stellar-Burgers/feed"
+            to="/feed"
             className={`${styles.header__link} text text_type_main-default text_color_inactive `}
             activeClassName={styles.header__link_active}
           >
@@ -49,7 +49,7 @@ const AppHeader:FC = () => {
         <div className="p-3">
           <NavLink
             exact
-            to="/Stellar-Burgers/profile"
+            to="/profile"
             className={`${styles.header__link} text text_type_main-default text_color_inactive`}
             activeClassName={styles.header__link_active}
           >
