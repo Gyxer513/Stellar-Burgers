@@ -9,14 +9,14 @@
 
 ## Полный стек используемых технологий
 
-React
-TypeScript
-React Redux
-Redux Thunk
-Redux toolkit
-React Router DOM
-React DnD
-WebSocket
+-React;<Br>
+-TypeScript;<Br>
+-React Redux;<Br>
+-Redux Thunk;<Br>
+-Redux toolkit;<Br>
+-React Router DOM;<Br>
+-React DnD;<Br>
+-WebSocket;<Br>
 
 
 ## Проект загружен на [GH Pages](https://gyxer513.github.io/Stellar-Burgers/). 
